@@ -32,8 +32,8 @@
 
   <!-- HERO-LIKE INTRO -->
   <main class="container">
-    <section class="hero" style="padding: 60px 0 30px;">
-      <h1 style="font-size:50px;">
+    <section class="hero">
+      <h1>
         About <span class="highlight">Me</span>
       </h1>
       <p class="lead">
@@ -43,11 +43,9 @@
     </section>
 
     <!-- ABOUT CONTENT -->
-    <section class="card" style="margin-top: 30px;">
-      <h2 style="font-family:'Inter',sans-serif; font-size:28px; margin-bottom:12px;">
-        Who I Am
-      </h2>
-      <p style="color:#4d4b63; line-height:1.6;">
+    <section class="card">
+      <h2>Who I Am</h2>
+      <p>
         I am an AI & DS student focused on solving real-world problems through applied intelligence.
         I work across machine learning, backend systems, automation, and cybersecurity —
         building tools that are clean, effective, and privacy-respecting.
@@ -55,26 +53,25 @@
     </section>
 
     <!-- SKILLS SECTION -->
-    <section class="card" style="margin-top: 30px;">
-      <h2 style="font-family:'Inter',sans-serif; font-size:28px; margin-bottom:12px;">
-        Technical Skills
-      </h2>
+    <section class="card">
+      <h2>Technical Skills</h2>
 
-      <ul style="margin-top:10px; line-height:1.8; color:#4d4b63;">
-        <li><strong>Python</strong> — Pandas, NumPy, Data Pipelines</li>
-        <li><strong>Machine Learning</strong> — scikit-learn, XGBoost, Evaluation</li>
-        <li><strong>Backend</strong> — FastAPI, Flask, REST APIs</li>
-        <li><strong>Frontend</strong> — HTML, CSS, JavaScript, Chrome Extensions</li>
-        <li><strong>Tools</strong> — Git, GitHub, Cloud Basics</li>
-      </ul>
+      <div class="code-block">
+        <pre><code><span class="comment">// Technical Skills</span>
+<span class="keyword">const</span> skills = {
+  python: [<span class="string">'Pandas'</span>, <span class="string">'NumPy'</span>, <span class="string">'Data Pipelines'</span>],
+  ml: [<span class="string">'scikit-learn'</span>, <span class="string">'XGBoost'</span>, <span class="string">'Evaluation'</span>],
+  backend: [<span class="string">'FastAPI'</span>, <span class="string">'Flask'</span>, <span class="string">'REST APIs'</span>],
+  frontend: [<span class="string">'HTML'</span>, <span class="string">'CSS'</span>, <span class="string">'JavaScript'</span>, <span class="string">'Chrome Extensions'</span>],
+  tools: [<span class="string">'Git'</span>, <span class="string">'GitHub'</span>, <span class="string">'Cloud Basics'</span>]
+};</code></pre>
+      </div>
     </section>
 
     <!-- PURPOSE SECTION -->
-    <section class="card" style="margin-top: 30px;">
-      <h2 style="font-family:'Inter',sans-serif; font-size:28px; margin-bottom:12px;">
-        Purpose
-      </h2>
-      <p style="color:#4d4b63; line-height:1.6;">
+    <section class="card">
+      <h2>Purpose</h2>
+      <p>
         My mission is to create systems that protect users, simplify complex ideas,
         and enable learning with integrity.  
         Each project I build focuses on <strong>privacy</strong>, <strong>clarity</strong>, and <strong>utility</strong>.
@@ -90,6 +87,19 @@
       <div>Privacy-first portfolio.</div>
     </div>
   </footer>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-left">
+      <span>Ready</span>
+    </div>
+    <div class="status-right">
+      <span>UTF-8</span>
+      <span>LF</span>
+      <span>JavaScript</span>
+      <span>Go Live</span>
+    </div>
+  </div>
 
   <script src="assets/js/script.js"></script>
 
