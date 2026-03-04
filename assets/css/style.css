@@ -356,3 +356,15 @@ svg path {
   50% { stroke-opacity: 1; }
   100% { stroke-opacity: 0.6; }
 }
+
+/* File badge on download cards */
+.file-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  background: var(--accent, #8a4bff);
+  color: #fff;
+}
