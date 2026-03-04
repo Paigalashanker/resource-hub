@@ -1,0 +1,16 @@
+[
+  {
+    "title": "AI Phishing Detection (Prototype)",
+    "description": "Machine learning + threat-intel fusion. Backend prototype built for early testing.",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "Python, scikit-learn, FastAPI",
+    "github": "https://github.com/paigalashanker"
+  },
+  {
+    "title": "Network Visualizer",
+    "description": "Interactive visual layer explorer showing activations and connections.",
+    "image": "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "React, D3.js",
+    "github": "https://github.com/paigalashanker"
+  }
+]
