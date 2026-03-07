@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#1e1e1e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
   <title>Downloads — ALDS Portfolio</title>
 
   <link rel="stylesheet" href="assets/css/style.css">
@@ -26,6 +31,7 @@
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+      <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
@@ -33,7 +39,7 @@
   <main class="container">
 
     <section class="hero" style="padding: 60px 0 20px;">
-      <h1 style="font-size:50px;">
+      <h1>
         Download <span class="highlight">Center</span>
       </h1>
       <p class="lead">
@@ -54,8 +60,9 @@
           width:100%; padding:14px; 
           background:white; 
           border-radius:12px; border:1px solid #ddd; 
-          font-size:15px;
+          font-size:16px;
           margin-top:8px;
+          -webkit-appearance:none;
         "
       />
     </section>

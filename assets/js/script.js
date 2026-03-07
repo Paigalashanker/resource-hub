@@ -1,4 +1,4 @@
-// Basic interactions: theme toggle, nav active link
+// Basic interactions: theme toggle, nav active link, hamburger menu
 (function(){
   // Theme toggle
   const tbtn = document.querySelectorAll('.theme-toggle');
@@ -7,6 +7,23 @@
       document.documentElement.classList.toggle('light-theme');
     });
   });
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('menuToggle');
+  const nav = document.querySelector('.nav');
+  if (hamburger && nav) {
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      hamburger.textContent = nav.classList.contains('open') ? '✕' : '☰';
+    });
+    // Close menu when a nav link is clicked
+    nav.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        hamburger.textContent = '☰';
+      });
+    });
+  }
 
   // Highlight nav link based on location
   const links = document.querySelectorAll('.nav-link');
@@ -187,10 +204,10 @@
     card.className = 'project-card card';
     card.style.padding = '20px';
     card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" style="width:100%; height:160px; object-fit:cover; border-radius:12px;">
-      <h3 style="font-size:22px; margin:12px 0 6px;">${p.title}</h3>
-      <p style="color:var(--text-secondary,#4d4b63);">${p.description}</p>
-      ${p.tech ? `<div class="meta" style="margin-top:10px; color:var(--text-muted,#6d6a85);">Tech: ${p.tech}</div>` : ''}
+      <img src="${p.image}" alt="${p.title}" loading="lazy">
+      <h3>${p.title}</h3>
+      <p>${p.description}</p>
+      ${p.tech ? `<div class="meta">Tech: ${p.tech}</div>` : ''}
       ${p.github ? `<a class="link" href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : ''}
       ${p.demo ? `<a class="link" href="${p.demo}" target="_blank" rel="noopener" style="margin-left:12px;">Live Demo</a>` : ''}
     `;
