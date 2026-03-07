@@ -1,16 +1,44 @@
 [
   {
-    "title": "AI Phishing Detection (Prototype)",
-    "description": "Machine learning + threat-intel fusion. Backend prototype built for early testing.",
-    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tech": "Python, scikit-learn, FastAPI",
-    "github": "https://github.com/paigalashanker"
+    "title": "DSA in Java",
+    "description": "A 90-day structured journey learning Data Structures & Algorithms in Java — arrays, linked lists, stacks, queues, recursion, sorting and more.",
+    "image": "https://images.unsplash.com/photo-1515879218367-8466d910auj7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "Java",
+    "github": "https://github.com/Paigalashanker/dsa-in-java"
   },
   {
-    "title": "Network Visualizer",
-    "description": "Interactive visual layer explorer showing activations and connections.",
-    "image": "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tech": "React, D3.js",
-    "github": "https://github.com/paigalashanker"
+    "title": "QR Code Generator",
+    "description": "A simple, client-side QR Code Generator. Generates offline-readable QR codes entirely in the browser — no server interaction needed.",
+    "image": "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "HTML, CSS, JavaScript",
+    "github": "https://github.com/Paigalashanker/QR"
+  },
+  {
+    "title": "IoT Air Quality Dashboard",
+    "description": "Real-time air quality monitoring dashboard powered by ESP8266 sensors and Firebase. Features live data, historical charts and AI-driven analysis.",
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "HTML, JavaScript, C++, Firebase",
+    "github": "https://github.com/Paigalashanker/iot-air-quality-dashboard"
+  },
+  {
+    "title": "Neon Shooter Pro",
+    "description": "A browser-based neon-themed shooting game. Move with arrow keys, shoot with spacebar, and rack up the highest score!",
+    "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "JavaScript, CSS, HTML",
+    "github": "https://github.com/Paigalashanker/neon-shooter-pro"
+  },
+  {
+    "title": "Percept Backend",
+    "description": "Python backend service for emotion detection and analysis. Supports multiple emotion classifications for intelligent perception.",
+    "image": "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "Python",
+    "github": "https://github.com/Paigalashanker/percept-backend"
+  },
+  {
+    "title": "Resource Hub",
+    "description": "Personal portfolio and resource-sharing website with project showcases, downloadable files and contact info — all auto-populated from GitHub.",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "tech": "HTML, JavaScript, CSS",
+    "github": "https://github.com/Paigalashanker/resource-hub"
   }
 ]
