@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#1e1e1e" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -11,7 +11,7 @@
   <title>Contact — ALDS Portfolio</title>
 
   <link rel="stylesheet" href="assets/css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -49,59 +49,24 @@
     </section>
 
     <!-- CONTACT FORM CARD -->
-    <section class="card" style="margin-top: 25px; padding: 32px;">
-      <h2 style="font-family:'Inter',sans-serif; font-size:28px; margin-bottom:16px;">
-        Contact Form
-      </h2>
+    <section class="card fade-in" style="margin-top: 25px; padding: 36px;">
+      <h2>Contact Form</h2>
 
       <form action="https://formsubmit.co/paigalashanker@gmail.com" method="POST">
-
-        <!-- Disable CAPTCHA (optional but cleaner) -->
         <input type="hidden" name="_captcha" value="false">
-
-        <!-- Redirect after submission (optional) -->
         <input type="hidden" name="_next" value="https://your-website-url-here/contact.html">
 
-        <label style="display:block; margin-bottom:16px; font-weight:600;">
-          Subject
-          <input 
-            name="subject" 
-            placeholder="Subject"
-            required
-            style="
-              width:100%; 
-              padding:12px; 
-              margin-top:6px;
-              border-radius:12px; 
-              border:1px solid #ddd;
-              font-size:16px;
-              -webkit-appearance:none;
-            "
-          >
-        </label>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input id="subject" name="subject" class="form-input" placeholder="What's this about?" required>
+        </div>
 
-        <label style="display:block; margin-bottom:18px; font-weight:600;">
-          Message
-          <textarea 
-            name="message" 
-            placeholder="Write your message..."
-            required
-            style="
-              width:100%; 
-              height:140px; 
-              padding:12px; 
-              margin-top:6px;
-              border-radius:12px; 
-              border:1px solid #ddd;
-              font-size:16px; 
-              resize:vertical;
-              -webkit-appearance:none;
-            "
-          ></textarea>
-        </label>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" class="form-input" placeholder="Write your message..." required></textarea>
+        </div>
 
         <button class="btn" type="submit">Send Message</button>
-
       </form>
     </section>
 
@@ -110,7 +75,11 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>AI & DS Student • SREC • 2024–2028</div>
+      <div class="footer-dev">
+        Developed & Maintained by
+        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a>
+      </div>
+      <div class="footer-meta">AI & DS • 2nd Year • SREC (2024–2028)</div>
     </div>
   </footer>
 

@@ -1,11 +1,20 @@
 // Basic interactions: theme toggle, nav active link, hamburger menu
 (function(){
-  // Theme toggle
+  // Theme toggle with localStorage persistence
+  const THEME_KEY = 'alds_theme';
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light') document.documentElement.classList.add('light-theme');
+
   const tbtn = document.querySelectorAll('.theme-toggle');
-  tbtn.forEach(b=>{
-    b.addEventListener('click', ()=>{
+  tbtn.forEach(b => {
+    b.addEventListener('click', () => {
       document.documentElement.classList.toggle('light-theme');
+      const isLight = document.documentElement.classList.contains('light-theme');
+      localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
+      tbtn.forEach(btn => { btn.textContent = isLight ? '☀️' : '🌓'; });
     });
+    // Set initial icon
+    if (document.documentElement.classList.contains('light-theme')) b.textContent = '☀️';
   });
 
   // Hamburger menu toggle
@@ -16,7 +25,6 @@
       nav.classList.toggle('open');
       hamburger.textContent = nav.classList.contains('open') ? '✕' : '☰';
     });
-    // Close menu when a nav link is clicked
     nav.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
@@ -29,10 +37,27 @@
   const links = document.querySelectorAll('.nav-link');
   links.forEach(a => {
     if(location.pathname.endsWith(a.getAttribute('href'))) {
-      links.forEach(x=>x.classList.remove('active'));
+      links.forEach(x => x.classList.remove('active'));
       a.classList.add('active');
     }
   });
+
+  // Scroll-reveal for .fade-in elements
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  }
 })();
 
 // ─── Auto-generate download cards from GitHub repo ───

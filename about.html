@@ -1,16 +1,16 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#1e1e1e" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
-  <title>About — ALDS Portfolio</title>
+  <title>About — Resource Hub</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -35,20 +35,46 @@
     </div>
   </header>
 
-  <!-- HERO-LIKE INTRO -->
   <main class="container">
+
+    <!-- HERO -->
     <section class="hero">
-      <h1>
-        About <span class="highlight">Me</span>
-      </h1>
+      <h1>About <span class="highlight">Me</span></h1>
       <p class="lead">
-        A second-year AI & Data Science student at Sree Rama Engineering College,  
+        A second-year AI & Data Science student at Sree Rama Engineering College,
         building intelligent systems with clarity, discipline, and purpose.
       </p>
     </section>
 
-    <!-- ABOUT CONTENT -->
-    <section class="card">
+    <!-- DEVELOPER INFO CARD -->
+    <section class="card fade-in">
+      <div class="about-developer">
+        <div class="dev-avatar">PS</div>
+        <h2>Paigala Delli Sankar</h2>
+        <p class="dev-role">2nd Year — Artificial Intelligence & Data Science</p>
+        <p class="dev-college">SREC (Sree Rama Engineering College), Tirupati</p>
+
+        <div class="dev-links">
+          <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub Profile
+          </a>
+          <a href="mailto:paigalashanker@gmail.com">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Email
+          </a>
+        </div>
+
+        <!-- QR CODE -->
+        <div class="qr-section">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://github.com/Paigalashanker&bgcolor=ffffff&color=0f172a" alt="QR Code — GitHub Profile" />
+          <p>Scan to visit GitHub profile</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO I AM -->
+    <section class="card fade-in">
       <h2>Who I Am</h2>
       <p>
         I am an AI & DS student focused on solving real-world problems through applied intelligence.
@@ -58,9 +84,8 @@
     </section>
 
     <!-- SKILLS SECTION -->
-    <section class="card">
+    <section class="card fade-in">
       <h2>Technical Skills</h2>
-
       <div class="code-block">
         <pre><code><span class="comment">// Technical Skills</span>
 <span class="keyword">const</span> skills = {
@@ -74,11 +99,11 @@
     </section>
 
     <!-- PURPOSE SECTION -->
-    <section class="card">
+    <section class="card fade-in">
       <h2>Purpose</h2>
       <p>
         My mission is to create systems that protect users, simplify complex ideas,
-        and enable learning with integrity.  
+        and enable learning with integrity.
         Each project I build focuses on <strong>privacy</strong>, <strong>clarity</strong>, and <strong>utility</strong>.
       </p>
     </section>
@@ -88,16 +113,17 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>AI & DS Student • SREC • 2024–2028</div>
-      <div>Privacy-first portfolio.</div>
+      <div class="footer-dev">
+        Developed & Maintained by
+        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a>
+      </div>
+      <div class="footer-meta">AI & DS • 2nd Year • SREC (2024–2028)</div>
     </div>
   </footer>
 
   <!-- STATUS BAR -->
   <div class="status-bar">
-    <div class="status-left">
-      <span>Ready</span>
-    </div>
+    <div class="status-left"><span>Ready</span></div>
     <div class="status-right">
       <span>UTF-8</span>
       <span>LF</span>
