@@ -197,6 +197,18 @@ a:hover {
   font-weight: 600;
 }
 
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: var(--gradient-accent);
+  border-radius: 2px;
+}
+
 /* ---------- HERO ---------- */
 .hero {
   text-align: center;
