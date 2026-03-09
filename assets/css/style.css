@@ -128,13 +128,14 @@ a:hover {
 }
 
 .brand .logo {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.5px;
+  text-transform: uppercase;
 }
 
 .brand .tag {
@@ -195,6 +196,18 @@ a:hover {
   color: var(--accent);
   background: var(--accent-glow);
   font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: var(--gradient-accent);
+  border-radius: 2px;
 }
 
 /* ---------- HERO ---------- */
