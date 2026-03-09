@@ -310,9 +310,9 @@ a:hover {
 }
 
 .card:hover {
-  box-shadow: var(--shadow);
-  transform: translateY(-3px);
-  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: var(--shadow), 0 0 20px var(--accent-glow);
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .card h2 {
