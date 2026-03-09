@@ -490,6 +490,25 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Project tech tags */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 20px 12px;
+}
+
+.project-tags span {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  letter-spacing: 0.3px;
+}
+
 /* ---------- ABOUT SECTION ---------- */
 .about-developer {
   display: flex;
