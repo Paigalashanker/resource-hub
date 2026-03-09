@@ -868,17 +868,20 @@ textarea.form-input {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-  .container { padding: 0 16px; }
-  .hero { padding: 48px 0 32px; }
-  .hero h1 { font-size: 28px; }
-  .grid { grid-template-columns: 1fr; }
-  .features { grid-template-columns: 1fr; }
+  .container { padding: 0 14px; }
+  .hero { padding: 40px 0 24px; }
+  .hero h1 { font-size: 26px; }
+  .lead { font-size: 15px; margin-bottom: 20px; }
+  .grid { grid-template-columns: 1fr; gap: 16px; }
+  .features { grid-template-columns: 1fr; gap: 16px; }
+  .card { padding: 20px; margin-bottom: 16px; }
   .project-card img { height: 140px; }
   .brand .tag { display: none; }
   .status-right span:nth-child(n+3) { display: none; }
   .code-block { font-size: 12px; padding: 14px; }
   .about-developer .dev-avatar { width: 80px; height: 80px; font-size: 32px; }
   .about-developer h2 { font-size: 22px; }
+  .site-footer { padding: 24px 14px; margin-top: 40px; }
 }
 
 /* Phones & small tablets (up to 768px) */
