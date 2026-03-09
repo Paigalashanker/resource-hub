@@ -246,7 +246,7 @@ a:hover {
 /* ---------- BUTTONS ---------- */
 .btn {
   background: var(--gradient-accent);
-  padding: 12px 28px;
+  padding: 14px 32px;
   border-radius: var(--radius);
   text-decoration: none;
   color: white;
