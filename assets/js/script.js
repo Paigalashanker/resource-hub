@@ -1,3 +1,30 @@
+// ─── Form submission success popup ───
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('submitted') === 'true') {
+    // Clean the URL
+    window.history.replaceState({}, '', window.location.pathname);
+
+    // Create popup overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .3s ease';
+
+    const popup = document.createElement('div');
+    popup.style.cssText = 'background:var(--card-bg,#1e1b2e);color:var(--text-primary,#fff);border-radius:16px;padding:40px 36px;text-align:center;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.4)';
+    popup.innerHTML = `
+      <div style="font-size:48px;margin-bottom:12px;">✅</div>
+      <h2 style="margin:0 0 10px;font-size:22px;">Message Sent!</h2>
+      <p style="color:var(--text-secondary,#a8a5b8);margin:0 0 24px;font-size:15px;">Your message has been submitted successfully. I'll get back to you soon!</p>
+      <button id="popupClose" style="background:var(--accent,#7c3aed);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;">OK</button>
+    `;
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+
+    document.getElementById('popupClose').addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  }
+})();
+
 // Basic interactions: theme toggle, nav active link, hamburger menu
 (function(){
   // Theme toggle with localStorage persistence
