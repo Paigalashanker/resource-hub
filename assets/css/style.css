@@ -921,6 +921,196 @@ textarea.form-input {
   }
 }
 
+/* ---------- API WIDGETS ---------- */
+.widget-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.widget-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  position: relative;
+}
+
+.widget-card:hover {
+  box-shadow: var(--shadow), 0 0 20px var(--accent-glow);
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.widget-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.widget-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* Quote widget */
+.quote-widget {
+  text-align: center;
+  margin-top: 32px;
+  padding: 36px 32px;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-widget::before {
+  content: '\201C';
+  position: absolute;
+  top: 8px;
+  left: 20px;
+  font-size: 80px;
+  color: var(--accent);
+  opacity: 0.12;
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+.quote-text {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 3vw, 22px);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.quote-author {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.quote-refresh {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.quote-refresh:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: rotate(180deg);
+}
+
+/* Weather widget */
+.weather-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-temp {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weather-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.weather-location {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.weather-details {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.weather-loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Joke widget */
+.joke-body {
+  min-height: 60px;
+}
+
+.joke-body p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.joke-body .joke-setup {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.joke-body .joke-punchline {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Visitor counter */
+.visitor-counter {
+  margin: 8px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.visitor-counter strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
 /* =============================================
    RESPONSIVE BREAKPOINTS
    ============================================= */
