@@ -645,6 +645,30 @@ a:hover {
   font-size: 13px;
 }
 
+.footer-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  transition: color var(--transition);
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-links span {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
 /* ---------- STATUS BAR ---------- */
 .status-bar {
   position: fixed;
