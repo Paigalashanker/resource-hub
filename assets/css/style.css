@@ -1131,6 +1131,11 @@ textarea.form-input {
   .about-developer .dev-avatar { width: 80px; height: 80px; font-size: 32px; }
   .about-developer h2 { font-size: 22px; }
   .site-footer { padding: 24px 14px; margin-top: 40px; }
+  .widget-row { grid-template-columns: 1fr; }
+  .widget-card { padding: 20px; }
+  .quote-widget { padding: 28px 20px; }
+  .quote-text { font-size: 17px; }
+  .weather-temp { font-size: 34px; }
 }
 
 /* Phones & small tablets (up to 768px) */

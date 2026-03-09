@@ -323,3 +323,158 @@
   loadProjects();
 })();
 
+// ─── Daily Quote Widget (Quotable API — no key, frontend only) ───
+(function(){
+  const textEl = document.getElementById('quoteText');
+  const authorEl = document.getElementById('quoteAuthor');
+  const refreshBtn = document.getElementById('quoteRefresh');
+  if (!textEl) return;
+
+  async function fetchQuote() {
+    textEl.textContent = 'Loading...';
+    authorEl.textContent = '';
+    try {
+      const res = await fetch('https://api.quotable.io/random?maxLength=120');
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      textEl.textContent = data.content;
+      authorEl.textContent = '— ' + data.author;
+    } catch {
+      // Fallback quotes if API is down
+      const fallback = [
+        { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+        { text: 'Talk is cheap. Show me the code.', author: 'Linus Torvalds' },
+        { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
+        { text: 'Code is like humor. When you have to explain it, it\'s bad.', author: 'Cory House' },
+        { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' }
+      ];
+      const q = fallback[Math.floor(Math.random() * fallback.length)];
+      textEl.textContent = q.text;
+      authorEl.textContent = '— ' + q.author;
+    }
+  }
+
+  fetchQuote();
+  if (refreshBtn) refreshBtn.addEventListener('click', fetchQuote);
+})();
+
+// ─── Weather Widget (Open-Meteo — free, no key, frontend only) ───
+(function(){
+  const body = document.getElementById('weatherBody');
+  if (!body) return;
+
+  const weatherCodes = {
+    0: '☀️ Clear sky', 1: '🌤️ Mainly clear', 2: '⛅ Partly cloudy', 3: '☁️ Overcast',
+    45: '🌫️ Foggy', 48: '🌫️ Rime fog', 51: '🌦️ Light drizzle', 53: '🌦️ Drizzle',
+    55: '🌧️ Dense drizzle', 61: '🌧️ Slight rain', 63: '🌧️ Moderate rain', 65: '🌧️ Heavy rain',
+    71: '🌨️ Slight snow', 73: '🌨️ Moderate snow', 75: '❄️ Heavy snow',
+    80: '🌦️ Rain showers', 81: '🌧️ Moderate showers', 82: '⛈️ Violent showers',
+    95: '⛈️ Thunderstorm', 96: '⛈️ Thunderstorm w/ hail', 99: '⛈️ Heavy hailstorm'
+  };
+
+  function renderWeather(data, city) {
+    const current = data.current_weather;
+    const desc = weatherCodes[current.weathercode] || '🌤️ ' + current.weathercode;
+    const icon = desc.split(' ')[0];
+    body.innerHTML = `
+      <div class="weather-main">
+        <span style="font-size:48px;">${icon}</span>
+        <div>
+          <div class="weather-temp">${Math.round(current.temperature)}°C</div>
+          <div class="weather-desc">${desc.substring(desc.indexOf(' ') + 1)}</div>
+        </div>
+      </div>
+      <div class="weather-location">📍 ${city}</div>
+      <div class="weather-details">
+        <span>💨 ${current.windspeed} km/h</span>
+      </div>
+    `;
+  }
+
+  async function loadWeather(lat, lon, city) {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      renderWeather(data, city);
+    } catch {
+      body.innerHTML = '<p class="weather-loading">Could not load weather.</p>';
+    }
+  }
+
+  // Try geolocation, fallback to Tirupati (SREC location)
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        // Reverse geocode city name via open-meteo geocoding
+        let city = 'Your Location';
+        try {
+          const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=&latitude=${latitude}&longitude=${longitude}&count=1`);
+          // Fallback — just use coordinates-based name
+        } catch {}
+        loadWeather(latitude, longitude, city);
+      },
+      () => {
+        // Permission denied → default to Tirupati
+        loadWeather(13.6288, 79.4192, 'Tirupati, India');
+      },
+      { timeout: 5000 }
+    );
+  } else {
+    loadWeather(13.6288, 79.4192, 'Tirupati, India');
+  }
+})();
+
+// ─── Programming Joke Widget (JokeAPI — free, no key, frontend only) ───
+(function(){
+  const jokeBody = document.getElementById('jokeBody');
+  const refreshBtn = document.getElementById('jokeRefresh');
+  if (!jokeBody) return;
+
+  async function fetchJoke() {
+    jokeBody.innerHTML = '<p>Loading joke...</p>';
+    try {
+      const res = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart');
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      if (data.type === 'twopart') {
+        jokeBody.innerHTML = `
+          <p class="joke-setup">${data.setup}</p>
+          <p class="joke-punchline">${data.delivery}</p>
+        `;
+      } else {
+        jokeBody.innerHTML = `<p class="joke-setup">${data.joke}</p>`;
+      }
+    } catch {
+      jokeBody.innerHTML = '<p class="joke-setup">Why do programmers prefer dark mode?</p><p class="joke-punchline">Because light attracts bugs! 🐛</p>';
+    }
+  }
+
+  fetchJoke();
+  if (refreshBtn) refreshBtn.addEventListener('click', fetchJoke);
+})();
+
+// ─── Visitor Counter (CountAPI — free, no key, frontend only) ───
+(function(){
+  const countEl = document.getElementById('visitorCount');
+  if (!countEl) return;
+
+  async function updateCount() {
+    try {
+      const res = await fetch('https://api.countapi.xyz/hit/paigalashanker-resource-hub/visits');
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      countEl.textContent = data.value.toLocaleString();
+    } catch {
+      // Fallback: local session counter
+      let count = parseInt(localStorage.getItem('rh_visit_count') || '0', 10);
+      count++;
+      localStorage.setItem('rh_visit_count', String(count));
+      countEl.textContent = count.toLocaleString();
+    }
+  }
+
+  updateCount();
+})();
