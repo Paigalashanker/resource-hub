@@ -3,26 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#0e0f14" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
-  <title>Downloads — ALDS Portfolio</title>
+  <title>Downloads — RESOURCE-HUB</title>
+
+  <!-- Google Sans Flex & Google Sans Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,ROND@8..144,-10..0,25..150,400..700,0..100&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
+  <!-- SKIP NAVIGATION -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <!-- NAVBAR -->
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
+      <a href="index.html" class="brand">
         <div class="logo">RESOURCE-HUB</div>
-        <div class="tag">Resources & Downloads</div>
-      </div>
+        <div class="tag">Downloads</div>
+      </a>
 
       <nav class="nav">
         <a href="index.html" class="nav-link">Home</a>
@@ -32,51 +40,58 @@
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
       <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓</button>
     </div>
   </header>
 
   <!-- HERO TITLE -->
-  <main class="container">
+  <main class="container" id="main-content">
 
-    <section class="hero" style="padding: 60px 0 20px;">
+    <section class="hero" style="padding: 68px 0 28px;">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Downloads &amp; Academic Assets
+      </div>
       <h1>
         Download <span class="highlight">Center</span>
       </h1>
       <p class="lead">
-        Tools, notes, extensions, and resources — neatly organized and ready to use.
+        Study materials, software tools, curated notes, and extension archives —
+        organized and available on demand.
       </p>
     </section>
 
-    <!-- SEARCH BAR -->
-    <section class="card fade-in" style="padding: 28px; margin-top: 25px;">
+    <!-- SEARCH & FILTER SECTION -->
+    <section class="card fade-in" style="padding: 28px; margin-top: 20px;">
       <h2>Search Resources</h2>
       <div class="search-wrapper">
         <input 
           id="searchInput"
           class="search-input"
-          placeholder="Search by name or file type..."
+          placeholder="Search by name, category, or file type (e.g. pdf, zip)..."
+          autocomplete="off"
         />
+      </div>
+
+      <!-- CATEGORY FILTERS -->
+      <div class="category-filters" id="categoryFilters" style="margin-top: 18px;">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="pdf">PDF</button>
+        <button class="category-btn" data-category="doc">Documents</button>
+        <button class="category-btn" data-category="zip">Archives</button>
+        <button class="category-btn" data-category="img">Images</button>
+        <button class="category-btn" data-category="exe">Software</button>
       </div>
     </section>
 
     <!-- FILE COUNT -->
-    <p id="fileCount" style="margin-top:20px; color:var(--text-secondary,#6d6a85); font-size:14px;"></p>
-
-    <!-- CATEGORY FILTERS -->
-    <div class="category-filters" id="categoryFilters" style="margin-top: 16px;">
-      <button class="category-btn active" data-category="all">All</button>
-      <button class="category-btn" data-category="pdf">PDF</button>
-      <button class="category-btn" data-category="doc">Documents</button>
-      <button class="category-btn" data-category="zip">Archives</button>
-      <button class="category-btn" data-category="img">Images</button>
-      <button class="category-btn" data-category="exe">Software</button>
-    </div>
+    <p id="fileCount" style="margin-top: 20px; color: var(--text-muted); font-size: 13.5px; font-family: var(--font-mono);"></p>
 
     <!-- DOWNLOAD GRID (auto-populated by script.js from GitHub) -->
     <div class="grid" id="downloadGrid" style="margin-top: 16px;"></div>
 
-    <p class="note" style="margin-top: 20px;">
-      To add files: drop them into <code>assets/downloads/</code> in VS Code, commit &amp; push — cards appear automatically.
+    <p class="note" style="margin-top: 24px; text-align: center;">
+      To add files: place them in <code>assets/downloads/</code>, commit &amp; push — downloads register automatically.
     </p>
 
   </main>
@@ -85,10 +100,17 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-dev">
-        Developed & Maintained by
+        Developed &amp; Maintained by
         <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a>
       </div>
-      <div class="footer-meta">AI & DS • 2nd Year • SREC (2024–2028)</div>
+      <div class="footer-links">
+        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span>•</span>
+        <a href="mailto:paigalashanker@gmail.com">Email</a>
+        <span>•</span>
+        <a href="about.html">About</a>
+      </div>
+      <div class="footer-meta">AI &amp; DS • 2nd Year • SREC (2024–2028)</div>
     </div>
   </footer>
 
@@ -100,7 +122,7 @@
     <div class="status-right">
       <span>UTF-8</span>
       <span>LF</span>
-      <span>JavaScript</span>
+      <span>Resource Repository</span>
       <span>Go Live</span>
     </div>
   </div>

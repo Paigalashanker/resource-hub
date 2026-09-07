@@ -7,15 +7,15 @@
 
     // Create popup overlay
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .3s ease';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .25s ease';
 
     const popup = document.createElement('div');
-    popup.style.cssText = 'background:var(--card-bg,#1e1b2e);color:var(--text-primary,#fff);border-radius:16px;padding:40px 36px;text-align:center;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.4)';
+    popup.style.cssText = 'background:var(--bg-secondary,#16171d);color:var(--text-primary,#fff);border:1px solid var(--border);border-radius:20px;padding:36px 32px;text-align:center;max-width:400px;width:90%;box-shadow:var(--shadow);';
     popup.innerHTML = `
-      <div style="font-size:48px;margin-bottom:12px;">✅</div>
-      <h2 style="margin:0 0 10px;font-size:22px;">Message Sent!</h2>
-      <p style="color:var(--text-secondary,#a8a5b8);margin:0 0 24px;font-size:15px;">Your message has been submitted successfully. I'll get back to you soon!</p>
-      <button id="popupClose" style="background:var(--accent,#7c3aed);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;">OK</button>
+      <div style="font-size:44px;margin-bottom:12px;">✅</div>
+      <h2 style="margin:0 0 10px;font-size:22px;font-weight:600;">Message Sent!</h2>
+      <p style="color:var(--text-secondary,#b2bbc5);margin:0 0 24px;font-size:14.5px;line-height:1.6;">Your message has been submitted successfully. I'll get back to you soon!</p>
+      <button id="popupClose" class="btn" style="min-height:40px;padding:10px 28px;">OK</button>
     `;
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
@@ -92,14 +92,17 @@
   const GITHUB_USER = 'paigalashanker';
   const GITHUB_REPO = 'resource-hub';
   const DOWNLOAD_PATH = 'assets/downloads';
-  const BRANCH = 'main'; // change to 'master' if needed
+  const BRANCH = 'main';
   const CACHE_KEY = 'alds_downloads_cache';
   const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in ms
 
   const grid = document.getElementById('downloadGrid');
   const searchInput = document.getElementById('searchInput');
   const fileCount = document.getElementById('fileCount');
+  const categoryFilters = document.getElementById('categoryFilters');
   if (!grid) return;
+
+  let activeCategory = 'all';
 
   // ── Cache helpers ──
   function getCached() {
@@ -117,22 +120,22 @@
 
   // File-type badge labels & icons
   const typeMap = {
-    pdf:  { label: 'PDF',  icon: '📄' },
-    zip:  { label: 'ZIP',  icon: '📦' },
-    rar:  { label: 'RAR',  icon: '📦' },
-    doc:  { label: 'DOC',  icon: '📝' },
-    docx: { label: 'DOCX', icon: '📝' },
-    ppt:  { label: 'PPT',  icon: '📊' },
-    pptx: { label: 'PPTX', icon: '📊' },
-    xls:  { label: 'XLS',  icon: '📊' },
-    xlsx: { label: 'XLSX', icon: '📊' },
-    txt:  { label: 'TXT',  icon: '📃' },
-    png:  { label: 'PNG',  icon: '🖼️' },
-    jpg:  { label: 'JPG',  icon: '🖼️' },
-    jpeg: { label: 'JPEG', icon: '🖼️' },
-    exe:  { label: 'EXE',  icon: '⚙️' },
-    msi:  { label: 'MSI',  icon: '⚙️' },
-    apk:  { label: 'APK',  icon: '📱' },
+    pdf:  { label: 'PDF',  icon: '📄', cat: 'pdf' },
+    zip:  { label: 'ZIP',  icon: '📦', cat: 'zip' },
+    rar:  { label: 'RAR',  icon: '📦', cat: 'zip' },
+    doc:  { label: 'DOC',  icon: '📝', cat: 'doc' },
+    docx: { label: 'DOCX', icon: '📝', cat: 'doc' },
+    ppt:  { label: 'PPT',  icon: '📊', cat: 'doc' },
+    pptx: { label: 'PPTX', icon: '📊', cat: 'doc' },
+    xls:  { label: 'XLS',  icon: '📊', cat: 'doc' },
+    xlsx: { label: 'XLSX', icon: '📊', cat: 'doc' },
+    txt:  { label: 'TXT',  icon: '📃', cat: 'doc' },
+    png:  { label: 'PNG',  icon: '🖼️', cat: 'img' },
+    jpg:  { label: 'JPG',  icon: '🖼️', cat: 'img' },
+    jpeg: { label: 'JPEG', icon: '🖼️', cat: 'img' },
+    exe:  { label: 'EXE',  icon: '⚙️', cat: 'exe' },
+    msi:  { label: 'MSI',  icon: '⚙️', cat: 'exe' },
+    apk:  { label: 'APK',  icon: '📱', cat: 'exe' },
   };
 
   function getExt(name) {
@@ -141,7 +144,6 @@
   }
 
   function prettyName(filename) {
-    // Remove extension, replace dashes/underscores with spaces, trim
     let name = filename.replace(/\.[^.]+$/, '');
     name = name.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
     return name;
@@ -155,29 +157,47 @@
 
   function buildCard(file) {
     const ext = getExt(file.name);
-    const info = typeMap[ext] || { label: ext.toUpperCase() || 'FILE', icon: '📁' };
+    const info = typeMap[ext] || { label: ext.toUpperCase() || 'FILE', icon: '📁', cat: 'other' };
     const title = prettyName(file.name);
-    // Raw GitHub download URL
     const downloadUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${DOWNLOAD_PATH}/${encodeURIComponent(file.name)}`;
 
     const card = document.createElement('div');
     card.className = 'download-card card';
-    card.style.padding = '22px';
+    card.dataset.category = info.cat || 'other';
+    card.dataset.ext = ext;
     card.innerHTML = `
       <span class="file-badge">${info.icon} ${info.label}</span>
-      <h3 style="font-size:20px; margin:8px 0 6px;">${title}</h3>
-      <p style="color:var(--text-secondary,#4d4b63); margin-bottom:12px; font-size:14px;">
+      <h3 style="margin:14px 0 8px;font-size:18px;">${title}</h3>
+      <p style="color:var(--text-secondary); margin-bottom:18px; font-size:13.5px;">
         ${info.label} file · ${formatSize(file.size)}
       </p>
-      <a class="btn" href="${downloadUrl}" download="${file.name}">Download</a>
+      <a class="btn btn-compact" href="${downloadUrl}" download="${file.name}">Download</a>
     `;
     return card;
   }
 
+  function filterCards() {
+    const q = (searchInput ? searchInput.value : '').toLowerCase();
+    let visibleCount = 0;
+    grid.querySelectorAll('.download-card').forEach(card => {
+      const text = (card.textContent || '').toLowerCase();
+      const matchQuery = text.includes(q);
+      const matchCat = activeCategory === 'all' || card.dataset.category === activeCategory;
+      if (matchQuery && matchCat) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    if (fileCount) {
+      fileCount.textContent = `${visibleCount} file${visibleCount !== 1 ? 's' : ''}`;
+    }
+  }
+
   async function loadDownloads() {
-    grid.innerHTML = '<p style="text-align:center;padding:30px;">Loading resources…</p>';
+    grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading resources…</p>';
     try {
-      // Try cache first
       let downloads = getCached();
 
       if (!downloads) {
@@ -190,7 +210,7 @@
       }
 
       if (downloads.length === 0) {
-        grid.innerHTML = '<p>No downloadable files found yet.</p>';
+        grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">No downloadable files found yet.</p>';
         if (fileCount) fileCount.textContent = '0 files';
         return;
       }
@@ -200,13 +220,17 @@
       grid.innerHTML = '';
       downloads.forEach(file => grid.appendChild(buildCard(file)));
 
-      // Wire up search
       if (searchInput) {
-        searchInput.addEventListener('input', () => {
-          const q = searchInput.value.toLowerCase();
-          grid.querySelectorAll('.download-card').forEach(card => {
-            const text = (card.textContent || '').toLowerCase();
-            card.style.display = text.includes(q) ? 'block' : 'none';
+        searchInput.addEventListener('input', filterCards);
+      }
+
+      if (categoryFilters) {
+        categoryFilters.querySelectorAll('.category-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            categoryFilters.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategory = btn.dataset.category || 'all';
+            filterCards();
           });
         });
       }
@@ -214,9 +238,9 @@
     } catch (err) {
       console.error('Failed to load downloads:', err);
       grid.innerHTML = `
-        <p style="text-align:center; padding:30px; color:#e55;">
-          Could not load files. <br>
-          <small>Check that the repo is public and the branch name is correct.</small>
+        <p style="text-align:center; padding:30px; color:var(--text-secondary);">
+          Could not load remote files currently. <br>
+          <small>Check that the repository is accessible and connected.</small>
         </p>`;
     }
   }
@@ -233,7 +257,6 @@
   const CACHE_KEY = 'alds_projects_cache';
   const CACHE_TTL = 5 * 60 * 1000;
 
-  // Two grids: full list on projects.html, preview on index.html
   const fullGrid = document.getElementById('projectList');
   const previewGrid = document.getElementById('projectGrid');
   if (!fullGrid && !previewGrid) return;
@@ -253,15 +276,16 @@
 
   function buildFullCard(p) {
     const card = document.createElement('div');
-    card.className = 'project-card card';
-    card.style.padding = '20px';
+    card.className = 'project-card';
     card.innerHTML = `
       <img src="${p.image}" alt="${p.title}" loading="lazy">
       <h3>${p.title}</h3>
       <p>${p.description}</p>
-      ${p.tech ? `<div class="meta">Tech: ${p.tech}</div>` : ''}
-      ${p.github ? `<a class="link" href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : ''}
-      ${p.demo ? `<a class="link" href="${p.demo}" target="_blank" rel="noopener" style="margin-left:12px;">Live Demo</a>` : ''}
+      ${p.tech ? `<div class="project-tags"><span>${p.tech}</span></div>` : ''}
+      <div style="display:flex; gap:10px; margin: 0 22px 20px; flex-wrap:wrap;">
+        ${p.github ? `<a class="btn btn-compact btn-outline" href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : ''}
+        ${p.demo ? `<a class="btn btn-compact" href="${p.demo}" target="_blank" rel="noopener">Live Demo</a>` : ''}
+      </div>
     `;
     return card;
   }
@@ -270,31 +294,41 @@
     const card = document.createElement('div');
     card.className = 'project-card';
     card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}">
+      <img src="${p.image}" alt="${p.title}" loading="lazy">
       <h4>${p.title}</h4>
       <p>${p.description}</p>
-      <a href="projects.html" class="link">View Details</a>
+      <a href="projects.html" class="link">View Details &rarr;</a>
     `;
     return card;
   }
 
   async function loadProjects() {
-    if (fullGrid) fullGrid.innerHTML = '<p style="text-align:center;padding:30px;">Loading projects…</p>';
-    if (previewGrid) previewGrid.innerHTML = '<p style="text-align:center;padding:30px;">Loading…</p>';
+    if (fullGrid) fullGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading projects…</p>';
+    if (previewGrid) previewGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading…</p>';
 
     try {
       let projects = getCached();
 
       if (!projects) {
-        const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${JSON_PATH}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Failed to fetch projects.json: ' + res.status);
-        projects = await res.json();
-        setCache(projects);
+        try {
+          const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${JSON_PATH}`;
+          const res = await fetch(url);
+          if (!res.ok) throw new Error('Failed to fetch from GitHub: ' + res.status);
+          projects = await res.json();
+        } catch (fetchErr) {
+          // Local fallback
+          const localRes = await fetch(JSON_PATH);
+          if (localRes.ok) {
+            projects = await localRes.json();
+          } else {
+            throw fetchErr;
+          }
+        }
+        if (projects) setCache(projects);
       }
 
       if (!projects || projects.length === 0) {
-        const msg = '<p>No projects added yet.</p>';
+        const msg = '<p style="text-align:center;color:var(--text-secondary);">No projects added yet.</p>';
         if (fullGrid) fullGrid.innerHTML = msg;
         if (previewGrid) previewGrid.innerHTML = msg;
         return;
@@ -306,15 +340,15 @@
         projects.forEach(p => fullGrid.appendChild(buildFullCard(p)));
       }
 
-      // Preview grid on index.html (show first 4)
+      // Preview grid on index.html (show first 3)
       if (previewGrid) {
         previewGrid.innerHTML = '';
-        projects.slice(0, 4).forEach(p => previewGrid.appendChild(buildPreviewCard(p)));
+        projects.slice(0, 3).forEach(p => previewGrid.appendChild(buildPreviewCard(p)));
       }
 
     } catch (err) {
       console.error('Failed to load projects:', err);
-      const errMsg = `<p style="text-align:center; padding:30px; color:#e55;">Could not load projects.</p>`;
+      const errMsg = `<p style="text-align:center; padding:30px; color:var(--text-muted);">Could not load projects.</p>`;
       if (fullGrid) fullGrid.innerHTML = errMsg;
       if (previewGrid) previewGrid.innerHTML = errMsg;
     }
@@ -323,7 +357,7 @@
   loadProjects();
 })();
 
-// ─── Daily Quote Widget (Quotable API — no key, frontend only) ───
+// ─── Daily Quote Widget (Quotable API) ───
 (function(){
   const textEl = document.getElementById('quoteText');
   const authorEl = document.getElementById('quoteAuthor');
@@ -331,7 +365,7 @@
   if (!textEl) return;
 
   async function fetchQuote() {
-    textEl.textContent = 'Loading...';
+    textEl.textContent = 'Loading inspiration...';
     authorEl.textContent = '';
     try {
       const res = await fetch('https://api.quotable.io/random?maxLength=120');
@@ -340,7 +374,7 @@
       textEl.textContent = data.content;
       authorEl.textContent = '— ' + data.author;
     } catch {
-      // Fallback quotes if API is down
+      // Fallback quotes
       const fallback = [
         { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
         { text: 'Talk is cheap. Show me the code.', author: 'Linus Torvalds' },
@@ -358,7 +392,7 @@
   if (refreshBtn) refreshBtn.addEventListener('click', fetchQuote);
 })();
 
-// ─── Weather Widget (OpenWeatherMap — frontend only) ───
+// ─── Weather Widget (OpenWeatherMap) ───
 (function(){
   const body = document.getElementById('weatherBody');
   if (!body) return;
@@ -371,12 +405,12 @@
     const icon = data.weather[0].icon;
     const city = data.name;
     const humidity = data.main.humidity;
-    const wind = Math.round(data.wind.speed * 3.6); // m/s → km/h
+    const wind = Math.round(data.wind.speed * 3.6);
     const feelsLike = Math.round(data.main.feels_like);
 
     body.innerHTML = `
       <div class="weather-main">
-        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" width="64" height="64">
+        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" width="54" height="54">
         <div>
           <div class="weather-temp">${temp}°C</div>
           <div class="weather-desc">${desc}</div>
@@ -415,7 +449,6 @@
     }
   }
 
-  // Try geolocation, fallback to Tirupati
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
       (pos) => loadWeather(pos.coords.latitude, pos.coords.longitude),
@@ -427,14 +460,14 @@
   }
 })();
 
-// ─── Programming Joke Widget (JokeAPI — free, no key, frontend only) ───
+// ─── Programming Joke Widget (JokeAPI) ───
 (function(){
   const jokeBody = document.getElementById('jokeBody');
   const refreshBtn = document.getElementById('jokeRefresh');
   if (!jokeBody) return;
 
   async function fetchJoke() {
-    jokeBody.innerHTML = '<p>Loading joke...</p>';
+    jokeBody.innerHTML = '<p style="color:var(--text-muted);">Loading joke...</p>';
     try {
       const res = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart');
       if (!res.ok) throw new Error(res.status);
@@ -456,7 +489,7 @@
   if (refreshBtn) refreshBtn.addEventListener('click', fetchJoke);
 })();
 
-// ─── Visitor Counter (CountAPI — free, no key, frontend only) ───
+// ─── Visitor Counter (CountAPI) ───
 (function(){
   const countEl = document.getElementById('visitorCount');
   if (!countEl) return;
@@ -468,7 +501,6 @@
       const data = await res.json();
       countEl.textContent = data.value.toLocaleString();
     } catch {
-      // Fallback: local session counter
       let count = parseInt(localStorage.getItem('rh_visit_count') || '0', 10);
       count++;
       localStorage.setItem('rh_visit_count', String(count));
