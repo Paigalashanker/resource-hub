@@ -507,6 +507,224 @@ a:hover {
   min-height: 36px;
 }
 
+/* IoT archive browser */
+.iot-hero {
+  padding-bottom: 28px;
+}
+
+.drive-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 18px 22px;
+}
+
+.drive-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font: 13px var(--font-mono);
+}
+
+.breadcrumb-button {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  padding: 3px 0;
+}
+
+.breadcrumb-button:hover {
+  color: var(--text-primary);
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted);
+}
+
+.drive-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drive-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.drive-search {
+  width: 220px;
+  min-height: 36px;
+}
+
+.drive-status {
+  margin: 20px 0 10px;
+  color: var(--text-muted);
+  font: 12px var(--font-mono);
+}
+
+.drive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.drive-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 88px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  transition: border-color var(--transition), transform var(--transition), background var(--transition);
+}
+
+.drive-item:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-tertiary);
+  transform: translateY(-2px);
+}
+
+.drive-item-icon {
+  width: 38px;
+  flex: 0 0 38px;
+  text-align: center;
+  font-size: 27px;
+}
+
+.drive-item-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.drive-item-copy h2 {
+  overflow: hidden;
+  margin: 0 0 2px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drive-item-copy p {
+  margin: 0;
+  color: var(--text-muted);
+  font: 11px var(--font-mono);
+}
+
+.drive-item-action {
+  border: 0;
+  background: transparent;
+  color: var(--accent-light);
+  cursor: pointer;
+  font: 12px var(--font-mono);
+  white-space: nowrap;
+}
+
+.drive-item-action:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.drive-empty {
+  grid-column: 1 / -1;
+  padding: 42px 20px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.archive-note {
+  margin: 26px 0 50px;
+}
+
+.archive-note p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.pdf-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.pdf-viewer[hidden] {
+  display: none;
+}
+
+.pdf-viewer-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1100px, 100%);
+  height: min(88vh, 850px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow);
+}
+
+.pdf-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pdf-viewer-header h2 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewer-close {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+.pdf-viewer iframe {
+  width: 100%;
+  flex: 1;
+  border: 0;
+  background: #fff;
+}
+
+.frontend-protected,
+.frontend-protected * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.frontend-protected input,
+.frontend-protected input * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+
 /* --------------------------------------------------------------------------
    6. Cards & Surfaces
    -------------------------------------------------------------------------- */
@@ -1319,9 +1537,17 @@ textarea.form-input {
   animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.fade-in:nth-child(2) { animation-delay: 0.08s; }
-.fade-in:nth-child(3) { animation-delay: 0.16s; }
-.fade-in:nth-child(4) { animation-delay: 0.24s; }
+.fade-in:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.fade-in:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.fade-in:nth-child(4) {
+  animation-delay: 0.24s;
+}
 
 @keyframes fadeInUp {
   to {
@@ -1331,8 +1557,15 @@ textarea.form-input {
 }
 
 @keyframes pulse {
-  0%, 100% { stroke-opacity: 0.4; }
-  50% { stroke-opacity: 0.9; }
+
+  0%,
+  100% {
+    stroke-opacity: 0.4;
+  }
+
+  50% {
+    stroke-opacity: 0.9;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1405,6 +1638,25 @@ textarea.form-input {
   .features {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .drive-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .drive-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .drive-search {
+    width: 100%;
+  }
+
+  .drive-actions .btn {
+    width: 100%;
   }
 }
 

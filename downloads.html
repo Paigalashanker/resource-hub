@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -13,8 +14,10 @@
   <!-- Google Sans Flex & Google Sans Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,ROND@8..144,-10..0,25..150,400..700,0..100&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,ROND@8..144,-10..0,25..150,400..700,0..100&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -36,6 +39,7 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="projects.html" class="nav-link">Projects</a>
         <a href="downloads.html" class="nav-link active">Downloads</a>
+        <a href="iot.html" class="nav-link">IoT (NPTEL)</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
@@ -65,12 +69,8 @@
     <section class="card fade-in" style="padding: 28px; margin-top: 20px;">
       <h2>Search Resources</h2>
       <div class="search-wrapper">
-        <input 
-          id="searchInput"
-          class="search-input"
-          placeholder="Search by name, category, or file type (e.g. pdf, zip)..."
-          autocomplete="off"
-        />
+        <input id="searchInput" class="search-input"
+          placeholder="Search by name, category, or file type (e.g. pdf, zip)..." autocomplete="off" />
       </div>
 
       <!-- CATEGORY FILTERS -->
@@ -85,7 +85,8 @@
     </section>
 
     <!-- FILE COUNT -->
-    <p id="fileCount" style="margin-top: 20px; color: var(--text-muted); font-size: 13.5px; font-family: var(--font-mono);"></p>
+    <p id="fileCount"
+      style="margin-top: 20px; color: var(--text-muted); font-size: 13.5px; font-family: var(--font-mono);"></p>
 
     <!-- DOWNLOAD GRID (auto-populated by script.js from GitHub) -->
     <div class="grid" id="downloadGrid" style="margin-top: 16px;"></div>
@@ -130,4 +131,5 @@
   <script src="assets/js/script.js"></script>
 
 </body>
+
 </html>

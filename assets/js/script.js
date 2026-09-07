@@ -1,5 +1,5 @@
 // ─── Form submission success popup ───
-(function(){
+(function () {
   const params = new URLSearchParams(window.location.search);
   if (params.get('submitted') === 'true') {
     // Clean the URL
@@ -26,7 +26,7 @@
 })();
 
 // Basic interactions: theme toggle, nav active link, hamburger menu
-(function(){
+(function () {
   // Theme toggle with localStorage persistence
   const THEME_KEY = 'alds_theme';
   const saved = localStorage.getItem(THEME_KEY);
@@ -63,7 +63,7 @@
   // Highlight nav link based on location
   const links = document.querySelectorAll('.nav-link');
   links.forEach(a => {
-    if(location.pathname.endsWith(a.getAttribute('href'))) {
+    if (location.pathname.endsWith(a.getAttribute('href'))) {
       links.forEach(x => x.classList.remove('active'));
       a.classList.add('active');
     }
@@ -88,7 +88,7 @@
 })();
 
 // ─── Auto-generate download cards from GitHub repo ───
-(function(){
+(function () {
   const GITHUB_USER = 'paigalashanker';
   const GITHUB_REPO = 'resource-hub';
   const DOWNLOAD_PATH = 'assets/downloads';
@@ -115,27 +115,27 @@
     } catch { return null; }
   }
   function setCache(data) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch {}
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
   }
 
   // File-type badge labels & icons
   const typeMap = {
-    pdf:  { label: 'PDF',  icon: '📄', cat: 'pdf' },
-    zip:  { label: 'ZIP',  icon: '📦', cat: 'zip' },
-    rar:  { label: 'RAR',  icon: '📦', cat: 'zip' },
-    doc:  { label: 'DOC',  icon: '📝', cat: 'doc' },
+    pdf: { label: 'PDF', icon: '📄', cat: 'pdf' },
+    zip: { label: 'ZIP', icon: '📦', cat: 'zip' },
+    rar: { label: 'RAR', icon: '📦', cat: 'zip' },
+    doc: { label: 'DOC', icon: '📝', cat: 'doc' },
     docx: { label: 'DOCX', icon: '📝', cat: 'doc' },
-    ppt:  { label: 'PPT',  icon: '📊', cat: 'doc' },
+    ppt: { label: 'PPT', icon: '📊', cat: 'doc' },
     pptx: { label: 'PPTX', icon: '📊', cat: 'doc' },
-    xls:  { label: 'XLS',  icon: '📊', cat: 'doc' },
+    xls: { label: 'XLS', icon: '📊', cat: 'doc' },
     xlsx: { label: 'XLSX', icon: '📊', cat: 'doc' },
-    txt:  { label: 'TXT',  icon: '📃', cat: 'doc' },
-    png:  { label: 'PNG',  icon: '🖼️', cat: 'img' },
-    jpg:  { label: 'JPG',  icon: '🖼️', cat: 'img' },
+    txt: { label: 'TXT', icon: '📃', cat: 'doc' },
+    png: { label: 'PNG', icon: '🖼️', cat: 'img' },
+    jpg: { label: 'JPG', icon: '🖼️', cat: 'img' },
     jpeg: { label: 'JPEG', icon: '🖼️', cat: 'img' },
-    exe:  { label: 'EXE',  icon: '⚙️', cat: 'exe' },
-    msi:  { label: 'MSI',  icon: '⚙️', cat: 'exe' },
-    apk:  { label: 'APK',  icon: '📱', cat: 'exe' },
+    exe: { label: 'EXE', icon: '⚙️', cat: 'exe' },
+    msi: { label: 'MSI', icon: '⚙️', cat: 'exe' },
+    apk: { label: 'APK', icon: '📱', cat: 'exe' },
   };
 
   function getExt(name) {
@@ -248,8 +248,119 @@
   loadDownloads();
 })();
 
+// -- IoT (NPTEL) folder browser and reading-only PDF viewer --
+(function () {
+  const grid = document.getElementById('iotGrid');
+  if (!grid) return;
+
+  const status = document.getElementById('iotStatus');
+  const search = document.getElementById('iotSearch');
+  const breadcrumb = document.getElementById('driveBreadcrumb');
+  const viewer = document.getElementById('pdfViewer');
+  const frame = document.getElementById('pdfFrame');
+  const viewerTitle = document.getElementById('pdfViewerTitle');
+  const closeViewer = document.getElementById('pdfViewerClose');
+  let archive = null;
+  let currentItems = [];
+  let folderPath = [];
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+  }
+
+  function folderAtPath() {
+    let items = archive.folders;
+    let folder = null;
+    folderPath.forEach(name => {
+      folder = items.find(item => item.name === name);
+      items = folder && folder.items ? folder.items : [];
+    });
+    return folder;
+  }
+
+  function renderBreadcrumb() {
+    breadcrumb.innerHTML = '<button class="breadcrumb-button" data-depth="-1">IoT (NPTEL)</button>';
+    folderPath.forEach((name, index) => {
+      breadcrumb.insertAdjacentHTML('beforeend', `<span class="breadcrumb-separator">/</span><button class="breadcrumb-button" data-depth="${index}">${escapeHtml(name)}</button>`);
+    });
+    breadcrumb.querySelectorAll('.breadcrumb-button').forEach(button => button.addEventListener('click', () => {
+      const depth = Number(button.dataset.depth);
+      folderPath = depth < 0 ? [] : folderPath.slice(0, depth + 1);
+      showFolder();
+    }));
+  }
+
+  function itemIcon(item) { return item.type === 'folder' ? '📁' : item.type === 'pdf' ? '📄' : '📝'; }
+
+  function openPdf(item) {
+    if (item.type !== 'pdf' || !item.path) return;
+    viewerTitle.textContent = item.name;
+    frame.src = `${item.path}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
+    viewer.hidden = false;
+    document.body.classList.add('viewer-open');
+    closeViewer.focus();
+  }
+
+  function closePdf() {
+    viewer.hidden = true;
+    frame.src = 'about:blank';
+    document.body.classList.remove('viewer-open');
+  }
+
+  function renderItems(items) {
+    grid.innerHTML = '';
+    if (!items.length) {
+      grid.innerHTML = '<p class="drive-empty">This folder has no mirrored files yet.</p>';
+      return;
+    }
+    items.forEach(item => {
+      const card = document.createElement('article');
+      card.className = 'drive-item';
+      const isFolder = item.type === 'folder';
+      const canRead = item.type === 'pdf' && item.path;
+      card.innerHTML = `<div class="drive-item-icon" aria-hidden="true">${itemIcon(item)}</div><div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : (item.type || 'File').toUpperCase()}</p></div><button class="drive-item-action" type="button" ${canRead || isFolder ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read PDF' : 'Unavailable'}</button>`;
+      const action = card.querySelector('button');
+      if (isFolder) action.addEventListener('click', () => { folderPath = [...folderPath, item.name]; showFolder(); });
+      if (canRead) action.addEventListener('click', () => openPdf(item));
+      grid.appendChild(card);
+    });
+  }
+
+  function showFolder() {
+    const folder = folderAtPath();
+    currentItems = folderPath.length ? (folder ? folder.items || [] : []) : [...archive.folders.map(folder => ({ ...folder, type: 'folder' })), ...archive.files];
+    renderBreadcrumb();
+    filterItems();
+  }
+
+  function filterItems() {
+    const query = search.value.trim().toLowerCase();
+    const visible = currentItems.filter(item => item.name.toLowerCase().includes(query));
+    renderItems(visible);
+    status.textContent = `${visible.length} item${visible.length === 1 ? '' : 's'}${query ? ' matching your search' : ''}`;
+  }
+
+  closeViewer.addEventListener('click', closePdf);
+  viewer.addEventListener('click', event => { if (event.target === viewer) closePdf(); });
+  search.addEventListener('input', filterItems);
+  document.body.classList.add('frontend-protected');
+  document.addEventListener('keydown', event => {
+    if (!viewer.hidden && event.key === 'Escape') closePdf();
+    const key = event.key.toLowerCase();
+    const blockedShortcut = event.key === 'F12' || (event.ctrlKey || event.metaKey) && ['s', 'p', 'u'].includes(key) || (event.ctrlKey || event.metaKey) && event.shiftKey && ['i', 'j', 'c'].includes(key);
+    if (blockedShortcut) event.preventDefault();
+  });
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.addEventListener('dragstart', event => event.preventDefault());
+
+  fetch('assets/data/iot-nptel.json', { cache: 'no-store' })
+    .then(response => { if (!response.ok) throw new Error('Manifest unavailable'); return response.json(); })
+    .then(data => { archive = data; showFolder(); })
+    .catch(() => { status.textContent = 'Archive manifest unavailable.'; grid.innerHTML = '<p class="drive-empty">Add assets/data/iot-nptel.json to load this archive.</p>'; });
+})();
+
 // ─── Auto-generate project cards from projects.json ───
-(function(){
+(function () {
   const GITHUB_USER = 'paigalashanker';
   const GITHUB_REPO = 'resource-hub';
   const BRANCH = 'main';
@@ -271,7 +382,7 @@
     } catch { return null; }
   }
   function setCache(data) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch {}
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
   }
 
   function buildFullCard(p) {
@@ -358,7 +469,7 @@
 })();
 
 // ─── Daily Quote Widget (Quotable API) ───
-(function(){
+(function () {
   const textEl = document.getElementById('quoteText');
   const authorEl = document.getElementById('quoteAuthor');
   const refreshBtn = document.getElementById('quoteRefresh');
@@ -393,7 +504,7 @@
 })();
 
 // ─── Weather Widget (OpenWeatherMap) ───
-(function(){
+(function () {
   const body = document.getElementById('weatherBody');
   if (!body) return;
 
@@ -461,7 +572,7 @@
 })();
 
 // ─── Programming Joke Widget (JokeAPI) ───
-(function(){
+(function () {
   const jokeBody = document.getElementById('jokeBody');
   const refreshBtn = document.getElementById('jokeRefresh');
   if (!jokeBody) return;
@@ -490,7 +601,7 @@
 })();
 
 // ─── Visitor Counter (CountAPI) ───
-(function(){
+(function () {
   const countEl = document.getElementById('visitorCount');
   if (!countEl) return;
 
