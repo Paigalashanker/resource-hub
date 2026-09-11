@@ -79,7 +79,8 @@
             <div class="pdf-viewer-header">
                 <h2 id="pdfViewerTitle">PDF preview</h2><button class="viewer-close" id="pdfViewerClose"
                     aria-label="Close PDF viewer">✕</button>
-            </div><iframe id="pdfFrame" title="PDF preview" src="about:blank"></iframe>
+            </div><iframe id="pdfFrame" title="PDF preview" src="about:blank" sandbox="allow-scripts allow-same-origin"
+                referrerpolicy="no-referrer"></iframe>
         </div>
     </div>
     <script src="assets/js/script.js"></script>

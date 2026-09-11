@@ -209,7 +209,16 @@ a:hover {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
-  transition: background var(--transition-smooth), border-color var(--transition-smooth);
+  transition: background var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.site-header.is-scrolled {
+  background: var(--surface-glass);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+}
+
+.site-header.is-scrolled .header-inner {
+  height: 56px;
 }
 
 .header-inner {
@@ -274,7 +283,7 @@ a:hover {
   letter-spacing: 0.1px;
   color: var(--text-secondary);
   border-radius: var(--radius-pill);
-  transition: all var(--transition);
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
   position: relative;
   white-space: nowrap;
 }
@@ -291,16 +300,23 @@ a:hover {
   border: 1px solid var(--border);
 }
 
-.nav-link.active::after {
+.nav-link::after {
   content: '';
   position: absolute;
   bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
+  left: 16px;
+  right: 16px;
+  transform: scaleX(0);
+  transform-origin: left;
   height: 2px;
   background: var(--accent);
   border-radius: var(--radius-pill);
+  transition: transform 300ms ease-in-out;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
 }
 
 /* Hamburger button */
@@ -314,11 +330,13 @@ a:hover {
   border-radius: var(--radius-sm);
   cursor: pointer;
   margin-left: auto;
-  transition: all var(--transition);
+  transition: color var(--transition), background var(--transition), border-color var(--transition), transform 300ms ease;
 }
 
 .hamburger:hover {
   background: var(--bg-tertiary);
+  border-color: var(--border-hover);
+  transform: scale(1.02);
 }
 
 /* Theme Toggle Button */
@@ -466,7 +484,7 @@ a:hover {
   border: 1px solid var(--accent);
   box-shadow: var(--shadow-accent);
   cursor: pointer;
-  transition: all var(--transition);
+  transition: transform 300ms ease-in-out, background-color 300ms ease-in-out, border-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
   text-decoration: none;
   min-height: 44px;
 }
@@ -475,7 +493,7 @@ a:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
   color: #ffffff;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 24px rgba(50, 121, 249, 0.38);
 }
 
@@ -662,10 +680,59 @@ a:hover {
   place-items: center;
   padding: 20px;
   background: rgba(0, 0, 0, 0.82);
+  animation: modalBackdropIn 220ms ease both;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.pdf-viewer.is-closing {
+  animation: modalBackdropOut 180ms ease both;
+}
+
+.pdf-viewer.is-closing .pdf-viewer-panel {
+  animation: modalPanelOut 180ms ease both;
 }
 
 .pdf-viewer[hidden] {
   display: none;
+}
+
+.site-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: modalBackdropIn 220ms ease both;
+}
+
+.site-modal.is-closing {
+  animation: modalBackdropOut 180ms ease both;
+}
+
+.site-modal-panel {
+  width: min(400px, 100%);
+  padding: 36px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-align: center;
+  box-shadow: var(--shadow);
+  animation: modalPanelIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.site-modal.is-closing .site-modal-panel {
+  animation: modalPanelOut 180ms ease both;
+}
+
+.modal-open {
+  overflow: hidden;
 }
 
 .pdf-viewer-panel {
@@ -678,6 +745,7 @@ a:hover {
   border-radius: var(--radius);
   background: var(--bg-secondary);
   box-shadow: var(--shadow);
+  animation: modalPanelIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .pdf-viewer-header {
@@ -735,7 +803,7 @@ a:hover {
   border-radius: var(--radius-lg);
   padding: 28px;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition);
+  transition: transform 300ms ease-in-out, border-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
   position: relative;
   overflow: hidden;
 }
@@ -831,7 +899,7 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition);
+  transition: transform 300ms ease-in-out, border-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1535,6 +1603,7 @@ textarea.form-input {
   opacity: 0;
   transform: translateY(16px);
   animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-play-state: paused;
 }
 
 .fade-in:nth-child(2) {
@@ -1568,6 +1637,108 @@ textarea.form-input {
   }
 }
 
+@keyframes modalBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPanelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalBackdropOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalPanelOut {
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 350ms ease, opacity 250ms ease;
+}
+
+.accordion-item.is-open .accordion-panel {
+  opacity: 1;
+}
+
+.accordion-trigger[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.accordion-trigger::after {
+  content: '⌄';
+  display: inline-block;
+  margin-left: auto;
+  transition: transform 250ms ease;
+}
+
+.tab-panel {
+  animation: tabFadeIn 220ms ease both;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.grid>*,
+.features>* {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.grid>*:nth-child(2),
+.features>*:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.grid>*:nth-child(3),
+.features>*:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.grid>*:nth-child(4),
+.features>*:nth-child(4) {
+  animation-delay: 210ms;
+}
+
+.grid>*:nth-child(5),
+.features>*:nth-child(5) {
+  animation-delay: 280ms;
+}
+
 /* --------------------------------------------------------------------------
    16. Responsive Media Queries
    -------------------------------------------------------------------------- */
@@ -1581,27 +1752,46 @@ textarea.form-input {
     justify-content: space-between;
     height: auto;
     padding: 12px 16px;
+    position: relative;
   }
 
   .nav {
-    display: none;
+    display: flex;
     flex-direction: column;
-    width: 100%;
-    order: 10;
-    border-top: 1px solid var(--border);
-    margin-top: 12px;
-    padding-top: 8px;
+    position: absolute;
+    top: calc(100% - 4px);
+    right: 16px;
+    width: min(280px, calc(100vw - 32px));
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-overlay);
+    box-shadow: var(--shadow);
+    transform: translateX(110%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 300ms ease, opacity 300ms ease, visibility 300ms ease;
     gap: 4px;
   }
 
   .nav.open {
-    display: flex;
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .nav-link {
     width: 100%;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
+  }
+
+  .nav-link::after {
+    left: 16px;
+    right: auto;
+    width: 28px;
   }
 
   .hero {
@@ -1657,6 +1847,18 @@ textarea.form-input {
 
   .drive-actions .btn {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

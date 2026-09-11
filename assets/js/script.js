@@ -7,21 +7,35 @@
 
     // Create popup overlay
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .25s ease';
+    overlay.className = 'site-modal';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'submissionTitle');
 
     const popup = document.createElement('div');
-    popup.style.cssText = 'background:var(--bg-secondary,#16171d);color:var(--text-primary,#fff);border:1px solid var(--border);border-radius:20px;padding:36px 32px;text-align:center;max-width:400px;width:90%;box-shadow:var(--shadow);';
+    popup.className = 'site-modal-panel';
     popup.innerHTML = `
       <div style="font-size:44px;margin-bottom:12px;">✅</div>
-      <h2 style="margin:0 0 10px;font-size:22px;font-weight:600;">Message Sent!</h2>
+      <h2 id="submissionTitle" style="margin:0 0 10px;font-size:22px;font-weight:600;">Message Sent!</h2>
       <p style="color:var(--text-secondary,#b2bbc5);margin:0 0 24px;font-size:14.5px;line-height:1.6;">Your message has been submitted successfully. I'll get back to you soon!</p>
       <button id="popupClose" class="btn" style="min-height:40px;padding:10px 28px;">OK</button>
     `;
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
 
-    document.getElementById('popupClose').addEventListener('click', () => overlay.remove());
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+    const closePopup = () => {
+      overlay.classList.add('is-closing');
+      window.setTimeout(() => overlay.remove(), 180);
+    };
+    document.getElementById('popupClose').addEventListener('click', closePopup);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closePopup(); });
+    document.addEventListener('keydown', function closeOnEscape(event) {
+      if (event.key === 'Escape') {
+        closePopup();
+        document.removeEventListener('keydown', closeOnEscape);
+      }
+    });
+    document.getElementById('popupClose').focus();
   }
 })();
 
@@ -48,17 +62,28 @@
   const hamburger = document.getElementById('menuToggle');
   const nav = document.querySelector('.nav');
   if (hamburger && nav) {
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'site-navigation');
+    nav.id = nav.id || 'site-navigation';
     hamburger.addEventListener('click', () => {
       nav.classList.toggle('open');
-      hamburger.textContent = nav.classList.contains('open') ? '✕' : '☰';
+      const isOpen = nav.classList.contains('open');
+      hamburger.textContent = isOpen ? '✕' : '☰';
+      hamburger.setAttribute('aria-expanded', String(isOpen));
     });
     nav.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
         hamburger.textContent = '☰';
+        hamburger.setAttribute('aria-expanded', 'false');
       });
     });
   }
+
+  const header = document.querySelector('.site-header');
+  const updateHeader = () => header && header.classList.toggle('is-scrolled', window.scrollY > 50);
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
 
   // Highlight nav link based on location
   const links = document.querySelectorAll('.nav-link');
@@ -85,6 +110,103 @@
       observer.observe(el);
     });
   }
+})();
+
+// ─── Shared accessible interaction primitives ───
+(function () {
+  document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+    const item = trigger.closest('.accordion-item');
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : item && item.querySelector('.accordion-panel');
+    if (!panel) return;
+    trigger.setAttribute('aria-expanded', item && item.classList.contains('is-open') ? 'true' : 'false');
+    panel.setAttribute('aria-hidden', trigger.getAttribute('aria-expanded') !== 'true' ? 'true' : 'false');
+    if (trigger.getAttribute('aria-expanded') === 'true') panel.style.maxHeight = `${panel.scrollHeight}px`;
+    trigger.addEventListener('click', () => {
+      const group = trigger.closest('[data-accordion]') || document;
+      group.querySelectorAll('.accordion-item.is-open').forEach(openItem => {
+        if (openItem === item) return;
+        const openTrigger = openItem.querySelector('.accordion-trigger');
+        const openPanel = openItem.querySelector('.accordion-panel');
+        openItem.classList.remove('is-open');
+        openTrigger && openTrigger.setAttribute('aria-expanded', 'false');
+        openPanel && (openPanel.style.maxHeight = '0px');
+        openPanel && openPanel.setAttribute('aria-hidden', 'true');
+      });
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      panel.setAttribute('aria-hidden', String(isOpen));
+      item && item.classList.toggle('is-open', !isOpen);
+      panel.style.maxHeight = isOpen ? '0px' : `${panel.scrollHeight}px`;
+    });
+  });
+
+  document.querySelectorAll('[data-tab-group]').forEach(group => {
+    const tabs = [...group.querySelectorAll('[data-tab]')];
+    const panels = [...group.querySelectorAll('[data-tab-panel]')];
+    const activate = tab => {
+      const target = tab.dataset.tab;
+      tabs.forEach(candidate => {
+        const active = candidate === tab;
+        candidate.classList.toggle('active', active);
+        candidate.setAttribute('aria-selected', String(active));
+        candidate.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      panels.forEach(panel => {
+        const active = panel.dataset.tabPanel === target;
+        panel.hidden = !active;
+        panel.classList.toggle('active', active);
+      });
+    };
+    tabs.forEach(tab => tab.addEventListener('click', () => activate(tab)));
+    tabs.forEach((tab, index) => tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length].focus();
+      activate(tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]);
+    }));
+    activate(tabs.find(tab => tab.classList.contains('active')) || tabs[0]);
+  });
+
+  const animateCounter = counter => {
+    const target = Number(counter.dataset.counter);
+    const duration = 900;
+    const start = performance.now();
+    const tick = now => {
+      const progress = Math.min((now - start) / duration, 1);
+      counter.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3))).toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { animateCounter(entry.target); counterObserver.unobserve(entry.target); }
+    }), { threshold: 0.5 });
+    document.querySelectorAll('[data-counter]').forEach(counter => counterObserver.observe(counter));
+  }
+
+  document.querySelectorAll('[data-modal-open]').forEach(opener => {
+    const modal = document.getElementById(opener.dataset.modalOpen);
+    if (!modal) return;
+    let lastFocused;
+    const close = () => {
+      modal.classList.add('is-closing');
+      window.setTimeout(() => { modal.hidden = true; modal.classList.remove('is-closing'); }, 180);
+      document.body.classList.remove('modal-open');
+      lastFocused && lastFocused.focus();
+    };
+    opener.addEventListener('click', () => {
+      lastFocused = document.activeElement;
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+      const focusable = modal.querySelector('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+      focusable && focusable.focus();
+    });
+    modal.querySelectorAll('[data-modal-close]').forEach(button => button.addEventListener('click', close));
+    modal.addEventListener('click', event => { if (event.target === modal) close(); });
+    modal.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  });
 })();
 
 // ─── Auto-generate download cards from GitHub repo ───
@@ -263,6 +385,10 @@
   let archive = null;
   let currentItems = [];
   let folderPath = [];
+  let viewerTrigger = null;
+
+  frame.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+  frame.setAttribute('referrerpolicy', 'no-referrer');
 
   function escapeHtml(value) {
     return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
@@ -294,17 +420,25 @@
 
   function openPdf(item) {
     if (item.type !== 'pdf' || !item.path) return;
+    viewerTrigger = document.activeElement;
     viewerTitle.textContent = item.name;
     frame.src = `${item.path}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
     viewer.hidden = false;
+    viewer.classList.remove('is-closing');
     document.body.classList.add('viewer-open');
     closeViewer.focus();
   }
 
   function closePdf() {
-    viewer.hidden = true;
-    frame.src = 'about:blank';
-    document.body.classList.remove('viewer-open');
+    if (viewer.hidden || viewer.classList.contains('is-closing')) return;
+    viewer.classList.add('is-closing');
+    window.setTimeout(() => {
+      viewer.hidden = true;
+      viewer.classList.remove('is-closing');
+      frame.src = 'about:blank';
+      document.body.classList.remove('viewer-open');
+      viewerTrigger && viewerTrigger.focus();
+    }, 180);
   }
 
   function renderItems(items) {
