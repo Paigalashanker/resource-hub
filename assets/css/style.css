@@ -66,9 +66,9 @@
   --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Typography */
-  --font-body: 'Google Sans Flex', 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Google Sans Flex', 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Google Sans Code', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-body: 'Pixelify Sans', 'Courier New', monospace;
+  --font-heading: 'Pixelify Sans', 'Courier New', monospace;
+  --font-mono: 'Pixelify Sans', 'Courier New', monospace;
 }
 
 /* Light Theme */
@@ -1879,5 +1879,1010 @@ textarea.form-input {
     width: 80px;
     height: 80px;
     font-size: 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   17. React About Experience
+   -------------------------------------------------------------------------- */
+.about-react-page {
+  --glass-ink: #f3f8ff;
+  --glass-muted: #a4b8ce;
+  --glass-line: rgba(211, 235, 255, 0.18);
+  --glass-surface: rgba(7, 19, 35, 0.54);
+  background: #061321;
+  color: var(--glass-ink);
+}
+
+.about-react-page .about-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, rgba(2, 11, 20, 0.92) 0%, rgba(2, 20, 38, 0.7) 42%, rgba(3, 16, 29, 0.42) 100%), url('../img/ai dashboard.png') center / cover;
+  filter: saturate(1.2);
+  transform: scale(1.04);
+}
+
+.about-react-page .about-atmosphere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 78% 16%, rgba(84, 182, 255, 0.28), transparent 25%), radial-gradient(circle at 18% 78%, rgba(48, 111, 181, 0.2), transparent 29%);
+  animation: atmosphereDrift 13s ease-in-out infinite alternate;
+}
+
+.about-shell {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 22px 0 38px;
+}
+
+.glass-header {
+  position: sticky;
+  top: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 66px;
+  padding: 10px 14px 10px 18px;
+  border: 1px solid var(--glass-line);
+  border-radius: 20px;
+  background: rgba(4, 17, 30, 0.57);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+
+.glass-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--glass-ink);
+}
+
+.glass-brand:hover {
+  color: #fff;
+}
+
+.glass-brand strong,
+.glass-brand small {
+  display: block;
+}
+
+.glass-brand strong {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+
+.glass-brand small {
+  margin-top: 2px;
+  color: var(--glass-muted);
+  font: 10px var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.brand-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(163, 218, 255, 0.55);
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(83, 191, 255, 0.45), rgba(51, 90, 178, 0.3));
+  color: white;
+  font-weight: 700;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .4), 0 0 24px rgba(71, 170, 255, .22);
+}
+
+.glass-nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.glass-nav a,
+.theme-switch,
+.glass-menu-button {
+  border: 0;
+  background: transparent;
+  color: var(--glass-muted);
+  font: 500 12px var(--font-body);
+  cursor: pointer;
+}
+
+.glass-nav a {
+  padding: 9px 11px;
+  border-radius: 10px;
+}
+
+.glass-nav a:hover,
+.glass-nav a.is-active {
+  background: rgba(181, 226, 255, .1);
+  color: #fff;
+}
+
+.theme-switch {
+  margin-left: 6px;
+  padding: 9px 12px;
+  border: 1px solid var(--glass-line);
+  border-radius: 10px;
+}
+
+.glass-menu-button {
+  display: none;
+  margin-left: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--glass-line);
+  border-radius: 10px;
+}
+
+.about-content {
+  padding: 104px 7% 76px;
+}
+
+.about-intro {
+  max-width: 720px;
+  animation: contentRise .8s .1s both;
+}
+
+.eyebrow,
+.card-label {
+  color: #9edcff;
+  font: 11px var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.status-pip {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #76e4ba;
+  box-shadow: 0 0 14px #76e4ba;
+}
+
+.about-intro h1 {
+  max-width: 680px;
+  margin: 18px 0 16px;
+  color: #f4f8ff;
+  font-size: clamp(52px, 7vw, 94px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: .94;
+}
+
+.about-intro h1 em {
+  color: #92d9ff;
+  font-style: normal;
+  text-shadow: 0 0 36px rgba(102, 202, 255, .35);
+}
+
+.about-intro>p {
+  max-width: 560px;
+  color: var(--glass-muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.intro-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.glass-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  border: 1px solid rgba(173, 227, 255, .42);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.glass-button-primary {
+  background: linear-gradient(135deg, rgba(70, 166, 232, .55), rgba(72, 98, 211, .3));
+  box-shadow: 0 10px 28px rgba(31, 136, 207, .2);
+}
+
+.glass-button:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.text-button {
+  color: #b8d7eb;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(184, 215, 235, .45);
+}
+
+.profile-grid,
+.lower-grid {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 18px;
+  margin-top: 70px;
+}
+
+.lower-grid {
+  grid-template-columns: .9fr 1.1fr;
+  margin-top: 18px;
+}
+
+.glass-panel {
+  border: 1px solid var(--glass-line);
+  border-radius: 22px;
+  background: linear-gradient(140deg, rgba(201, 234, 255, .13), rgba(10, 27, 48, .4) 45%, rgba(7, 17, 30, .55));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .2), inset 0 1px rgba(255, 255, 255, .12);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-height: 250px;
+  padding: 32px;
+  transform: perspective(900px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transition: transform .25s ease;
+}
+
+.profile-orbit {
+  position: relative;
+  display: grid;
+  flex: 0 0 132px;
+  width: 132px;
+  height: 132px;
+  place-items: center;
+  border: 1px solid rgba(144, 220, 255, .65);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #8ddfff, #276e9a 37%, #0b1d37 72%);
+  color: #e8f8ff;
+  font-size: 35px;
+  font-weight: 600;
+  box-shadow: 0 0 0 12px rgba(106, 191, 236, .05), 0 0 60px rgba(76, 184, 245, .27);
+}
+
+.profile-orbit::before,
+.profile-orbit::after {
+  content: '';
+  position: absolute;
+  inset: -12px -24px;
+  border: 1px solid rgba(138, 215, 255, .28);
+  border-radius: 50%;
+  transform: rotate(34deg);
+}
+
+.profile-orbit::after {
+  inset: -24px -12px;
+  transform: rotate(-34deg);
+  border-color: rgba(128, 174, 255, .19);
+}
+
+.profile-meta {
+  margin-bottom: 12px;
+  color: #9edcff;
+  font: 11px var(--font-mono);
+}
+
+.profile-copy h2 {
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+}
+
+.profile-copy p {
+  color: #c5daea;
+  font-size: 14px;
+}
+
+.muted-copy {
+  color: var(--glass-muted) !important;
+}
+
+.profile-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.profile-links a {
+  padding: 8px 12px;
+  border: 1px solid var(--glass-line);
+  border-radius: 9px;
+  color: #d8f2ff;
+  font-size: 12px;
+}
+
+.profile-links a:hover {
+  border-color: #83d8ff;
+  background: rgba(112, 202, 255, .12);
+  color: #fff;
+}
+
+.signal-card,
+.philosophy-card,
+.skills-card {
+  padding: 28px;
+}
+
+.signal-line {
+  width: 100%;
+  height: 1px;
+  margin: 22px 0 24px;
+  background: linear-gradient(90deg, #6ed5ff, transparent);
+}
+
+.signal-card h3 {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.signal-card p,
+.philosophy-card p {
+  margin-top: 11px;
+  color: var(--glass-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.signal-stats {
+  display: flex;
+  gap: 36px;
+  margin-top: 32px;
+}
+
+.signal-stats strong,
+.signal-stats span {
+  display: block;
+}
+
+.signal-stats strong {
+  color: #d9f4ff;
+  font: 24px var(--font-mono);
+}
+
+.signal-stats span {
+  margin-top: 2px;
+  color: var(--glass-muted);
+  font: 10px var(--font-mono);
+  text-transform: uppercase;
+}
+
+.philosophy-card h2 {
+  max-width: 380px;
+  margin-top: 20px;
+  color: #f5fbff;
+  font-size: 28px;
+  font-weight: 450;
+  line-height: 1.1;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 26px;
+}
+
+.pill-row span,
+.skill-list span {
+  padding: 7px 10px;
+  border: 1px solid var(--glass-line);
+  border-radius: 99px;
+  color: #cfe8f7;
+  font: 11px var(--font-mono);
+}
+
+.skill-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 22px 0 24px;
+}
+
+.skill-tabs button {
+  padding: 8px 10px;
+  border: 1px solid var(--glass-line);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--glass-muted);
+  font: 11px var(--font-mono);
+  cursor: pointer;
+}
+
+.skill-tabs button.is-active,
+.skill-tabs button:hover {
+  border-color: #7dd7ff;
+  background: rgba(108, 202, 255, .13);
+  color: #fff;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-list span {
+  animation: skillReveal .35s calc(var(--skill-index) * 50ms) both;
+}
+
+.about-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 7%;
+  color: #89a8bd;
+  font: 10px var(--font-mono);
+  letter-spacing: .04em;
+}
+
+.light-theme .about-react-page {
+  --glass-ink: #0b2138;
+  --glass-muted: #45657d;
+  --glass-line: rgba(29, 89, 125, .22);
+  --glass-surface: rgba(235, 247, 255, .62);
+  background: #cfe4f1;
+}
+
+.light-theme .about-react-page .about-atmosphere {
+  filter: saturate(.9) brightness(1.2);
+}
+
+.light-theme .glass-header,
+.light-theme .glass-panel {
+  background: rgba(237, 248, 255, .54);
+}
+
+.light-theme .glass-brand,
+.light-theme .glass-nav a:hover,
+.light-theme .glass-nav a.is-active,
+.light-theme .profile-copy h2,
+.light-theme .signal-card h3,
+.light-theme .philosophy-card h2 {
+  color: #0b2138;
+}
+
+.light-theme .about-intro h1,
+.light-theme .about-intro h1 em {
+  color: #0b4268;
+}
+
+.light-theme .glass-nav a,
+.light-theme .theme-switch {
+  color: #45657d;
+}
+
+@keyframes contentRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes atmosphereDrift {
+  from {
+    transform: scale(1.04) translate3d(-1%, -1%, 0);
+  }
+
+  to {
+    transform: scale(1.08) translate3d(1%, 1%, 0);
+  }
+}
+
+@keyframes skillReveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 780px) {
+  .about-shell {
+    width: min(100% - 28px, 620px);
+  }
+
+  .glass-header {
+    top: 10px;
+  }
+
+  .glass-menu-button {
+    display: block;
+  }
+
+  .glass-nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px;
+    border: 1px solid var(--glass-line);
+    border-radius: 16px;
+    background: rgba(5, 20, 35, .92);
+    backdrop-filter: blur(22px);
+  }
+
+  .glass-nav.is-open {
+    display: flex;
+  }
+
+  .glass-nav a,
+  .theme-switch {
+    text-align: left;
+  }
+
+  .theme-switch {
+    margin: 4px 0 0;
+  }
+
+  .about-content {
+    padding: 72px 3% 55px;
+  }
+
+  .about-intro h1 {
+    font-size: clamp(50px, 15vw, 78px);
+  }
+
+  .profile-grid,
+  .lower-grid {
+    grid-template-columns: 1fr;
+    margin-top: 50px;
+  }
+
+  .profile-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .about-footer {
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 3%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-react-page .about-atmosphere::after,
+  .about-intro,
+  .skill-list span {
+    animation: none;
+  }
+
+  .profile-card {
+    transition: none;
+    transform: none;
+  }
+
+  .about-react-page .math-floater {
+    animation: none;
+  }
+}
+
+/* Fixed white glass theme for the React about experience. */
+.about-react-page {
+  --glass-ink: #0b2138;
+  --glass-muted: #4b687e;
+  --glass-line: rgba(30, 91, 126, 0.2);
+  background: #eef7fc;
+  color: var(--glass-ink);
+}
+
+.about-react-page .about-atmosphere {
+  background: linear-gradient(105deg, rgba(244, 251, 255, 0.9) 0%, rgba(236, 248, 255, 0.72) 42%, rgba(221, 241, 252, 0.48) 100%), url('../img/ai dashboard.png') center / cover;
+  filter: saturate(0.9) brightness(1.15);
+}
+
+.about-react-page .math-floaters {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.about-react-page .math-floater {
+  position: absolute;
+  top: 14%;
+  left: 8%;
+  display: grid;
+  gap: 7px;
+  color: rgba(32, 113, 151, 0.48);
+  font: 17px var(--font-heading);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  transform: translate3d(0, 0, 0) rotate(-4deg);
+  animation: mathFloat 14s ease-in-out calc(var(--floater-index) * -1.5s) infinite alternate;
+}
+
+.about-react-page .math-floater i {
+  display: block;
+  width: 72%;
+  height: 2px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.38;
+  transform: rotate(-2deg);
+}
+
+.about-react-page .math-floater:nth-child(even) {
+  color: rgba(47, 129, 177, 0.32);
+  font-size: 13px;
+  animation-duration: 17s;
+}
+
+.about-react-page .math-floater:nth-child(2) {
+  top: 27%;
+  left: 28%;
+  transform: rotate(5deg);
+}
+
+.about-react-page .math-floater:nth-child(3) {
+  top: 18%;
+  left: auto;
+  right: 10%;
+  transform: rotate(-7deg);
+}
+
+.about-react-page .math-floater:nth-child(4) {
+  top: 44%;
+  left: 54%;
+  transform: rotate(3deg);
+}
+
+.about-react-page .math-floater:nth-child(5) {
+  top: 62%;
+  left: 72%;
+  transform: rotate(-5deg);
+}
+
+.about-react-page .math-floater:nth-child(6) {
+  top: 72%;
+  left: 12%;
+  transform: rotate(4deg);
+}
+
+.about-react-page .math-floater:nth-child(7) {
+  top: 78%;
+  left: 38%;
+  transform: rotate(-3deg);
+}
+
+.about-react-page .math-floater:nth-child(8) {
+  top: 38%;
+  left: auto;
+  right: 7%;
+  font-size: 30px;
+  transform: rotate(8deg);
+}
+
+.about-react-page .math-formula {
+  position: relative;
+  z-index: 1;
+}
+
+.about-react-page .about-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.67);
+  box-shadow: 0 18px 60px rgba(49, 99, 126, 0.14);
+}
+
+.glass-brand,
+.glass-brand:hover {
+  color: #0b2138;
+}
+
+.glass-brand small,
+.glass-nav a,
+.glass-menu-button {
+  color: #4b687e;
+}
+
+.glass-nav a:hover,
+.glass-nav a.is-active {
+  background: rgba(66, 143, 184, 0.12);
+  color: #0b4268;
+}
+
+.glass-panel {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.72), rgba(235, 248, 255, 0.58) 45%, rgba(255, 255, 255, 0.62));
+  box-shadow: 0 24px 70px rgba(50, 101, 128, 0.14), inset 0 1px rgba(255, 255, 255, 0.85);
+}
+
+.about-intro h1,
+.about-intro h1 em,
+.profile-copy h2,
+.signal-card h3,
+.philosophy-card h2 {
+  color: #0b4268;
+}
+
+.about-intro h1 em {
+  text-shadow: 0 0 36px rgba(102, 202, 255, 0.3);
+}
+
+.about-intro>p,
+.signal-card p,
+.philosophy-card p {
+  color: #4b687e;
+}
+
+.eyebrow,
+.card-label,
+.profile-meta {
+  color: #27759c;
+}
+
+.glass-button-primary {
+  background: linear-gradient(135deg, rgba(90, 183, 231, 0.68), rgba(91, 137, 218, 0.5));
+  color: #082b48;
+}
+
+.text-button,
+.profile-links a {
+  color: #176187;
+}
+
+.profile-copy p {
+  color: #315a72;
+}
+
+.profile-orbit {
+  box-shadow: 0 0 0 12px rgba(106, 191, 236, 0.08), 0 0 60px rgba(76, 184, 245, 0.24);
+}
+
+.pill-row span,
+.skill-list span {
+  color: #2c607b;
+}
+
+.skill-tabs button {
+  color: #4b687e;
+}
+
+.skill-tabs button.is-active,
+.skill-tabs button:hover {
+  color: #0b4268;
+}
+
+.about-footer {
+  color: #53758a;
+}
+
+@keyframes mathFloat {
+  0% {
+    opacity: 0.15;
+    translate: 0 16px;
+  }
+
+  100% {
+    opacity: 0.72;
+    translate: 18px -34px;
+  }
+}
+
+@media (max-width: 780px) {
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-react-page .math-floater {
+    animation: none;
+  }
+}
+
+/* Shared white glass theme for the rest of Resource Hub. */
+.light-theme body:not(.about-react-page) {
+  background-color: #eef7fc;
+  background-image: linear-gradient(105deg, rgba(244, 251, 255, 0.92), rgba(224, 242, 252, 0.72)), url('../img/ai dashboard.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.light-theme body:not(.about-react-page) .site-header {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(30, 91, 126, 0.18);
+  box-shadow: 0 12px 36px rgba(49, 99, 126, 0.1);
+}
+
+.light-theme body:not(.about-react-page) .brand .logo,
+.light-theme body:not(.about-react-page) .nav-link.active,
+.light-theme body:not(.about-react-page) .nav-link:hover {
+  color: #0b4268;
+}
+
+.light-theme body:not(.about-react-page) .brand .tag,
+.light-theme body:not(.about-react-page) .nav-link,
+.light-theme body:not(.about-react-page) .lead,
+.light-theme body:not(.about-react-page) .card p {
+  color: #4b687e;
+}
+
+.light-theme body:not(.about-react-page) .card,
+.light-theme body:not(.about-react-page) .widget-card,
+.light-theme body:not(.about-react-page) .project-card,
+.light-theme body:not(.about-react-page) .download-card,
+.light-theme body:not(.about-react-page) .drive-item {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.78), rgba(235, 248, 255, 0.62));
+  border-color: rgba(30, 91, 126, 0.18);
+  box-shadow: 0 18px 50px rgba(50, 101, 128, 0.1), inset 0 1px rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+.light-theme body:not(.about-react-page) .card:hover,
+.light-theme body:not(.about-react-page) .widget-card:hover,
+.light-theme body:not(.about-react-page) .project-card:hover,
+.light-theme body:not(.about-react-page) .download-card:hover,
+.light-theme body:not(.about-react-page) .drive-item:hover {
+  border-color: rgba(39, 117, 156, 0.4);
+  box-shadow: 0 24px 60px rgba(50, 101, 128, 0.15);
+}
+
+.light-theme body:not(.about-react-page) .hero h1,
+.light-theme body:not(.about-react-page) .card h2,
+.light-theme body:not(.about-react-page) .card h3,
+.light-theme body:not(.about-react-page) .project-card h3,
+.light-theme body:not(.about-react-page) .project-card h4,
+.light-theme body:not(.about-react-page) .widget-header h3 {
+  color: #0b4268;
+}
+
+.light-theme body:not(.about-react-page) .btn {
+  background: linear-gradient(135deg, #5ab7e7, #5b89da);
+  border-color: #5b9fce;
+  color: #082b48;
+  box-shadow: 0 10px 26px rgba(76, 158, 207, 0.22);
+}
+
+.light-theme body:not(.about-react-page) .btn-outline,
+.light-theme body:not(.about-react-page) .category-btn {
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(30, 91, 126, 0.2);
+  color: #176187;
+}
+
+.light-theme body:not(.about-react-page) .search-input,
+.light-theme body:not(.about-react-page) .form-input {
+  background: rgba(255, 255, 255, 0.74);
+  border-color: rgba(30, 91, 126, 0.2);
+  color: #0b2138;
+}
+
+.light-theme body:not(.about-react-page) .site-footer,
+.light-theme body:not(.about-react-page) .status-bar {
+  background: rgba(255, 255, 255, 0.68);
+  border-color: rgba(30, 91, 126, 0.16);
+  color: #53758a;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.light-theme body:not(.about-react-page) .footer-inner .footer-dev,
+.light-theme body:not(.about-react-page) .footer-links a:hover {
+  color: #0b4268;
+}
+
+/* Shared math-floater layer used by the static pages. */
+body:not(.about-react-page) .math-floaters {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+body:not(.about-react-page) .math-floater {
+  position: absolute;
+  top: 14%;
+  left: 8%;
+  display: grid;
+  gap: 7px;
+  color: rgba(32, 113, 151, 0.36);
+  font: 17px var(--font-heading);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  transform: rotate(-4deg);
+  animation: mathFloat 14s ease-in-out calc(var(--floater-index) * -1.5s) infinite alternate;
+}
+
+body:not(.about-react-page) .math-floater i {
+  display: block;
+  width: 72%;
+  height: 2px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.38;
+}
+
+body:not(.about-react-page) .math-floater:nth-child(even) {
+  color: rgba(47, 129, 177, 0.26);
+  font-size: 13px;
+  animation-duration: 17s;
+}
+
+body:not(.about-react-page) .math-floater:nth-child(2) {
+  top: 27%;
+  left: 28%;
+  transform: rotate(5deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(3) {
+  top: 18%;
+  left: auto;
+  right: 10%;
+  transform: rotate(-7deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(4) {
+  top: 44%;
+  left: 54%;
+  transform: rotate(3deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(5) {
+  top: 62%;
+  left: 72%;
+  transform: rotate(-5deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(6) {
+  top: 72%;
+  left: 12%;
+  transform: rotate(4deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(7) {
+  top: 78%;
+  left: 38%;
+  transform: rotate(-3deg);
+}
+
+body:not(.about-react-page) .math-floater:nth-child(8) {
+  top: 38%;
+  left: auto;
+  right: 7%;
+  font-size: 30px;
+  transform: rotate(8deg);
+}
+
+body:not(.about-react-page)> :not(.math-floaters) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.about-react-page) .math-floater {
+    animation: none;
   }
 }
