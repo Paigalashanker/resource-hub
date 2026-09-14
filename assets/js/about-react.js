@@ -62,9 +62,9 @@ function AboutPage() {
             React.createElement(Header),
             React.createElement('main', { id: 'main-content', className: 'about-content' },
                 React.createElement('section', { className: 'about-intro' },
-                    React.createElement('div', { className: 'eyebrow' }, React.createElement('span', { className: 'status-pip' }), 'Developer profile / 2026'),
+                    React.createElement('div', { className: 'eyebrow' }, React.createElement('span', { className: 'status-pip' }), 'Student resource platform'),
                     React.createElement('h1', null, 'Ideas made ', React.createElement('em', null, 'visible.')),
-                    React.createElement('p', null, 'I am Paigala Delli Sankar, an AI & Data Science student building calm, useful software at the intersection of intelligent systems and human curiosity.'),
+                    React.createElement('p', null, 'CampusVault is a student-built space for exploring projects, notes, downloads, and practical learning resources across AI, Data Science, programming, and IoT.'),
                     React.createElement('div', { className: 'intro-actions' },
                         React.createElement('a', { className: 'glass-button glass-button-primary', href: 'projects.html' }, 'Explore projects <span>↗</span>'),
                         React.createElement('a', { className: 'text-button', href: 'mailto:paigalashanker@gmail.com' }, 'Start a conversation')
@@ -90,10 +90,15 @@ function AboutPage() {
                         React.createElement('h3', null, 'Learning in public.'),
                         React.createElement('p', null, 'Turning notes, experiments, and small failures into tools that make the next project clearer.'),
                         React.createElement('div', { className: 'signal-stats' },
-                            React.createElement('div', null, React.createElement('strong', null, '03'), React.createElement('span', null, 'focus areas')),
-                            React.createElement('div', null, React.createElement('strong', null, '∞'), React.createElement('span', null, 'curiosity'))
+                            React.createElement('p', null, 'Built for students who want a practical starting point for study, experiments, and project work.')
                         )
                     )
+                ),
+                React.createElement('section', { className: 'glass-panel about-purpose-card' },
+                    React.createElement('div', { className: 'card-label' }, 'What is CampusVault?'),
+                    React.createElement('h2', null, 'A useful shelf for student work.'),
+                    React.createElement('p', null, 'CampusVault brings together the materials already maintained in this repository so students can find them in one place instead of searching across scattered folders and links.'),
+                    React.createElement('div', { className: 'pill-row' }, ['AI & Machine Learning', 'Data Science', 'Programming', 'Projects', 'IoT & NPTEL', 'Notes & downloads'].map(item => React.createElement('span', { key: item }, item)))
                 ),
                 React.createElement('section', { className: 'lower-grid' },
                     React.createElement('article', { className: 'glass-panel philosophy-card' },
@@ -111,7 +116,13 @@ function AboutPage() {
             ),
             React.createElement('footer', { className: 'about-footer' },
                 React.createElement('span', null, 'Resource Hub / About'),
-                React.createElement('span', null, 'Designed and maintained by Paigala Delli Sankar')
+                React.createElement('span', null, 'Maintained by Paigala Delli Sankar'),
+                React.createElement('nav', { 'aria-label': 'Footer navigation' },
+                    React.createElement('a', { href: 'privacy.html' }, 'Privacy'),
+                    React.createElement('a', { href: 'terms.html' }, 'Terms'),
+                    React.createElement('a', { href: 'disclaimer.html' }, 'Disclaimer'),
+                    React.createElement('a', { href: 'contact.html' }, 'Contact')
+                )
             )
         )
     );

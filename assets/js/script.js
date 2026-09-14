@@ -271,7 +271,12 @@
     return name;
   }
 
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+  }
+
   function formatSize(bytes) {
+    if (!bytes) return 'Local file';
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / 1048576).toFixed(1) + ' MB';
@@ -281,19 +286,21 @@
     const ext = getExt(file.name);
     const info = typeMap[ext] || { label: ext.toUpperCase() || 'FILE', icon: '📁', cat: 'other' };
     const title = prettyName(file.name);
-    const downloadUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${DOWNLOAD_PATH}/${encodeURIComponent(file.name)}`;
+    const downloadUrl = file.url || `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${DOWNLOAD_PATH}/${encodeURIComponent(file.name)}`;
 
     const card = document.createElement('div');
     card.className = 'download-card card';
     card.dataset.category = info.cat || 'other';
     card.dataset.ext = ext;
+    const safeTitle = escapeHtml(title);
+    const safeDescription = escapeHtml(file.description || `${info.label} file · ${formatSize(file.size)}`);
     card.innerHTML = `
       <span class="file-badge">${info.icon} ${info.label}</span>
-      <h3 style="margin:14px 0 8px;font-size:18px;">${title}</h3>
+      <h3 style="margin:14px 0 8px;font-size:18px;">${safeTitle}</h3>
       <p style="color:var(--text-secondary); margin-bottom:18px; font-size:13.5px;">
-        ${info.label} file · ${formatSize(file.size)}
+        ${safeDescription}
       </p>
-      <a class="btn btn-compact" href="${downloadUrl}" download="${file.name}">Download</a>
+      <a class="btn btn-compact" href="${downloadUrl}" download="${escapeHtml(file.name)}">Download</a>
     `;
     return card;
   }
@@ -318,16 +325,18 @@
   }
 
   async function loadDownloads() {
-    grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading resources…</p>';
+    grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Resource directory is available. Optional file details may update shortly.</p>';
     try {
       let downloads = getCached();
 
       if (!downloads) {
-        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${DOWNLOAD_PATH}?ref=${BRANCH}`;
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error('GitHub API returned ' + res.status);
-        const files = await res.json();
-        downloads = files.filter(f => f.type === 'file' && !f.name.startsWith('.'));
+        const localRes = await fetch('assets/data/downloads.json', { cache: 'no-store' });
+        if (!localRes.ok) throw new Error('Local download manifest unavailable');
+        const localFiles = await localRes.json();
+        downloads = localFiles.map(file => ({
+          ...file,
+          url: `assets/downloads/${encodeURIComponent(file.name)}`
+        }));
         setCache(downloads);
       }
 
@@ -361,8 +370,8 @@
       console.error('Failed to load downloads:', err);
       grid.innerHTML = `
         <p style="text-align:center; padding:30px; color:var(--text-secondary);">
-          Could not load remote files currently. <br>
-          <small>Check that the repository is accessible and connected.</small>
+          The local resource list could not be loaded right now. <br>
+          <small>Check the repository files and refresh the page.</small>
         </p>`;
     }
   }
@@ -548,27 +557,16 @@
   }
 
   async function loadProjects() {
-    if (fullGrid) fullGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading projects…</p>';
-    if (previewGrid) previewGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Loading…</p>';
+    if (fullGrid) fullGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Project directory is available. Optional details may update shortly.</p>';
+    if (previewGrid) previewGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Featured projects are ready below.</p>';
 
     try {
       let projects = getCached();
 
       if (!projects) {
-        try {
-          const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${JSON_PATH}`;
-          const res = await fetch(url);
-          if (!res.ok) throw new Error('Failed to fetch from GitHub: ' + res.status);
-          projects = await res.json();
-        } catch (fetchErr) {
-          // Local fallback
-          const localRes = await fetch(JSON_PATH);
-          if (localRes.ok) {
-            projects = await localRes.json();
-          } else {
-            throw fetchErr;
-          }
-        }
+        const localRes = await fetch(JSON_PATH, { cache: 'no-store' });
+        if (!localRes.ok) throw new Error('Local project data unavailable');
+        projects = await localRes.json();
         if (projects) setCache(projects);
       }
 
@@ -610,8 +608,8 @@
   if (!textEl) return;
 
   async function fetchQuote() {
-    textEl.textContent = 'Loading inspiration...';
-    authorEl.textContent = '';
+    textEl.textContent = 'A useful idea starts with a clear question.';
+    authorEl.textContent = '— CampusVault note';
     try {
       const res = await fetch('https://api.quotable.io/random?maxLength=120');
       if (!res.ok) throw new Error(res.status);
@@ -641,68 +639,7 @@
 (function () {
   const body = document.getElementById('weatherBody');
   if (!body) return;
-
-  const OWM_KEY = 'a599d692c1df51d7286f37b8d1ed33ac';
-
-  function renderWeather(data) {
-    const temp = Math.round(data.main.temp);
-    const desc = data.weather[0].description;
-    const icon = data.weather[0].icon;
-    const city = data.name;
-    const humidity = data.main.humidity;
-    const wind = Math.round(data.wind.speed * 3.6);
-    const feelsLike = Math.round(data.main.feels_like);
-
-    body.innerHTML = `
-      <div class="weather-main">
-        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" width="54" height="54">
-        <div>
-          <div class="weather-temp">${temp}°C</div>
-          <div class="weather-desc">${desc}</div>
-        </div>
-      </div>
-      <div class="weather-location">📍 ${city}</div>
-      <div class="weather-details">
-        <span>🌡️ Feels ${feelsLike}°C</span>
-        <span>💧 ${humidity}%</span>
-        <span>💨 ${wind} km/h</span>
-      </div>
-    `;
-  }
-
-  async function loadWeather(lat, lon) {
-    try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OWM_KEY}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      renderWeather(data);
-    } catch {
-      body.innerHTML = '<p class="weather-loading">Could not load weather.</p>';
-    }
-  }
-
-  async function loadByCity(city) {
-    try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${OWM_KEY}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      renderWeather(data);
-    } catch {
-      body.innerHTML = '<p class="weather-loading">Could not load weather.</p>';
-    }
-  }
-
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => loadWeather(pos.coords.latitude, pos.coords.longitude),
-      () => loadByCity('Tirupati,IN'),
-      { timeout: 5000 }
-    );
-  } else {
-    loadByCity('Tirupati,IN');
-  }
+  body.innerHTML = '<p class="weather-loading">Live weather is not enabled in this static site. Your location is never requested.</p>';
 })();
 
 // ─── Programming Joke Widget (JokeAPI) ───
@@ -712,18 +649,25 @@
   if (!jokeBody) return;
 
   async function fetchJoke() {
-    jokeBody.innerHTML = '<p style="color:var(--text-muted);">Loading joke...</p>';
+    jokeBody.innerHTML = '<p class="joke-setup">Optional programming joke unavailable. Your resources remain available.</p>';
     try {
       const res = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart');
       if (!res.ok) throw new Error(res.status);
       const data = await res.json();
       if (data.type === 'twopart') {
-        jokeBody.innerHTML = `
-          <p class="joke-setup">${data.setup}</p>
-          <p class="joke-punchline">${data.delivery}</p>
-        `;
+        jokeBody.replaceChildren();
+        const setup = document.createElement('p');
+        setup.className = 'joke-setup';
+        setup.textContent = data.setup;
+        const punchline = document.createElement('p');
+        punchline.className = 'joke-punchline';
+        punchline.textContent = data.delivery;
+        jokeBody.append(setup, punchline);
       } else {
-        jokeBody.innerHTML = `<p class="joke-setup">${data.joke}</p>`;
+        const joke = document.createElement('p');
+        joke.className = 'joke-setup';
+        joke.textContent = data.joke;
+        jokeBody.replaceChildren(joke);
       }
     } catch {
       jokeBody.innerHTML = '<p class="joke-setup">Why do programmers prefer dark mode?</p><p class="joke-punchline">Because light attracts bugs! 🐛</p>';
@@ -732,26 +676,4 @@
 
   fetchJoke();
   if (refreshBtn) refreshBtn.addEventListener('click', fetchJoke);
-})();
-
-// ─── Visitor Counter (CountAPI) ───
-(function () {
-  const countEl = document.getElementById('visitorCount');
-  if (!countEl) return;
-
-  async function updateCount() {
-    try {
-      const res = await fetch('https://api.countapi.xyz/hit/paigalashanker-resource-hub/visits');
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      countEl.textContent = data.value.toLocaleString();
-    } catch {
-      let count = parseInt(localStorage.getItem('rh_visit_count') || '0', 10);
-      count++;
-      localStorage.setItem('rh_visit_count', String(count));
-      countEl.textContent = count.toLocaleString();
-    }
-  }
-
-  updateCount();
 })();
