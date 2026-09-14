@@ -184,6 +184,49 @@ a:hover {
   top: 14px;
 }
 
+/* Reserved space for a future Google AdSense unit. */
+.ad-placeholder {
+  position: fixed;
+  right: 16px;
+  bottom: 52px;
+  z-index: 900;
+  width: 112px;
+  min-height: 54px;
+  padding: 8px 10px;
+  border: 1px dashed var(--border-hover);
+  border-radius: var(--radius-sm);
+  background: var(--surface-overlay);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+  font-size: 10px;
+  line-height: 1.25;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ad-placeholder span,
+.ad-placeholder strong {
+  display: block;
+}
+
+.ad-placeholder strong {
+  margin-top: 3px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (max-width: 520px) {
+  .ad-placeholder {
+    right: 10px;
+    bottom: 44px;
+    width: 96px;
+    min-height: 48px;
+    padding: 6px 8px;
+  }
+}
+
 /* Focus visible styling */
 *:focus-visible {
   outline: 2px solid var(--accent);
