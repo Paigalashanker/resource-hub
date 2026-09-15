@@ -9,7 +9,7 @@ const navItems = [
     ['About', 'about.html'],
     ['Contact', 'contact.html']
 ];
-const mathFloaters = ['∑ x²', 'f(x) = eˣ', 'π ≈ 3.14', '∇ AI', '01 / 10', 'Σ data', 'P(A|B)', '∞'];
+const mathFloaters = ['AI', 'PY', 'TF', 'NP', 'PD', 'JS', 'GH', 'CV'];
 
 function Header() {
     const [menuOpen, setMenuOpen] = useState(false);

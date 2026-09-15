@@ -164,6 +164,82 @@ a:hover {
   color: var(--accent-light);
 }
 
+/* Playful pointer trail for mouse and trackpad users. */
+.reptile-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.reptile-cursor.is-visible {
+  opacity: 1;
+}
+
+.reptile-segment {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  width: clamp(7px, calc(15px - var(--segment-index) * 0.7px), 15px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--text-primary));
+  border-radius: 55% 45% 55% 45%;
+  background: color-mix(in srgb, var(--accent) 78%, var(--bg-primary));
+  box-shadow: 0 0 8px var(--accent-glow);
+  transform-origin: center;
+}
+
+.reptile-segment:nth-child(odd) {
+  border-radius: 45% 55% 45% 55%;
+}
+
+.reptile-head {
+  top: -10px;
+  left: -10px;
+  width: 20px;
+  border-color: var(--accent-light);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow), 0 0 16px var(--accent-glow);
+}
+
+.reptile-head::before,
+.reptile-head::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+}
+
+.reptile-head::before {
+  left: 4px;
+}
+
+.reptile-head::after {
+  right: 4px;
+}
+
+@media (pointer: fine) {
+
+  html.has-reptile-cursor,
+  html.has-reptile-cursor body,
+  html.has-reptile-cursor a,
+  html.has-reptile-cursor button {
+    cursor: none;
+  }
+}
+
+@supports not (color: color-mix(in srgb, black, white)) {
+  .reptile-segment {
+    border-color: var(--accent-light);
+    background: var(--accent);
+  }
+}
+
 /* Skip link for keyboard a11y */
 .skip-link {
   position: absolute;
@@ -2916,6 +2992,52 @@ body:not(.about-react-page) .math-floater:nth-child(8) {
   right: 7%;
   font-size: 30px;
   transform: rotate(8deg);
+}
+
+/* AI tool marks replace the old formula-only background language. */
+.math-floater {
+  align-items: center;
+  width: 50px;
+  gap: 0;
+  color: rgba(32, 113, 151, 0.5);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.math-floater .math-formula {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(21, 87, 126, 0.08), inset 0 1px rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.math-floater i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin-top: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.math-floater:nth-child(even) {
+  color: rgba(24, 125, 145, 0.4);
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .math-floater {
+    animation: none;
+  }
 }
 
 body:not(.about-react-page)> :not(.math-floaters) {

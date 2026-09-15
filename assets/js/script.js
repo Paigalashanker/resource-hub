@@ -112,6 +112,69 @@
   }
 })();
 
+// ─── Reptile pointer trail ───
+(function () {
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!finePointer || reducedMotion) return;
+
+  const segmentCount = 11;
+  const segments = [];
+  const points = Array.from({ length: segmentCount }, () => ({ x: -100, y: -100 }));
+  const cursor = document.createElement('div');
+  cursor.className = 'reptile-cursor';
+  cursor.setAttribute('aria-hidden', 'true');
+
+  for (let index = segmentCount - 1; index >= 0; index -= 1) {
+    const segment = document.createElement('span');
+    segment.className = `reptile-segment${index === 0 ? ' reptile-head' : ''}`;
+    segment.style.setProperty('--segment-index', index);
+    cursor.appendChild(segment);
+    segments[index] = segment;
+  }
+
+  document.body.appendChild(cursor);
+  document.documentElement.classList.add('has-reptile-cursor');
+
+  let targetX = -100;
+  let targetY = -100;
+  let animationFrame;
+
+  const move = event => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    cursor.classList.add('is-visible');
+  };
+
+  const render = () => {
+    points[0].x += (targetX - points[0].x) * 0.28;
+    points[0].y += (targetY - points[0].y) * 0.28;
+
+    for (let index = 1; index < points.length; index += 1) {
+      const previous = points[index - 1];
+      const point = points[index];
+      point.x += (previous.x - point.x) * 0.34;
+      point.y += (previous.y - point.y) * 0.34;
+    }
+
+    points.forEach((point, index) => {
+      const next = points[Math.min(index + 1, points.length - 1)];
+      const angle = Math.atan2(point.y - next.y, point.x - next.x) * 180 / Math.PI;
+      segments[index].style.transform = `translate3d(${point.x}px, ${point.y}px, 0) rotate(${angle}deg)`;
+    });
+
+    animationFrame = window.requestAnimationFrame(render);
+  };
+
+  window.addEventListener('pointermove', move, { passive: true });
+  window.addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
+  animationFrame = window.requestAnimationFrame(render);
+
+  window.addEventListener('pagehide', () => {
+    window.cancelAnimationFrame(animationFrame);
+  }, { once: true });
+})();
+
 // ─── Shared accessible interaction primitives ───
 (function () {
   document.querySelectorAll('.accordion-trigger').forEach(trigger => {
