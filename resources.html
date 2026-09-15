@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Resources | CAMPUSVAULT</title>
+  <meta name="description" content="Search notes, PYQs, lab resources, study materials, and project references by branch, semester, subject, unit, and type." />
+  <link rel="canonical" href="https://campusvault.dpdns.org/resources.html" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="CampusVault Resources" />
+  <meta property="og:description" content="Smart student resource library with filters, direct links, sharing, and bookmarks." />
+  <meta property="og:url" content="https://campusvault.dpdns.org/resources.html" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f7f9fc" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/campusvault.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="page-shell">
+    <div class="circuit-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><span class="brand-logo">CAMPUSVAULT</span><span class="brand-tag">Resource Library</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="resources.html">Resources</a>
+          <a class="nav-link" href="ai.html">AI</a>
+          <a class="nav-link" href="quizzes.html">Quizzes</a>
+          <a class="nav-link" href="projects.html">Projects</a>
+          <a class="nav-link" href="placement.html">Placement</a>
+          <a class="nav-link" href="resume.html">Resume</a>
+          <a class="nav-link" href="internships.html">Internships</a>
+        </nav>
+        <div class="header-actions">
+          <a class="search-mini" href="resources.html">🔎 Search</a>
+          <button class="hamburger" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="container">
+      <section class="hero">
+        <div class="hero-kicker">Branch → Semester → Subject → Unit → Resource Type</div>
+        <h1>Smart Resource Search</h1>
+        <p>Find notes, subjects, unit-wise materials, PYQs, lab programs, important questions, and study resources with fast mobile-friendly filters.</p>
+      </section>
+
+      <section class="section card">
+        <div class="search-shell">
+          <input id="resourceSearch" type="search" placeholder="Search notes, subjects, units, PYQs, lab programs..." autocomplete="off" />
+          <div class="filters">
+            <select id="filterBranch"><option value="All">All branches</option></select>
+            <select id="filterSemester"><option value="All">All semesters</option></select>
+            <select id="filterSubject"><option value="All">All subjects</option></select>
+            <select id="filterUnit"><option value="All">All units</option></select>
+            <select id="filterType"><option value="All">All resource types</option></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="meta-row"><span class="meta-chip" id="resourceCount">0 resources</span></div>
+        <div class="grid" id="resourceGrid"><div class="loading-state">Loading resource library...</div></div>
+        <div class="empty-state" id="resourceEmpty" hidden>
+          <h2>No matching resources found</h2>
+          <p>Try a simpler search or reset one of the filters.</p>
+        </div>
+      </section>
+
+      <section class="section card request-box">
+        <h2>Can't find what you need?</h2>
+        <form id="requestResourceForm">
+          <select id="requestType" required>
+            <option value="">Select request type</option>
+            <option>Notes</option>
+            <option>PYQs</option>
+            <option>Projects</option>
+            <option>Lab programs</option>
+            <option>Subjects</option>
+            <option>Other resources</option>
+          </select>
+          <textarea id="requestDetails" placeholder="Describe the resource you need"></textarea>
+          <button class="btn" type="submit">Request a Resource</button>
+          <p class="status-note">This UI is ready; connect your form/backend endpoint later.</p>
+        </form>
+      </section>
+
+      <section class="section" data-ad-slot></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="sitemap.xml">Sitemap</a>
+          <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

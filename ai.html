@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>CampusVault AI | CAMPUSVAULT</title>
+  <meta name="description" content="CampusVault AI interface for topic explanation, summary, MCQ generation, flashcards, viva prep, project ideas, and resume support." />
+  <link rel="canonical" href="https://campusvault.dpdns.org/ai.html" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="CampusVault AI" />
+  <meta property="og:description" content="Frontend-first AI assistant architecture with secure backend-ready abstraction and no exposed keys." />
+  <meta property="og:url" content="https://campusvault.dpdns.org/ai.html" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f7f9fc" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/campusvault.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="page-shell">
+    <div class="circuit-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><span class="brand-logo">CAMPUSVAULT</span><span class="brand-tag">CampusVault AI</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="resources.html">Resources</a><a class="nav-link" href="ai.html">AI</a><a class="nav-link" href="quizzes.html">Quizzes</a><a class="nav-link" href="projects.html">Projects</a><a class="nav-link" href="placement.html">Placement</a><a class="nav-link" href="resume.html">Resume</a><a class="nav-link" href="internships.html">Internships</a>
+        </nav>
+        <div class="header-actions"><a class="search-mini" href="resources.html">🔎 Search</a><button class="hamburger" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button></div>
+      </div>
+    </header>
+
+    <main id="main-content" class="container">
+      <section class="hero">
+        <div class="hero-kicker">Explain • Summarize • Quiz • Flashcards • Study Plans</div>
+        <h1>CampusVault AI</h1>
+        <p>AI interface ready for secure backend integration. No API keys are exposed in frontend code.</p>
+      </section>
+
+      <section class="section">
+        <h2>Quick AI Actions</h2>
+        <div class="ai-tool-list">
+          <button class="btn btn-outline" data-ai-action="Explain normalization in DBMS.">Explain a topic</button>
+          <button class="btn btn-outline" data-ai-action="Create 20 MCQs from this topic.">Generate MCQs</button>
+          <button class="btn btn-outline" data-ai-action="Make a 7-day ML study plan.">Generate study plan</button>
+          <button class="btn btn-outline" data-ai-action="Give me viva questions for my IoT project.">Generate viva questions</button>
+        </div>
+      </section>
+
+      <section class="section card">
+        <form id="aiPromptForm" class="request-box">
+          <label for="aiTool">AI tool mode</label>
+          <select id="aiTool">
+            <option value="explain">Explain topic</option>
+            <option value="summarize">Summarize notes</option>
+            <option value="mcq">Generate MCQs</option>
+            <option value="flashcards">Generate flashcards</option>
+            <option value="study-plan">Generate study plan</option>
+            <option value="viva">Generate viva questions</option>
+            <option value="project-ideas">Generate project ideas</option>
+            <option value="code">Explain code</option>
+            <option value="resume">Resume assistance</option>
+            <option value="interview">Interview preparation</option>
+          </select>
+          <textarea id="aiPrompt" placeholder="Type your prompt. Example: Explain normalization in DBMS."></textarea>
+          <button class="btn" type="submit">Run CampusVault AI</button>
+          <p class="status-note">Backend placeholder active: connect secure API route later.</p>
+        </form>
+      </section>
+
+      <section class="section card">
+        <h2>AI Response</h2>
+        <pre id="aiOutput" style="white-space:pre-wrap; margin:0; font:inherit;">No output yet.</pre>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner"><div class="footer-links"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div></div>
+    </footer>
+  </div>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

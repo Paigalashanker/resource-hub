@@ -1,679 +1,744 @@
-// ─── Form submission success popup ───
 (function () {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('submitted') === 'true') {
-    // Clean the URL
-    window.history.replaceState({}, '', window.location.pathname);
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-    // Create popup overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'site-modal';
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-labelledby', 'submissionTitle');
+  const STORAGE = {
+    bookmarks: 'campusvault_bookmarks_v1',
+    recent: 'campusvault_recent_v1',
+    quizHistory: 'campusvault_quiz_history_v1',
+    events: 'campusvault_events_v1'
+  };
 
-    const popup = document.createElement('div');
-    popup.className = 'site-modal-panel';
-    popup.innerHTML = `
-      <div style="font-size:44px;margin-bottom:12px;">✅</div>
-      <h2 id="submissionTitle" style="margin:0 0 10px;font-size:22px;font-weight:600;">Message Sent!</h2>
-      <p style="color:var(--text-secondary,#b2bbc5);margin:0 0 24px;font-size:14.5px;line-height:1.6;">Your message has been submitted successfully. I'll get back to you soon!</p>
-      <button id="popupClose" class="btn" style="min-height:40px;padding:10px 28px;">OK</button>
-    `;
-    overlay.appendChild(popup);
-    document.body.appendChild(overlay);
-
-    const closePopup = () => {
-      overlay.classList.add('is-closing');
-      window.setTimeout(() => overlay.remove(), 180);
-    };
-    document.getElementById('popupClose').addEventListener('click', closePopup);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) closePopup(); });
-    document.addEventListener('keydown', function closeOnEscape(event) {
-      if (event.key === 'Escape') {
-        closePopup();
-        document.removeEventListener('keydown', closeOnEscape);
-      }
-    });
-    document.getElementById('popupClose').focus();
+  function loadJSON(key, fallback = []) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
   }
-})();
 
-// Basic interactions: theme toggle, nav active link, hamburger menu
-(function () {
-  // Theme toggle with localStorage persistence
-  const THEME_KEY = 'alds_theme';
-  const saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'light') document.documentElement.classList.add('light-theme');
+  function saveJSON(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { }
+  }
 
-  const tbtn = document.querySelectorAll('.theme-toggle');
-  tbtn.forEach(b => {
-    b.addEventListener('click', () => {
-      document.documentElement.classList.toggle('light-theme');
-      const isLight = document.documentElement.classList.contains('light-theme');
-      localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
-      tbtn.forEach(btn => { btn.textContent = isLight ? '☀️' : '🌓'; });
-    });
-    // Set initial icon
-    if (document.documentElement.classList.contains('light-theme')) b.textContent = '☀️';
-  });
-
-  // Hamburger menu toggle
-  const hamburger = document.getElementById('menuToggle');
-  const nav = document.querySelector('.nav');
-  if (hamburger && nav) {
-    hamburger.setAttribute('aria-expanded', 'false');
-    hamburger.setAttribute('aria-controls', 'site-navigation');
-    nav.id = nav.id || 'site-navigation';
-    hamburger.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      const isOpen = nav.classList.contains('open');
-      hamburger.textContent = isOpen ? '✕' : '☰';
-      hamburger.setAttribute('aria-expanded', String(isOpen));
-    });
-    nav.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        hamburger.textContent = '☰';
-        hamburger.setAttribute('aria-expanded', 'false');
+  function canonicalUrl(pathname, params) {
+    const url = new URL(pathname, window.location.origin);
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') url.searchParams.set(key, String(value));
       });
-    });
-  }
-
-  const header = document.querySelector('.site-header');
-  const updateHeader = () => header && header.classList.toggle('is-scrolled', window.scrollY > 50);
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
-
-  // Highlight nav link based on location
-  const links = document.querySelectorAll('.nav-link');
-  links.forEach(a => {
-    if (location.pathname.endsWith(a.getAttribute('href'))) {
-      links.forEach(x => x.classList.remove('active'));
-      a.classList.add('active');
     }
-  });
-
-  // Scroll-reveal for .fade-in elements
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
-    });
-  }
-})();
-
-// ─── Shared accessible interaction primitives ───
-(function () {
-  document.querySelectorAll('.accordion-trigger').forEach(trigger => {
-    const item = trigger.closest('.accordion-item');
-    const panelId = trigger.getAttribute('aria-controls');
-    const panel = panelId ? document.getElementById(panelId) : item && item.querySelector('.accordion-panel');
-    if (!panel) return;
-    trigger.setAttribute('aria-expanded', item && item.classList.contains('is-open') ? 'true' : 'false');
-    panel.setAttribute('aria-hidden', trigger.getAttribute('aria-expanded') !== 'true' ? 'true' : 'false');
-    if (trigger.getAttribute('aria-expanded') === 'true') panel.style.maxHeight = `${panel.scrollHeight}px`;
-    trigger.addEventListener('click', () => {
-      const group = trigger.closest('[data-accordion]') || document;
-      group.querySelectorAll('.accordion-item.is-open').forEach(openItem => {
-        if (openItem === item) return;
-        const openTrigger = openItem.querySelector('.accordion-trigger');
-        const openPanel = openItem.querySelector('.accordion-panel');
-        openItem.classList.remove('is-open');
-        openTrigger && openTrigger.setAttribute('aria-expanded', 'false');
-        openPanel && (openPanel.style.maxHeight = '0px');
-        openPanel && openPanel.setAttribute('aria-hidden', 'true');
-      });
-      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-      trigger.setAttribute('aria-expanded', String(!isOpen));
-      panel.setAttribute('aria-hidden', String(isOpen));
-      item && item.classList.toggle('is-open', !isOpen);
-      panel.style.maxHeight = isOpen ? '0px' : `${panel.scrollHeight}px`;
-    });
-  });
-
-  document.querySelectorAll('[data-tab-group]').forEach(group => {
-    const tabs = [...group.querySelectorAll('[data-tab]')];
-    const panels = [...group.querySelectorAll('[data-tab-panel]')];
-    const activate = tab => {
-      const target = tab.dataset.tab;
-      tabs.forEach(candidate => {
-        const active = candidate === tab;
-        candidate.classList.toggle('active', active);
-        candidate.setAttribute('aria-selected', String(active));
-        candidate.setAttribute('tabindex', active ? '0' : '-1');
-      });
-      panels.forEach(panel => {
-        const active = panel.dataset.tabPanel === target;
-        panel.hidden = !active;
-        panel.classList.toggle('active', active);
-      });
-    };
-    tabs.forEach(tab => tab.addEventListener('click', () => activate(tab)));
-    tabs.forEach((tab, index) => tab.addEventListener('keydown', event => {
-      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault();
-      tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length].focus();
-      activate(tabs[(index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]);
-    }));
-    activate(tabs.find(tab => tab.classList.contains('active')) || tabs[0]);
-  });
-
-  const animateCounter = counter => {
-    const target = Number(counter.dataset.counter);
-    const duration = 900;
-    const start = performance.now();
-    const tick = now => {
-      const progress = Math.min((now - start) / duration, 1);
-      counter.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3))).toLocaleString();
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  if ('IntersectionObserver' in window) {
-    const counterObserver = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { animateCounter(entry.target); counterObserver.unobserve(entry.target); }
-    }), { threshold: 0.5 });
-    document.querySelectorAll('[data-counter]').forEach(counter => counterObserver.observe(counter));
+    return url.toString();
   }
 
-  document.querySelectorAll('[data-modal-open]').forEach(opener => {
-    const modal = document.getElementById(opener.dataset.modalOpen);
-    if (!modal) return;
-    let lastFocused;
-    const close = () => {
-      modal.classList.add('is-closing');
-      window.setTimeout(() => { modal.hidden = true; modal.classList.remove('is-closing'); }, 180);
-      document.body.classList.remove('modal-open');
-      lastFocused && lastFocused.focus();
-    };
-    opener.addEventListener('click', () => {
-      lastFocused = document.activeElement;
-      modal.hidden = false;
-      document.body.classList.add('modal-open');
-      const focusable = modal.querySelector('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
-      focusable && focusable.focus();
-    });
-    modal.querySelectorAll('[data-modal-close]').forEach(button => button.addEventListener('click', close));
-    modal.addEventListener('click', event => { if (event.target === modal) close(); });
-    modal.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
-  });
-})();
+  function trackEvent(name, payload = {}) {
+    const entry = { name, payload, at: new Date().toISOString() };
+    const history = loadJSON(STORAGE.events, []);
+    history.unshift(entry);
+    saveJSON(STORAGE.events, history.slice(0, 100));
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: name, ...payload });
+  }
 
-// ─── Auto-generate download cards from GitHub repo ───
-(function () {
-  const GITHUB_USER = 'paigalashanker';
-  const GITHUB_REPO = 'resource-hub';
-  const DOWNLOAD_PATH = 'assets/downloads';
-  const BRANCH = 'main';
-  const CACHE_KEY = 'alds_downloads_cache';
-  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in ms
+  function toast(message) {
+    let stack = $('.toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.className = 'toast-stack';
+      document.body.appendChild(stack);
+    }
+    const item = document.createElement('div');
+    item.className = 'toast';
+    item.textContent = message;
+    stack.appendChild(item);
+    setTimeout(() => item.remove(), 2400);
+  }
 
-  const grid = document.getElementById('downloadGrid');
-  const searchInput = document.getElementById('searchInput');
-  const fileCount = document.getElementById('fileCount');
-  const categoryFilters = document.getElementById('categoryFilters');
-  if (!grid) return;
-
-  let activeCategory = 'all';
-
-  // ── Cache helpers ──
-  function getCached() {
+  async function copyText(text) {
     try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const { ts, data } = JSON.parse(raw);
-      if (Date.now() - ts > CACHE_TTL) { localStorage.removeItem(CACHE_KEY); return null; }
-      return data;
-    } catch { return null; }
-  }
-  function setCache(data) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
-  }
-
-  // File-type badge labels & icons
-  const typeMap = {
-    pdf: { label: 'PDF', icon: '📄', cat: 'pdf' },
-    zip: { label: 'ZIP', icon: '📦', cat: 'zip' },
-    rar: { label: 'RAR', icon: '📦', cat: 'zip' },
-    doc: { label: 'DOC', icon: '📝', cat: 'doc' },
-    docx: { label: 'DOCX', icon: '📝', cat: 'doc' },
-    ppt: { label: 'PPT', icon: '📊', cat: 'doc' },
-    pptx: { label: 'PPTX', icon: '📊', cat: 'doc' },
-    xls: { label: 'XLS', icon: '📊', cat: 'doc' },
-    xlsx: { label: 'XLSX', icon: '📊', cat: 'doc' },
-    txt: { label: 'TXT', icon: '📃', cat: 'doc' },
-    png: { label: 'PNG', icon: '🖼️', cat: 'img' },
-    jpg: { label: 'JPG', icon: '🖼️', cat: 'img' },
-    jpeg: { label: 'JPEG', icon: '🖼️', cat: 'img' },
-    exe: { label: 'EXE', icon: '⚙️', cat: 'exe' },
-    msi: { label: 'MSI', icon: '⚙️', cat: 'exe' },
-    apk: { label: 'APK', icon: '📱', cat: 'exe' },
-  };
-
-  function getExt(name) {
-    const parts = name.split('.');
-    return parts.length > 1 ? parts.pop().toLowerCase() : '';
-  }
-
-  function prettyName(filename) {
-    let name = filename.replace(/\.[^.]+$/, '');
-    name = name.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
-    return name;
-  }
-
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
-  }
-
-  function formatSize(bytes) {
-    if (!bytes) return 'Local file';
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1048576).toFixed(1) + ' MB';
-  }
-
-  function buildCard(file) {
-    const ext = getExt(file.name);
-    const info = typeMap[ext] || { label: ext.toUpperCase() || 'FILE', icon: '📁', cat: 'other' };
-    const title = prettyName(file.name);
-    const downloadUrl = file.url || `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${DOWNLOAD_PATH}/${encodeURIComponent(file.name)}`;
-
-    const card = document.createElement('div');
-    card.className = 'download-card card';
-    card.dataset.category = info.cat || 'other';
-    card.dataset.ext = ext;
-    const safeTitle = escapeHtml(title);
-    const safeDescription = escapeHtml(file.description || `${info.label} file · ${formatSize(file.size)}`);
-    card.innerHTML = `
-      <span class="file-badge">${info.icon} ${info.label}</span>
-      <h3 style="margin:14px 0 8px;font-size:18px;">${safeTitle}</h3>
-      <p style="color:var(--text-secondary); margin-bottom:18px; font-size:13.5px;">
-        ${safeDescription}
-      </p>
-      <a class="btn btn-compact" href="${downloadUrl}" download="${escapeHtml(file.name)}">Download</a>
-    `;
-    return card;
-  }
-
-  function filterCards() {
-    const q = (searchInput ? searchInput.value : '').toLowerCase();
-    let visibleCount = 0;
-    grid.querySelectorAll('.download-card').forEach(card => {
-      const text = (card.textContent || '').toLowerCase();
-      const matchQuery = text.includes(q);
-      const matchCat = activeCategory === 'all' || card.dataset.category === activeCategory;
-      if (matchQuery && matchCat) {
-        card.style.display = 'block';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
-    if (fileCount) {
-      fileCount.textContent = `${visibleCount} file${visibleCount !== 1 ? 's' : ''}`;
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      const ok = document.execCommand('copy');
+      area.remove();
+      return ok;
     }
   }
 
-  async function loadDownloads() {
-    grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Resource directory is available. Optional file details may update shortly.</p>';
-    try {
-      let downloads = getCached();
-
-      if (!downloads) {
-        const localRes = await fetch('assets/data/downloads.json', { cache: 'no-store' });
-        if (!localRes.ok) throw new Error('Local download manifest unavailable');
-        const localFiles = await localRes.json();
-        downloads = localFiles.map(file => ({
-          ...file,
-          url: `assets/downloads/${encodeURIComponent(file.name)}`
-        }));
-        setCache(downloads);
-      }
-
-      if (downloads.length === 0) {
-        grid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">No downloadable files found yet.</p>';
-        if (fileCount) fileCount.textContent = '0 files';
+  async function shareItem({ title, text, url, eventName = 'resource_share' }) {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+        trackEvent(eventName, { method: 'native', url });
+        toast('Share sheet opened');
         return;
+      } catch {
+        // fall back
       }
+    }
+    const copied = await copyText(url);
+    if (copied) {
+      trackEvent(eventName, { method: 'copy', url });
+      toast('Link copied');
+    }
+  }
 
-      if (fileCount) fileCount.textContent = downloads.length + ' file' + (downloads.length !== 1 ? 's' : '');
+  function whatsappShare({ title, description, url }) {
+    const message = `📚 ${title}\n\n${description || 'I found this useful resource on CampusVault.'}\n\nCheck it out:\n${url}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener');
+    trackEvent('whatsapp_share', { url, title });
+  }
 
-      grid.innerHTML = '';
-      downloads.forEach(file => grid.appendChild(buildCard(file)));
+  function toggleBookmark(resourceId) {
+    const existing = loadJSON(STORAGE.bookmarks, []);
+    const updated = existing.includes(resourceId)
+      ? existing.filter(id => id !== resourceId)
+      : [...existing, resourceId];
+    saveJSON(STORAGE.bookmarks, updated);
+    return updated.includes(resourceId);
+  }
 
-      if (searchInput) {
-        searchInput.addEventListener('input', filterCards);
+  function isBookmarked(resourceId) {
+    return loadJSON(STORAGE.bookmarks, []).includes(resourceId);
+  }
+
+  function markRecent(resourceId) {
+    const recent = loadJSON(STORAGE.recent, []);
+    const updated = [resourceId, ...recent.filter(id => id !== resourceId)].slice(0, 20);
+    saveJSON(STORAGE.recent, updated);
+  }
+
+  function slug(text) {
+    return String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  function updateMobileNav() {
+    const hamburger = $('#menuToggle');
+    const nav = $('.nav');
+    if (!hamburger || !nav) return;
+    const toggle = () => {
+      const open = nav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+      hamburger.textContent = open ? '✕' : '☰';
+    };
+    hamburger.addEventListener('click', toggle);
+    $$('.nav-link', nav).forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.textContent = '☰';
+    }));
+  }
+
+  function markActiveNav() {
+    const current = window.location.pathname.split('/').pop() || 'index.html';
+    $$('.nav-link').forEach(link => {
+      const href = link.getAttribute('href');
+      link.classList.toggle('active', href === current || (current === '' && href === 'index.html'));
+    });
+  }
+
+  function setupGlobalSearch() {
+    const form = $('#globalSearchForm');
+    const input = $('#globalSearchInput');
+    if (!form || !input) return;
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const q = input.value.trim();
+      window.location.href = q ? `resources.html?q=${encodeURIComponent(q)}` : 'resources.html';
+    });
+  }
+
+  function setupRequestForm() {
+    const form = $('#requestResourceForm');
+    if (!form) return;
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      trackEvent('resource_request_submitted', {
+        type: $('#requestType') ? $('#requestType').value : 'other'
+      });
+      toast('Request saved locally. Connect backend to receive submissions.');
+      form.reset();
+    });
+  }
+
+  async function fetchData(path, fallback = []) {
+    try {
+      const response = await fetch(path, { cache: 'no-store' });
+      if (!response.ok) throw new Error('fetch failed');
+      return await response.json();
+    } catch {
+      return fallback;
+    }
+  }
+
+  async function mountResourceLibrary() {
+    const root = $('#resourceGrid');
+    if (!root) return;
+
+    const resources = await fetchData('assets/data/resources.json');
+    const search = $('#resourceSearch');
+    const count = $('#resourceCount');
+    const empty = $('#resourceEmpty');
+    const filters = {
+      branch: $('#filterBranch'),
+      semester: $('#filterSemester'),
+      subject: $('#filterSubject'),
+      unit: $('#filterUnit'),
+      type: $('#filterType')
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('q') && search) search.value = params.get('q');
+
+    const options = key => ['All', ...new Set(resources.map(item => item[key] || 'All'))];
+    Object.entries(filters).forEach(([key, select]) => {
+      if (!select) return;
+      options(key).forEach(value => {
+        const opt = document.createElement('option');
+        opt.value = value;
+        opt.textContent = value;
+        select.appendChild(opt);
+      });
+    });
+
+    const byId = new Map(resources.map(item => [item.id, item]));
+
+    function matches(resource) {
+      const q = (search?.value || '').trim().toLowerCase();
+      const text = [resource.title, resource.description, resource.subject, resource.type, resource.unit].join(' ').toLowerCase();
+      if (q && !text.includes(q)) return false;
+      for (const [key, select] of Object.entries(filters)) {
+        if (select && select.value !== 'All' && (resource[key] || 'All') !== select.value) return false;
       }
+      return true;
+    }
 
-      if (categoryFilters) {
-        categoryFilters.querySelectorAll('.category-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            categoryFilters.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            activeCategory = btn.dataset.category || 'all';
-            filterCards();
+    function resourceUrl(item) {
+      return canonicalUrl('resources.html', { resource: item.id });
+    }
+
+    function render(list) {
+      root.replaceChildren();
+      if (count) count.textContent = `${list.length} resource${list.length === 1 ? '' : 's'}`;
+      empty.hidden = list.length > 0;
+
+      list.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'resource-card';
+        card.id = `resource-${item.id}`;
+        const link = item.url || '';
+        const titleUrl = resourceUrl(item);
+        const related = (item.related || []).map(id => byId.get(id)).filter(Boolean);
+
+        card.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <div class="tag-row">
+            <span class="tag">${item.branch}</span>
+            <span class="tag">Sem ${item.semester}</span>
+            <span class="tag">${item.subject}</span>
+            <span class="tag">${item.unit}</span>
+            <span class="tag">${item.type}</span>
+            ${item.placeholder ? '<span class="tag">Placeholder</span>' : ''}
+          </div>
+          ${related.length ? `<div class="status-note">Related: ${related.map(r => `<a href="resources.html?resource=${encodeURIComponent(r.id)}">${r.title}</a>`).join(' • ')}</div>` : ''}
+          <div class="card-actions">
+            ${link ? `<a class="btn" href="${link}" target="_blank" rel="noopener" data-open-resource>Open</a>` : '<button class="btn btn-ghost" type="button" disabled>Open unavailable</button>'}
+            <button class="btn btn-outline" type="button" data-share>Share</button>
+            <button class="btn btn-outline" type="button" data-copy>Copy link</button>
+            <button class="btn btn-outline" type="button" data-whatsapp>WhatsApp</button>
+            <button class="btn btn-ghost" type="button" data-save>${isBookmarked(item.id) ? 'Saved' : 'Save'}</button>
+          </div>
+          <div class="status-note">Direct link: <a href="${titleUrl}">${titleUrl}</a></div>
+        `;
+
+        $('[data-open-resource]', card)?.addEventListener('click', () => {
+          markRecent(item.id);
+          trackEvent('resource_view', { id: item.id, type: item.type });
+          trackEvent('resource_download', { id: item.id, source: item.source });
+        });
+
+        $('[data-share]', card)?.addEventListener('click', () => {
+          shareItem({
+            title: item.title,
+            text: item.shareDescription || 'I found this useful resource on CampusVault.',
+            url: titleUrl,
+            eventName: 'resource_share'
           });
         });
+
+        $('[data-copy]', card)?.addEventListener('click', async () => {
+          const ok = await copyText(titleUrl);
+          if (ok) {
+            trackEvent('resource_share', { method: 'copy', id: item.id });
+            toast('Resource link copied');
+          }
+        });
+
+        $('[data-whatsapp]', card)?.addEventListener('click', () => whatsappShare({
+          title: item.title,
+          description: item.shareDescription || 'I found this useful resource on CampusVault.',
+          url: titleUrl
+        }));
+
+        $('[data-save]', card)?.addEventListener('click', event => {
+          const saved = toggleBookmark(item.id);
+          event.currentTarget.textContent = saved ? 'Saved' : 'Save';
+          toast(saved ? 'Saved to dashboard' : 'Removed from saved');
+        });
+
+        root.appendChild(card);
+      });
+
+      const deepId = params.get('resource');
+      if (deepId) {
+        const target = document.getElementById(`resource-${CSS.escape(deepId)}`);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.style.borderColor = 'var(--accent)';
+          setTimeout(() => { target.style.borderColor = ''; }, 2400);
+        }
       }
+    }
 
-    } catch (err) {
-      console.error('Failed to load downloads:', err);
-      grid.innerHTML = `
-        <p style="text-align:center; padding:30px; color:var(--text-secondary);">
-          The local resource list could not be loaded right now. <br>
-          <small>Check the repository files and refresh the page.</small>
-        </p>`;
+    const refresh = () => render(resources.filter(matches));
+    [search, ...Object.values(filters)].forEach(field => field && field.addEventListener('input', refresh));
+    refresh();
+  }
+
+  async function mountHomeCollections() {
+    const popular = $('#popularResources');
+    const trending = $('#trendingQuizzes');
+    const featuredProjects = $('#featuredProjects');
+    if (!popular && !trending && !featuredProjects) return;
+
+    const [resources, quizzes, projects] = await Promise.all([
+      fetchData('assets/data/resources.json'),
+      fetchData('assets/data/quizzes.json'),
+      fetchData('assets/data/projects.json')
+    ]);
+
+    if (popular) {
+      popular.replaceChildren();
+      resources.filter(item => !item.placeholder).slice(0, 4).forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'category-card';
+        card.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p><a class="btn btn-outline" href="resources.html?resource=${encodeURIComponent(item.id)}">Open resource</a>`;
+        popular.appendChild(card);
+      });
+    }
+
+    if (trending) {
+      trending.replaceChildren();
+      quizzes.slice(0, 3).forEach(quiz => {
+        const card = document.createElement('article');
+        card.className = 'quiz-card';
+        card.innerHTML = `<h3>${quiz.title}</h3><p>${quiz.subject} • ${quiz.difficulty}</p><a class="btn btn-outline" href="quizzes.html?quiz=${encodeURIComponent(quiz.id)}">Start quiz</a>`;
+        trending.appendChild(card);
+      });
+    }
+
+    if (featuredProjects) {
+      featuredProjects.replaceChildren();
+      projects.slice(0, 3).forEach(project => {
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <h3>${project.title}</h3>
+          <p>${project.description}</p>
+          <div class="meta-row"><span class="meta-chip">${project.category || 'Project'}</span><span class="meta-chip">${project.tech || 'Tech stack listed in project'}</span></div>
+          <a class="btn btn-outline" href="projects.html#${slug(project.title)}">View project</a>`;
+        featuredProjects.appendChild(card);
+      });
     }
   }
 
-  loadDownloads();
-})();
+  async function mountProjects() {
+    const root = $('#projectList');
+    if (!root) return;
+    const projects = await fetchData('assets/data/projects.json');
+    root.replaceChildren();
 
-// -- IoT (NPTEL) folder browser and reading-only PDF viewer --
-(function () {
-  const grid = document.getElementById('iotGrid');
-  if (!grid) return;
-
-  const status = document.getElementById('iotStatus');
-  const search = document.getElementById('iotSearch');
-  const breadcrumb = document.getElementById('driveBreadcrumb');
-  const viewer = document.getElementById('pdfViewer');
-  const frame = document.getElementById('pdfFrame');
-  const viewerTitle = document.getElementById('pdfViewerTitle');
-  const closeViewer = document.getElementById('pdfViewerClose');
-  let archive = null;
-  let currentItems = [];
-  let folderPath = [];
-  let viewerTrigger = null;
-
-  frame.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-  frame.setAttribute('referrerpolicy', 'no-referrer');
-
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
-  }
-
-  function folderAtPath() {
-    let items = archive.folders;
-    let folder = null;
-    folderPath.forEach(name => {
-      folder = items.find(item => item.name === name);
-      items = folder && folder.items ? folder.items : [];
-    });
-    return folder;
-  }
-
-  function renderBreadcrumb() {
-    breadcrumb.innerHTML = '<button class="breadcrumb-button" data-depth="-1">IoT (NPTEL)</button>';
-    folderPath.forEach((name, index) => {
-      breadcrumb.insertAdjacentHTML('beforeend', `<span class="breadcrumb-separator">/</span><button class="breadcrumb-button" data-depth="${index}">${escapeHtml(name)}</button>`);
-    });
-    breadcrumb.querySelectorAll('.breadcrumb-button').forEach(button => button.addEventListener('click', () => {
-      const depth = Number(button.dataset.depth);
-      folderPath = depth < 0 ? [] : folderPath.slice(0, depth + 1);
-      showFolder();
-    }));
-  }
-
-  function itemIcon(item) { return item.type === 'folder' ? '📁' : item.type === 'pdf' ? '📄' : '📝'; }
-
-  function openPdf(item) {
-    if (item.type !== 'pdf' || !item.path) return;
-    viewerTrigger = document.activeElement;
-    viewerTitle.textContent = item.name;
-    frame.src = `${item.path}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
-    viewer.hidden = false;
-    viewer.classList.remove('is-closing');
-    document.body.classList.add('viewer-open');
-    closeViewer.focus();
-  }
-
-  function closePdf() {
-    if (viewer.hidden || viewer.classList.contains('is-closing')) return;
-    viewer.classList.add('is-closing');
-    window.setTimeout(() => {
-      viewer.hidden = true;
-      viewer.classList.remove('is-closing');
-      frame.src = 'about:blank';
-      document.body.classList.remove('viewer-open');
-      viewerTrigger && viewerTrigger.focus();
-    }, 180);
-  }
-
-  function renderItems(items) {
-    grid.innerHTML = '';
-    if (!items.length) {
-      grid.innerHTML = '<p class="drive-empty">This folder has no mirrored files yet.</p>';
-      return;
-    }
-    items.forEach(item => {
+    projects.forEach(project => {
       const card = document.createElement('article');
-      card.className = 'drive-item';
-      const isFolder = item.type === 'folder';
-      const canRead = item.type === 'pdf' && item.path;
-      card.innerHTML = `<div class="drive-item-icon" aria-hidden="true">${itemIcon(item)}</div><div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : (item.type || 'File').toUpperCase()}</p></div><button class="drive-item-action" type="button" ${canRead || isFolder ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read PDF' : 'Unavailable'}</button>`;
-      const action = card.querySelector('button');
-      if (isFolder) action.addEventListener('click', () => { folderPath = [...folderPath, item.name]; showFolder(); });
-      if (canRead) action.addEventListener('click', () => openPdf(item));
-      grid.appendChild(card);
+      card.className = 'project-card';
+      const projectLink = canonicalUrl('projects.html', { project: project.id || slug(project.title) });
+      card.id = slug(project.title);
+      card.innerHTML = `
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+        <div class="meta-row">
+          <span class="meta-chip">${project.category || 'General'}</span>
+          <span class="meta-chip">${project.difficulty || 'Student level'}</span>
+          <span class="meta-chip">${project.tech || 'Tech listed'}</span>
+        </div>
+        <div class="card-actions">
+          ${project.github ? `<a class="btn" href="${project.github}" target="_blank" rel="noopener" data-project-view>Source</a>` : ''}
+          <button type="button" class="btn btn-outline" data-share-project>Share</button>
+          <button type="button" class="btn btn-outline" data-share-project-wa>WhatsApp</button>
+        </div>
+      `;
+
+      $('[data-project-view]', card)?.addEventListener('click', () => trackEvent('project_view', { title: project.title }));
+      $('[data-share-project]', card)?.addEventListener('click', () => {
+        shareItem({ title: project.title, text: project.description, url: projectLink, eventName: 'project_share' });
+      });
+      $('[data-share-project-wa]', card)?.addEventListener('click', () => {
+        whatsappShare({ title: project.title, description: project.description, url: projectLink });
+      });
+
+      root.appendChild(card);
     });
   }
 
-  function showFolder() {
-    const folder = folderAtPath();
-    currentItems = folderPath.length ? (folder ? folder.items || [] : []) : [...archive.folders.map(folder => ({ ...folder, type: 'folder' })), ...archive.files];
-    renderBreadcrumb();
-    filterItems();
+  async function mountQuizzes() {
+    const library = $('#quizLibrary');
+    const player = $('#quizPlayer');
+    if (!library || !player) return;
+
+    const quizzes = await fetchData('assets/data/quizzes.json');
+    const params = new URLSearchParams(window.location.search);
+
+    function renderLibrary() {
+      library.replaceChildren();
+      quizzes.forEach(quiz => {
+        const card = document.createElement('article');
+        card.className = 'quiz-card';
+        card.innerHTML = `
+          <h3>${quiz.title}</h3>
+          <p>${quiz.category} • ${quiz.difficulty} • ${quiz.questions.length} questions</p>
+          <div class="card-actions">
+            <button class="btn" type="button" data-start="${quiz.id}">Start quiz</button>
+            <button class="btn btn-outline" type="button" data-share="${quiz.id}">Share</button>
+          </div>
+        `;
+        $('[data-start]', card).addEventListener('click', () => startQuiz(quiz.id));
+        $('[data-share]', card).addEventListener('click', () => {
+          const link = canonicalUrl('quizzes.html', { quiz: quiz.id });
+          shareItem({ title: quiz.title, text: 'Try this quiz on CampusVault', url: link, eventName: 'quiz_share' });
+        });
+        library.appendChild(card);
+      });
+    }
+
+    function startQuiz(quizId) {
+      const quiz = quizzes.find(item => item.id === quizId);
+      if (!quiz) return;
+      trackEvent('quiz_started', { quiz: quizId });
+      let index = 0;
+      let score = 0;
+
+      const renderQuestion = () => {
+        const item = quiz.questions[index];
+        const progress = Math.round(((index + 1) / quiz.questions.length) * 100);
+        player.innerHTML = `
+          <div class="card">
+            <div class="meta-row"><span class="meta-chip">Question ${index + 1}/${quiz.questions.length}</span><span class="meta-chip">${quiz.subject}</span></div>
+            <div class="progress" aria-label="Quiz progress"><span style="width:${progress}%"></span></div>
+            <h3>${item.question}</h3>
+            <div class="grid" style="grid-template-columns:repeat(1,minmax(0,1fr)); margin-top:.6rem;">
+              ${item.options.map((option, optionIndex) => `<button class="btn btn-outline" type="button" data-option="${optionIndex}">${option}</button>`).join('')}
+            </div>
+          </div>
+        `;
+
+        $$('[data-option]', player).forEach(button => {
+          button.addEventListener('click', () => {
+            const selected = Number(button.dataset.option);
+            if (selected === item.answer) score += 1;
+            index += 1;
+            if (index < quiz.questions.length) {
+              renderQuestion();
+            } else {
+              renderResult();
+            }
+          });
+        });
+      };
+
+      const renderResult = () => {
+        const total = quiz.questions.length;
+        const resultLink = canonicalUrl('quizzes.html', { quiz: quiz.id });
+        trackEvent('quiz_completed', { quiz: quiz.id, score, total });
+
+        const history = loadJSON(STORAGE.quizHistory, []);
+        history.unshift({ quizId: quiz.id, title: quiz.title, score, total, at: new Date().toISOString() });
+        saveJSON(STORAGE.quizHistory, history.slice(0, 20));
+
+        player.innerHTML = `
+          <div class="card">
+            <h3>🎉 Your score: ${score}/${total}</h3>
+            <p>${score >= Math.ceil(total * 0.7) ? 'Great work!' : 'Keep practicing and retry this quiz.'}</p>
+            <div class="card-actions">
+              <button class="btn" type="button" id="retryQuiz">Retry quiz</button>
+              <button class="btn btn-outline" type="button" id="shareQuizResult">Share result</button>
+              <button class="btn btn-outline" type="button" id="nextQuiz">Next quiz</button>
+            </div>
+          </div>
+        `;
+
+        $('#retryQuiz').addEventListener('click', () => startQuiz(quiz.id));
+        $('#nextQuiz').addEventListener('click', () => {
+          const currentIndex = quizzes.findIndex(item => item.id === quiz.id);
+          const next = quizzes[(currentIndex + 1) % quizzes.length];
+          startQuiz(next.id);
+        });
+        $('#shareQuizResult').addEventListener('click', () => {
+          const text = `🎉 I scored ${score}/${total} on CampusVault! Can you beat me?`;
+          shareItem({ title: `${quiz.title} result`, text, url: resultLink, eventName: 'quiz_share' });
+        });
+      };
+
+      renderQuestion();
+    }
+
+    renderLibrary();
+    if (params.get('quiz')) startQuiz(params.get('quiz'));
   }
 
-  function filterItems() {
-    const query = search.value.trim().toLowerCase();
-    const visible = currentItems.filter(item => item.name.toLowerCase().includes(query));
-    renderItems(visible);
-    status.textContent = `${visible.length} item${visible.length === 1 ? '' : 's'}${query ? ' matching your search' : ''}`;
-  }
+  async function mountDashboard() {
+    const savedRoot = $('#savedResources');
+    const recentRoot = $('#recentResources');
+    const quizRoot = $('#quizHistory');
+    if (!savedRoot && !recentRoot && !quizRoot) return;
 
-  closeViewer.addEventListener('click', closePdf);
-  viewer.addEventListener('click', event => { if (event.target === viewer) closePdf(); });
-  search.addEventListener('input', filterItems);
-  document.body.classList.add('frontend-protected');
-  document.addEventListener('keydown', event => {
-    if (!viewer.hidden && event.key === 'Escape') closePdf();
-    const key = event.key.toLowerCase();
-    const blockedShortcut = event.key === 'F12' || (event.ctrlKey || event.metaKey) && ['s', 'p', 'u'].includes(key) || (event.ctrlKey || event.metaKey) && event.shiftKey && ['i', 'j', 'c'].includes(key);
-    if (blockedShortcut) event.preventDefault();
-  });
-  document.addEventListener('contextmenu', event => event.preventDefault());
-  document.addEventListener('dragstart', event => event.preventDefault());
+    const resources = await fetchData('assets/data/resources.json');
+    const byId = new Map(resources.map(item => [item.id, item]));
 
-  fetch('assets/data/iot-nptel.json', { cache: 'no-store' })
-    .then(response => { if (!response.ok) throw new Error('Manifest unavailable'); return response.json(); })
-    .then(data => { archive = data; showFolder(); })
-    .catch(() => { status.textContent = 'Archive manifest unavailable.'; grid.innerHTML = '<p class="drive-empty">Add assets/data/iot-nptel.json to load this archive.</p>'; });
-})();
-
-// ─── Auto-generate project cards from projects.json ───
-(function () {
-  const GITHUB_USER = 'paigalashanker';
-  const GITHUB_REPO = 'resource-hub';
-  const BRANCH = 'main';
-  const JSON_PATH = 'assets/data/projects.json';
-  const CACHE_KEY = 'alds_projects_cache';
-  const CACHE_TTL = 5 * 60 * 1000;
-
-  const fullGrid = document.getElementById('projectList');
-  const previewGrid = document.getElementById('projectGrid');
-  if (!fullGrid && !previewGrid) return;
-
-  function getCached() {
-    try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const { ts, data } = JSON.parse(raw);
-      if (Date.now() - ts > CACHE_TTL) { localStorage.removeItem(CACHE_KEY); return null; }
-      return data;
-    } catch { return null; }
-  }
-  function setCache(data) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
-  }
-
-  function buildFullCard(p) {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <h3>${p.title}</h3>
-      <p>${p.description}</p>
-      ${p.tech ? `<div class="project-tags"><span>${p.tech}</span></div>` : ''}
-      <div style="display:flex; gap:10px; margin: 0 22px 20px; flex-wrap:wrap;">
-        ${p.github ? `<a class="btn btn-compact btn-outline" href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : ''}
-        ${p.demo ? `<a class="btn btn-compact" href="${p.demo}" target="_blank" rel="noopener">Live Demo</a>` : ''}
-      </div>
-    `;
-    return card;
-  }
-
-  function buildPreviewCard(p) {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <h4>${p.title}</h4>
-      <p>${p.description}</p>
-      <a href="projects.html" class="link">View Details &rarr;</a>
-    `;
-    return card;
-  }
-
-  async function loadProjects() {
-    if (fullGrid) fullGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Project directory is available. Optional details may update shortly.</p>';
-    if (previewGrid) previewGrid.innerHTML = '<p style="text-align:center;padding:30px;color:var(--text-secondary);">Featured projects are ready below.</p>';
-
-    try {
-      let projects = getCached();
-
-      if (!projects) {
-        const localRes = await fetch(JSON_PATH, { cache: 'no-store' });
-        if (!localRes.ok) throw new Error('Local project data unavailable');
-        projects = await localRes.json();
-        if (projects) setCache(projects);
+    if (savedRoot) {
+      const saved = loadJSON(STORAGE.bookmarks, []);
+      savedRoot.replaceChildren();
+      if (!saved.length) {
+        savedRoot.innerHTML = '<div class="empty-state">No saved resources yet. Use the Save button in Resources.</div>';
+      } else {
+        saved.forEach(id => {
+          const item = byId.get(id);
+          if (!item) return;
+          const card = document.createElement('article');
+          card.className = 'info-card';
+          card.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p><a class="btn btn-outline" href="resources.html?resource=${encodeURIComponent(item.id)}">Open</a>`;
+          savedRoot.appendChild(card);
+        });
       }
+    }
 
-      if (!projects || projects.length === 0) {
-        const msg = '<p style="text-align:center;color:var(--text-secondary);">No projects added yet.</p>';
-        if (fullGrid) fullGrid.innerHTML = msg;
-        if (previewGrid) previewGrid.innerHTML = msg;
+    if (recentRoot) {
+      const recent = loadJSON(STORAGE.recent, []);
+      recentRoot.replaceChildren();
+      if (!recent.length) {
+        recentRoot.innerHTML = '<div class="empty-state">No recent activity yet.</div>';
+      } else {
+        recent.slice(0, 6).forEach(id => {
+          const item = byId.get(id);
+          if (!item) return;
+          const row = document.createElement('article');
+          row.className = 'info-card';
+          row.innerHTML = `<h3>${item.title}</h3><p>${item.subject} • ${item.type}</p>`;
+          recentRoot.appendChild(row);
+        });
+      }
+    }
+
+    if (quizRoot) {
+      const history = loadJSON(STORAGE.quizHistory, []);
+      quizRoot.replaceChildren();
+      if (!history.length) {
+        quizRoot.innerHTML = '<div class="empty-state">No quiz attempts yet.</div>';
+      } else {
+        history.slice(0, 8).forEach(entry => {
+          const row = document.createElement('article');
+          row.className = 'info-card';
+          row.innerHTML = `<h3>${entry.title}</h3><p>Score ${entry.score}/${entry.total} • ${new Date(entry.at).toLocaleString()}</p>`;
+          quizRoot.appendChild(row);
+        });
+      }
+    }
+  }
+
+  function mountAIPlayground() {
+    const form = $('#aiPromptForm');
+    const output = $('#aiOutput');
+    if (!form || !output) return;
+
+    const AIService = window.CampusVaultAIService || {
+      async run({ tool, prompt }) {
+        return {
+          status: 'placeholder',
+          text: `CampusVault AI backend is not connected yet.\n\nTool: ${tool}\nPrompt: ${prompt}\n\nConnect this UI to your secure backend API route to generate real responses.`
+        };
+      }
+    };
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const tool = $('#aiTool').value;
+      const prompt = $('#aiPrompt').value.trim();
+      if (!prompt) return;
+      output.textContent = 'Generating response...';
+      const result = await AIService.run({ tool, prompt });
+      output.textContent = result.text;
+      trackEvent('ai_tool_used', { tool });
+    });
+
+    $$('[data-ai-action]').forEach(button => {
+      button.addEventListener('click', () => {
+        const prompt = button.dataset.aiAction;
+        $('#aiPrompt').value = prompt;
+        $('#aiPrompt').focus();
+      });
+    });
+  }
+
+  function mountIotArchive() {
+    const grid = $('#iotGrid');
+    if (!grid) return;
+
+    const status = $('#iotStatus');
+    const search = $('#iotSearch');
+    const breadcrumb = $('#driveBreadcrumb');
+    const viewer = $('#pdfViewer');
+    const frame = $('#pdfFrame');
+    const viewerTitle = $('#pdfViewerTitle');
+    const closeViewer = $('#pdfViewerClose');
+
+    let archive = null;
+    let currentItems = [];
+    let folderPath = [];
+    let viewerTrigger = null;
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[ch]));
+    }
+
+    function folderAtPath() {
+      let items = archive.folders;
+      let folder = null;
+      folderPath.forEach(name => {
+        folder = items.find(item => item.name === name);
+        items = folder && folder.items ? folder.items : [];
+      });
+      return folder;
+    }
+
+    function renderBreadcrumb() {
+      breadcrumb.innerHTML = '<button class="breadcrumb-button" data-depth="-1">IoT (NPTEL)</button>';
+      folderPath.forEach((name, index) => {
+        breadcrumb.insertAdjacentHTML('beforeend', `<span class="breadcrumb-separator">/</span><button class="breadcrumb-button" data-depth="${index}">${escapeHtml(name)}</button>`);
+      });
+      $$('.breadcrumb-button', breadcrumb).forEach(button => {
+        button.addEventListener('click', () => {
+          const depth = Number(button.dataset.depth);
+          folderPath = depth < 0 ? [] : folderPath.slice(0, depth + 1);
+          showFolder();
+        });
+      });
+    }
+
+    function openPdf(item) {
+      viewerTrigger = document.activeElement;
+      viewerTitle.textContent = item.name;
+      frame.src = `${item.path}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
+      viewer.hidden = false;
+      document.body.classList.add('viewer-open', 'frontend-protected');
+      closeViewer.focus();
+    }
+
+    function closePdf() {
+      viewer.hidden = true;
+      frame.src = 'about:blank';
+      document.body.classList.remove('viewer-open', 'frontend-protected');
+      if (viewerTrigger) viewerTrigger.focus();
+    }
+
+    function itemIcon(item) {
+      if (item.type === 'folder') return '📁';
+      if (item.type === 'pdf') return '📄';
+      return '📝';
+    }
+
+    function renderItems(items) {
+      grid.replaceChildren();
+      if (!items.length) {
+        grid.innerHTML = '<div class="empty-state">This folder has no mirrored files yet.</div>';
         return;
       }
 
-      // Full grid on projects.html
-      if (fullGrid) {
-        fullGrid.innerHTML = '';
-        projects.forEach(p => fullGrid.appendChild(buildFullCard(p)));
-      }
-
-      // Preview grid on index.html (show first 3)
-      if (previewGrid) {
-        previewGrid.innerHTML = '';
-        projects.slice(0, 3).forEach(p => previewGrid.appendChild(buildPreviewCard(p)));
-      }
-
-    } catch (err) {
-      console.error('Failed to load projects:', err);
-      const errMsg = `<p style="text-align:center; padding:30px; color:var(--text-muted);">Could not load projects.</p>`;
-      if (fullGrid) fullGrid.innerHTML = errMsg;
-      if (previewGrid) previewGrid.innerHTML = errMsg;
+      items.forEach(item => {
+        const row = document.createElement('article');
+        row.className = 'drive-item';
+        const isFolder = item.type === 'folder';
+        const canRead = item.type === 'pdf' && item.path;
+        row.innerHTML = `
+          <div aria-hidden="true">${itemIcon(item)}</div>
+          <div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : item.type || 'File'}</p></div>
+          <button class="drive-item-action" type="button" ${isFolder || canRead ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read PDF' : 'Unavailable'}</button>
+        `;
+        const action = $('.drive-item-action', row);
+        if (isFolder) action.addEventListener('click', () => { folderPath = [...folderPath, item.name]; showFolder(); });
+        if (canRead) action.addEventListener('click', () => openPdf(item));
+        grid.appendChild(row);
+      });
     }
+
+    function filterItems() {
+      const query = (search.value || '').trim().toLowerCase();
+      const visible = currentItems.filter(item => item.name.toLowerCase().includes(query));
+      renderItems(visible);
+      status.textContent = `${visible.length} item${visible.length === 1 ? '' : 's'}${query ? ' matching your search' : ''}`;
+    }
+
+    function showFolder() {
+      const folder = folderAtPath();
+      currentItems = folderPath.length
+        ? (folder ? folder.items || [] : [])
+        : [...archive.folders.map(folder => ({ ...folder, type: 'folder' })), ...archive.files];
+      renderBreadcrumb();
+      filterItems();
+    }
+
+    closeViewer.addEventListener('click', closePdf);
+    viewer.addEventListener('click', event => { if (event.target === viewer) closePdf(); });
+    document.addEventListener('keydown', event => { if (!viewer.hidden && event.key === 'Escape') closePdf(); });
+    search.addEventListener('input', filterItems);
+
+    fetch('assets/data/iot-nptel.json', { cache: 'no-store' })
+      .then(response => {
+        if (!response.ok) throw new Error('missing');
+        return response.json();
+      })
+      .then(data => {
+        archive = data;
+        showFolder();
+      })
+      .catch(() => {
+        status.textContent = 'Archive manifest unavailable.';
+        grid.innerHTML = '<div class="empty-state">Add assets/data/iot-nptel.json to load this archive.</div>';
+      });
   }
 
-  loadProjects();
-})();
-
-// ─── Daily Quote Widget (Quotable API) ───
-(function () {
-  const textEl = document.getElementById('quoteText');
-  const authorEl = document.getElementById('quoteAuthor');
-  const refreshBtn = document.getElementById('quoteRefresh');
-  if (!textEl) return;
-
-  async function fetchQuote() {
-    textEl.textContent = 'A useful idea starts with a clear question.';
-    authorEl.textContent = '— CampusVault note';
-    try {
-      const res = await fetch('https://api.quotable.io/random?maxLength=120');
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      textEl.textContent = data.content;
-      authorEl.textContent = '— ' + data.author;
-    } catch {
-      // Fallback quotes
-      const fallback = [
-        { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
-        { text: 'Talk is cheap. Show me the code.', author: 'Linus Torvalds' },
-        { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
-        { text: 'Code is like humor. When you have to explain it, it\'s bad.', author: 'Cory House' },
-        { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' }
-      ];
-      const q = fallback[Math.floor(Math.random() * fallback.length)];
-      textEl.textContent = q.text;
-      authorEl.textContent = '— ' + q.author;
-    }
+  function setupAdPlaceholders() {
+    $$('[data-ad-slot]').forEach(slot => {
+      slot.innerHTML = '<div class="status-note">Ad placeholder (non-intrusive). Connect AdSense unit ID when ready.</div>';
+    });
   }
 
-  fetchQuote();
-  if (refreshBtn) refreshBtn.addEventListener('click', fetchQuote);
-})();
+  updateMobileNav();
+  markActiveNav();
+  setupGlobalSearch();
+  setupRequestForm();
+  setupAdPlaceholders();
 
-// ─── Weather Widget (OpenWeatherMap) ───
-(function () {
-  const body = document.getElementById('weatherBody');
-  if (!body) return;
-  body.innerHTML = '<p class="weather-loading">Live weather is not enabled in this static site. Your location is never requested.</p>';
-})();
+  Promise.all([
+    mountHomeCollections(),
+    mountResourceLibrary(),
+    mountProjects(),
+    mountQuizzes(),
+    mountDashboard()
+  ]).catch(() => { });
 
-// ─── Programming Joke Widget (JokeAPI) ───
-(function () {
-  const jokeBody = document.getElementById('jokeBody');
-  const refreshBtn = document.getElementById('jokeRefresh');
-  if (!jokeBody) return;
-
-  async function fetchJoke() {
-    jokeBody.innerHTML = '<p class="joke-setup">Optional programming joke unavailable. Your resources remain available.</p>';
-    try {
-      const res = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart');
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      if (data.type === 'twopart') {
-        jokeBody.replaceChildren();
-        const setup = document.createElement('p');
-        setup.className = 'joke-setup';
-        setup.textContent = data.setup;
-        const punchline = document.createElement('p');
-        punchline.className = 'joke-punchline';
-        punchline.textContent = data.delivery;
-        jokeBody.append(setup, punchline);
-      } else {
-        const joke = document.createElement('p');
-        joke.className = 'joke-setup';
-        joke.textContent = data.joke;
-        jokeBody.replaceChildren(joke);
-      }
-    } catch {
-      jokeBody.innerHTML = '<p class="joke-setup">Why do programmers prefer dark mode?</p><p class="joke-punchline">Because light attracts bugs! 🐛</p>';
-    }
-  }
-
-  fetchJoke();
-  if (refreshBtn) refreshBtn.addEventListener('click', fetchJoke);
+  mountAIPlayground();
+  mountIotArchive();
 })();

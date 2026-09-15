@@ -1,142 +1,77 @@
 <!doctype html>
-<html lang="en" class="light-theme">
-
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#eef7fc" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="format-detection" content="telephone=no" />
-  <title>Projects — RESOURCE-HUB</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4394486687199900"
-    crossorigin="anonymous"></script>
-  <meta name="description" content="Explore AI, Data Science, IoT, and software projects from RESOURCE-HUB." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Projects Hub | CAMPUSVAULT</title>
+  <meta name="description" content="Explore CampusVault student projects across AI/ML, data science, IoT, web, Python, and Java categories." />
   <link rel="canonical" href="https://campusvault.dpdns.org/projects.html" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Projects — CampusVault" />
-  <meta property="og:description" content="Explore AI, Data Science, IoT, and software projects from CampusVault." />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="Projects Hub | CAMPUSVAULT" />
+  <meta property="og:description" content="Project cards with difficulty, technologies, and easy sharing for student collaboration." />
   <meta property="og:url" content="https://campusvault.dpdns.org/projects.html" />
   <meta property="og:type" content="website" />
-
-  <!-- Pixel-inspired project typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap">
-
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="theme-color" content="#f7f9fc" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/campusvault.css" />
 </head>
-
 <body>
-
-  <!-- SKIP NAVIGATION -->
   <a class="skip-link" href="#main-content">Skip to main content</a>
-
-  <!-- NAVBAR -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand">
-        <div class="logo">RESOURCE-HUB</div>
-        <div class="tag">Projects</div>
-      </a>
-
-      <nav class="nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="projects.html" class="nav-link active">Projects</a>
-        <a href="downloads.html" class="nav-link">Downloads</a>
-        <a href="iot.html" class="nav-link">IoT (NPTEL)</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-      <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
-    </div>
-  </header>
-
-  <!-- HERO TITLE -->
-  <main class="container" id="main-content">
-
-    <section class="hero" style="padding: 68px 0 28px;">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Portfolio &amp; Prototypes
+  <div class="page-shell">
+    <div class="circuit-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><span class="brand-logo">CAMPUSVAULT</span><span class="brand-tag">Projects Hub</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="resources.html">Resources</a>
+          <a class="nav-link" href="ai.html">AI</a>
+          <a class="nav-link" href="quizzes.html">Quizzes</a>
+          <a class="nav-link" href="projects.html">Projects</a>
+          <a class="nav-link" href="placement.html">Placement</a>
+          <a class="nav-link" href="resume.html">Resume</a>
+          <a class="nav-link" href="internships.html">Internships</a>
+        </nav>
+        <div class="header-actions">
+          <a class="search-mini" href="resources.html">🔎 Search</a>
+          <button class="hamburger" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        </div>
       </div>
-      <h1>
-        My <span class="highlight">Projects</span>
-      </h1>
-      <p class="lead">
-        A curated suite of intelligent tools, experiments, and applied machine learning systems
-        engineered with clarity, structure, and curiosity.
-      </p>
-    </section>
+    </header>
 
-    <!-- PROJECT GRID (auto-populated from projects.json) -->
-    <div class="grid" id="projectList" style="margin-top: 16px;">
-      <article class="project-card">
-        <h3>DSA in Java</h3>
-        <p>A structured journey through core Data Structures and Algorithms topics in Java.</p><a
-          class="btn btn-compact btn-outline" href="https://github.com/Paigalashanker/dsa-in-java" target="_blank"
-          rel="noopener noreferrer">Source code</a>
-      </article>
-      <article class="project-card">
-        <h3>QR Code Generator</h3>
-        <p>A client-side browser tool that creates offline-readable QR codes.</p><a class="btn btn-compact btn-outline"
-          href="https://github.com/Paigalashanker/QR" target="_blank" rel="noopener noreferrer">Source code</a>
-      </article>
-      <article class="project-card">
-        <h3>IoT Air Quality Dashboard</h3>
-        <p>An ESP8266 and Firebase dashboard for air-quality monitoring and historical data.</p><a
-          class="btn btn-compact btn-outline" href="https://github.com/Paigalashanker/iot-air-quality-dashboard"
-          target="_blank" rel="noopener noreferrer">Source code</a>
-      </article>
-    </div>
+    <main id="main-content" class="container">
+      <section class="hero">
+        <div class="hero-kicker">AI/ML • Data Science • IoT • Web • Python • Java</div>
+        <h1>Project Hub</h1>
+        <p>Discover practical student projects with concise details, technologies, and share-ready links for team learning and viva preparation.</p>
+      </section>
 
-    <p class="note" style="margin-top: 24px; text-align: center;">
-      To add projects: edit <code>assets/data/projects.json</code>, commit &amp; push — cards update automatically.
-    </p>
+      <section class="section">
+        <div class="grid" id="projectList"><div class="loading-state">Loading project cards...</div></div>
+      </section>
 
-  </main>
+      <section class="section card">
+        <h2>Project Detail Architecture (Ready for expansion)</h2>
+        <div class="grid">
+          <article class="info-card"><h3>Problem statement</h3><p>Attach concise problem context per project.</p></article>
+          <article class="info-card"><h3>Implementation guide</h3><p>Add a clear build/run approach and deployment notes.</p></article>
+          <article class="info-card"><h3>Documentation / PPT / Viva</h3><p>Add these fields when available without fabricating links.</p></article>
+        </div>
+      </section>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-dev">
-        Developed &amp; Maintained by
-        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a>
+      <section class="section" data-ad-slot></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-links">
+          <a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a><a href="resources.html">Resources</a>
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span>•</span>
-        <a href="mailto:paigalashanker@gmail.com">Email</a>
-        <span>•</span>
-        <a href="about.html">About</a>
-        <span>•</span>
-        <a href="privacy.html">Privacy</a>
-        <span>•</span>
-        <a href="terms.html">Terms</a>
-        <span>•</span>
-        <a href="disclaimer.html">Disclaimer</a>
-      </div>
-      <div class="footer-meta">AI &amp; DS • 3rd Year • SREC (2024–2028)</div>
-    </div>
-  </footer>
-
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div class="status-left">
-      <span>Ready</span>
-    </div>
-    <div class="status-right">
-      <span>UTF-8</span>
-      <span>LF</span>
-      <span>Projects Showcase</span>
-      <span>Go Live</span>
-    </div>
+    </footer>
   </div>
-
-  <script src="assets/js/math-floaters.js"></script>
   <script src="assets/js/script.js"></script>
-
 </body>
-
 </html>

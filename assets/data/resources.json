@@ -1,0 +1,72 @@
+[
+  {
+    "id": "aids-syllabus-r23",
+    "title": "AI & DS R23 Course Structure and Syllabus",
+    "description": "JNTUA AI & Data Science four-year syllabus reference PDF.",
+    "branch": "AI & DS",
+    "semester": "All",
+    "subject": "Curriculum",
+    "unit": "Syllabus",
+    "type": "Study Materials",
+    "source": "local",
+    "url": "assets/downloads/6.JNTUA-B.Tech_.-AI-DS-R23-IV-Years-Course-Structure-and-Syllabus.pdf",
+    "shareDescription": "Official syllabus reference for AI & DS students.",
+    "related": ["dsa-reference-book"]
+  },
+  {
+    "id": "dsa-reference-book",
+    "title": "DSA from Scratch",
+    "description": "Data Structures and Algorithms reference document for study and revision.",
+    "branch": "CSE",
+    "semester": "3",
+    "subject": "Data Structures",
+    "unit": "Core Concepts",
+    "type": "Notes",
+    "source": "local",
+    "url": "assets/downloads/dsa%20from%20scratch.pdf",
+    "shareDescription": "Useful DSA revision material with core concepts.",
+    "related": ["aids-syllabus-r23"]
+  },
+  {
+    "id": "iot-assignment-week1",
+    "title": "IoT NPTEL Assignment W1",
+    "description": "NPTEL IoT assignment archive PDF (Week 1).",
+    "branch": "ECE",
+    "semester": "5",
+    "subject": "Internet of Things",
+    "unit": "Assignments",
+    "type": "Previous Year Questions",
+    "source": "drive",
+    "url": "https://drive.google.com/file/d/1zUTY4QEwFXjOfRnuh7TBrZKeB6H7C5Vr/preview",
+    "shareDescription": "IoT NPTEL assignment sheet for practice.",
+    "related": ["iot-assignment-week2"]
+  },
+  {
+    "id": "iot-assignment-week2",
+    "title": "IoT NPTEL Assignment W2",
+    "description": "NPTEL IoT assignment archive PDF (Week 2).",
+    "branch": "ECE",
+    "semester": "5",
+    "subject": "Internet of Things",
+    "unit": "Assignments",
+    "type": "Practice Questions",
+    "source": "drive",
+    "url": "https://drive.google.com/file/d/1ycOXxo7z_VExdCnTO7hTuKsVYI_bFfw5/preview",
+    "shareDescription": "Week 2 IoT assignment resource from the NPTEL archive.",
+    "related": ["iot-assignment-week1"]
+  },
+  {
+    "id": "resource-request-placeholder",
+    "title": "Request Missing Resource",
+    "description": "Placeholder entry for students to request notes, PYQs, projects, and lab resources.",
+    "branch": "All",
+    "semester": "All",
+    "subject": "CampusVault",
+    "unit": "Requests",
+    "type": "Important Questions",
+    "source": "placeholder",
+    "placeholder": true,
+    "shareDescription": "Use CampusVault request flow to ask for missing resources.",
+    "related": []
+  }
+]

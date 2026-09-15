@@ -1,95 +1,81 @@
 <!doctype html>
-<html lang="en" class="light-theme">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="theme-color" content="#eef7fc" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="description" content="Browse the RESOURCE-HUB IoT NPTEL course archive and reading materials." />
-    <link rel="canonical" href="https://campusvault.dpdns.org/iot.html" />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="IoT (NPTEL) — CampusVault" />
-    <meta property="og:description" content="Browse the CampusVault IoT NPTEL course archive and reading materials." />
-    <meta property="og:url" content="https://campusvault.dpdns.org/iot.html" />
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; frame-src 'self' https://drive.google.com https://*.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'none'">
-    <title>IoT (NPTEL) — RESOURCE-HUB</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4394486687199900"
-        crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap">
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>IoT (NPTEL) Archive | CAMPUSVAULT</title>
+  <meta name="description" content="Browse CampusVault IoT NPTEL archive in a reading-oriented file browser with search and folder navigation." />
+  <link rel="canonical" href="https://campusvault.dpdns.org/iot.html" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="IoT NPTEL Archive | CAMPUSVAULT" />
+  <meta property="og:description" content="Read IoT NPTEL files with a static-friendly archive browser." />
+  <meta property="og:url" content="https://campusvault.dpdns.org/iot.html" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f7f9fc" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/campusvault.css" />
 </head>
-
 <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="page-shell">
+    <div class="circuit-bg" aria-hidden="true"></div>
     <header class="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="brand">
-                <div class="logo">RESOURCE-HUB</div>
-                <div class="tag">IoT (NPTEL)</div>
-            </a>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="downloads.html" class="nav-link">Downloads</a>
-                <a href="iot.html" class="nav-link active">IoT (NPTEL)</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
-            <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
-        </div>
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><span class="brand-logo">CAMPUSVAULT</span><span class="brand-tag">IoT (NPTEL)</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="resources.html">Resources</a>
+          <a class="nav-link" href="ai.html">AI</a>
+          <a class="nav-link" href="quizzes.html">Quizzes</a>
+          <a class="nav-link" href="projects.html">Projects</a>
+          <a class="nav-link" href="placement.html">Placement</a>
+          <a class="nav-link" href="resume.html">Resume</a>
+          <a class="nav-link" href="internships.html">Internships</a>
+        </nav>
+        <div class="header-actions"><button class="hamburger" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button></div>
+      </div>
     </header>
 
-    <main class="container" id="main-content">
-        <section class="hero iot-hero">
-            <div class="hero-badge"><span class="badge-dot"></span>Course Archive · NPTEL</div>
-            <h1>IoT <span class="highlight">(NPTEL)</span></h1>
-            <p class="lead">A focused course archive with a familiar folder view. Open PDFs here for reading without
-                exposing download controls.</p>
-        </section>
-        <section class="drive-toolbar card fade-in" aria-label="Archive controls">
-            <div class="drive-breadcrumb" id="driveBreadcrumb"><span class="breadcrumb-current">IoT (NPTEL)</span></div>
-            <div class="drive-actions">
-                <label class="drive-search-label" for="iotSearch">Search</label>
-                <input id="iotSearch" class="search-input drive-search" type="search"
-                    placeholder="Search this folder..." autocomplete="off">
-            </div>
-        </section>
-        <div class="drive-status" id="iotStatus" aria-live="polite">Archive contents are ready to browse.</div>
-        <section class="drive-grid" id="iotGrid" aria-label="IoT NPTEL files and folders"></section>
-        <section class="archive-note card fade-in">
-            <h2>Reading-only archive</h2>
-            <p>PDFs open in the site viewer with download and print controls disabled. Static hosting can deter casual
-                scraping, but true access control requires authenticated server-side file delivery.</p>
-        </section>
+    <main id="main-content" class="container">
+      <section class="hero">
+        <div class="hero-kicker">Course Archive · NPTEL</div>
+        <h1>IoT Archive</h1>
+        <p>Search and browse IoT archive folders and open available PDFs in a focused reading viewer.</p>
+      </section>
+
+      <section class="section card drive-toolbar" aria-label="Archive controls">
+        <div class="drive-breadcrumb" id="driveBreadcrumb"><span class="meta-chip">IoT (NPTEL)</span></div>
+        <input id="iotSearch" type="search" placeholder="Search this folder..." autocomplete="off" />
+      </section>
+
+      <p class="status-note" id="iotStatus" aria-live="polite">Archive contents are ready to browse.</p>
+      <section class="section drive-grid" id="iotGrid" aria-label="IoT files and folders"></section>
+
+      <section class="section card">
+        <h2>Reading-only archive note</h2>
+        <p class="section-lead">Static hosting can reduce casual scraping but cannot enforce strict access control. Use secure backend delivery if hard protection is needed.</p>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-dev">Developed &amp; Maintained by <a href="https://github.com/Paigalashanker"
-                    target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a></div>
-            <div class="footer-links"><a href="https://github.com/Paigalashanker" target="_blank"
-                    rel="noopener noreferrer">GitHub</a><span>•</span><a
-                    href="mailto:paigalashanker@gmail.com">Email</a><span>•</span><a
-                    href="about.html">About</a><span>•</span><a href="privacy.html">Privacy</a><span>•</span><a
-                    href="terms.html">Terms</a><span>•</span><a href="disclaimer.html">Disclaimer</a></div>
-            <div class="footer-meta">AI &amp; DS • 3rd Year • SREC (2024–2028)</div>
-        </div>
+      <div class="container footer-inner">
+        <div class="footer-links"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div>
+      </div>
     </footer>
-    <div class="pdf-viewer" id="pdfViewer" hidden role="dialog" aria-modal="true" aria-labelledby="pdfViewerTitle">
-        <div class="pdf-viewer-panel">
-            <div class="pdf-viewer-header">
-                <h2 id="pdfViewerTitle">PDF preview</h2><button class="viewer-close" id="pdfViewerClose"
-                    aria-label="Close PDF viewer">✕</button>
-            </div><iframe id="pdfFrame" title="PDF preview" src="about:blank" sandbox="allow-scripts allow-same-origin"
-                referrerpolicy="no-referrer"></iframe>
-        </div>
-    </div>
-    <script src="assets/js/math-floaters.js"></script>
-    <script src="assets/js/script.js"></script>
-</body>
+  </div>
 
+  <div class="pdf-viewer" id="pdfViewer" hidden role="dialog" aria-modal="true" aria-labelledby="pdfViewerTitle">
+    <div class="pdf-viewer-panel">
+      <div class="pdf-viewer-header">
+        <h2 id="pdfViewerTitle">PDF preview</h2>
+        <button class="viewer-close" id="pdfViewerClose" aria-label="Close PDF viewer">✕</button>
+      </div>
+      <iframe id="pdfFrame" title="PDF preview" src="about:blank" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
 </html>

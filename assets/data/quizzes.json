@@ -1,0 +1,70 @@
+[
+  {
+    "id": "dbms-normalization-basics",
+    "title": "DBMS Normalization Basics",
+    "category": "DBMS",
+    "difficulty": "Beginner",
+    "subject": "DBMS",
+    "questions": [
+      {
+        "question": "Which normal form removes repeating groups?",
+        "options": ["1NF", "2NF", "3NF", "BCNF"],
+        "answer": 0
+      },
+      {
+        "question": "2NF mainly removes which dependency?",
+        "options": ["Transitive dependency", "Partial dependency", "Multivalued dependency", "Join dependency"],
+        "answer": 1
+      },
+      {
+        "question": "3NF requires relation to be in:",
+        "options": ["Only 1NF", "Only 2NF", "2NF and no transitive dependency", "BCNF only"],
+        "answer": 2
+      },
+      {
+        "question": "BCNF is stronger than:",
+        "options": ["1NF", "2NF", "3NF", "4NF"],
+        "answer": 2
+      },
+      {
+        "question": "Main goal of normalization is to:",
+        "options": ["Increase file size", "Reduce redundancy", "Avoid indexes", "Disable joins"],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "python-data-science-quick-check",
+    "title": "Python Data Science Quick Check",
+    "category": "Data Science",
+    "difficulty": "Intermediate",
+    "subject": "Python",
+    "questions": [
+      {
+        "question": "Which library is best known for tabular data analysis?",
+        "options": ["NumPy", "Pandas", "Matplotlib", "Seaborn"],
+        "answer": 1
+      },
+      {
+        "question": "NumPy arrays are optimized for:",
+        "options": ["Image editing", "Vectorized numerical operations", "Web routing", "Package publishing"],
+        "answer": 1
+      },
+      {
+        "question": "Which function loads CSV into a DataFrame?",
+        "options": ["pd.open_csv", "pd.read_csv", "pd.load_csv", "pd.file_csv"],
+        "answer": 1
+      },
+      {
+        "question": "Matplotlib is primarily used for:",
+        "options": ["Database migration", "Data visualization", "Compiler optimization", "API authentication"],
+        "answer": 1
+      },
+      {
+        "question": "Missing values in Pandas can be checked with:",
+        "options": ["isnull()", "dropna()", "merge()", "shape()"],
+        "answer": 0
+      }
+    ]
+  }
+]

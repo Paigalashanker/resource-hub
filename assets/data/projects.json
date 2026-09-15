@@ -1,30 +1,38 @@
 [
   {
+    "id": "dsa-in-java",
     "title": "DSA in Java",
     "description": "A 90-day structured journey learning Data Structures & Algorithms in Java — arrays, linked lists, stacks, queues, recursion, sorting and more.",
-    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Placement",
+    "difficulty": "Intermediate",
     "tech": "Java",
     "github": "https://github.com/Paigalashanker/dsa-in-java"
   },
   {
+    "id": "qr-code-generator",
     "title": "QR Code Generator",
-    "description": "A simple, client-side QR Code Generator. Generates offline-readable QR codes entirely in the browser — no server interaction needed.",
-    "image": "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "description": "A simple, client-side QR Code Generator that works fully in the browser without server-side processing.",
+    "category": "Web Development",
+    "difficulty": "Beginner",
     "tech": "HTML, CSS, JavaScript",
     "github": "https://github.com/Paigalashanker/QR"
   },
   {
+    "id": "iot-air-quality-dashboard",
     "title": "IoT Air Quality Dashboard",
-    "description": "Real-time air quality monitoring dashboard powered by ESP8266 sensors and Firebase. Features live data, historical charts and AI-driven analysis.",
-    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tech": "HTML, JavaScript, C++, Firebase",
+    "description": "Real-time air quality monitoring dashboard powered by ESP8266 sensors and Firebase with live and historical views.",
+    "category": "IoT",
+    "difficulty": "Advanced",
+    "tech": "ESP8266, Firebase, JavaScript",
     "github": "https://github.com/Paigalashanker/iot-air-quality-dashboard"
   },
   {
-    "title": "Resource Hub",
-    "description": "Personal portfolio and resource-sharing website with project showcases, downloadable files and contact info — all auto-populated from GitHub.",
-    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "tech": "HTML, JavaScript, CSS",
+    "id": "resource-hub-platform",
+    "title": "CampusVault Platform",
+    "description": "Static-first student resource platform architecture focused on mobile discoverability, sharing, and learning workflows.",
+    "category": "AI/ML",
+    "difficulty": "Intermediate",
+    "tech": "HTML, CSS, JavaScript",
     "github": "https://github.com/Paigalashanker/resource-hub"
   }
 ]
