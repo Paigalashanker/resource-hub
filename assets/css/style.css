@@ -223,16 +223,6 @@ a:hover {
   right: 4px;
 }
 
-@media (pointer: fine) {
-
-  html.has-reptile-cursor,
-  html.has-reptile-cursor body,
-  html.has-reptile-cursor a,
-  html.has-reptile-cursor button {
-    cursor: none;
-  }
-}
-
 @supports not (color: color-mix(in srgb, black, white)) {
   .reptile-segment {
     border-color: var(--accent-light);
