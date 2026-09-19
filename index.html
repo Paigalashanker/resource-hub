@@ -1,203 +1,902 @@
 <!doctype html>
-<html lang="en" class="light-theme">
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#eef7fc" />
+  <meta name="theme-color" content="#06070a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
-  <title>RESOURCE-HUB — AI & DS Portfolio</title>
+
+  <title>CAMPUSVAULT — The Story &amp; Digital Workshop of Dilli</title>
   <meta name="description"
-    content="RESOURCE-HUB offers AI and Data Science projects, engineering resources, study materials, downloads, and IoT course notes." />
+    content="Experience the cinematic journey of a student who faced failure, pressure, and self-doubt to build AI systems, robotics, and CampusVault." />
   <link rel="canonical" href="https://campusvault.dpdns.org/" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="RESOURCE-HUB — AI &amp; DS Portfolio" />
-  <meta property="og:description" content="AI and Data Science projects, resources, downloads, and IoT course notes." />
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="CAMPUSVAULT — The Story &amp; Digital Workshop of Dilli" />
+  <meta property="og:description"
+    content="An interactive documentary of an engineering journey in AI, Data Science, Robotics, and software systems." />
   <meta property="og:url" content="https://campusvault.dpdns.org/" />
   <meta property="og:type" content="website" />
 
-  <!-- Pixel-inspired project typography -->
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap">
 
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Modern Cinema Stylesheet -->
+  <link rel="stylesheet" href="assets/css/cinema.css">
+
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4394486687199900"
     crossorigin="anonymous"></script>
+
+  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "RESOURCE-HUB",
+      "name": "CAMPUSVAULT",
       "url": "https://campusvault.dpdns.org/",
-      "description": "AI and Data Science projects, resources, downloads, and IoT course notes."
+      "description": "The interactive journey and engineering portfolio of Paigala Delli Sankar (Dilli) — AI & DS, Robotics, and Software.",
+      "author": {
+        "@type": "Person",
+        "name": "Paigala Delli Sankar",
+        "alternateName": "Dilli",
+        "jobTitle": "Lead Developer & AI & DS Student",
+        "affiliation": "Sree Rama Engineering College (SREC), Tirupati"
+      }
     }
   </script>
 </head>
 
 <body>
 
-  <!-- SKIP NAVIGATION -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <!-- Scroll Progress Bar -->
+  <div id="cv-progress-bar" aria-hidden="true"></div>
 
-  <!-- NAVBAR -->
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <a href="index.html" class="brand">
-        <div class="logo">RESOURCE-HUB</div>
-        <div class="tag">AI &amp; DS • SREC</div>
-      </a>
-      <nav class="nav">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="projects.html" class="nav-link">Projects</a>
-        <a href="downloads.html" class="nav-link">Downloads</a>
-        <a href="iot.html" class="nav-link">IoT (NPTEL)</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-      <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
+  <!-- Accessible Skip Link -->
+  <a class="cv-skip-link" href="#main-story">Skip to main content</a>
+
+  <!-- Ambient Vignette -->
+  <div class="cv-vignette" aria-hidden="true"></div>
+
+  <!-- ------------------------------------------------------------------------
+       CINEMATIC PRELOADER
+       ------------------------------------------------------------------------ -->
+  <div id="cv-preloader" role="status" aria-live="polite">
+    <div class="cv-preloader-content">
+      <div class="cv-preloader-brand">CAMPUSVAULT</div>
+      <div class="cv-preloader-tagline">AN INTERACTIVE DOCUMENTARY</div>
+      <div class="cv-preloader-progress-track">
+        <div class="cv-preloader-progress-fill" id="cv-preloader-fill"></div>
+      </div>
+      <div class="cv-preloader-phrase">"EVERYTHING STARTS SOMEWHERE."</div>
     </div>
-  </header>
+  </div>
 
-  <!-- HERO SECTION -->
-  <main id="main-content" role="main">
+  <!-- ------------------------------------------------------------------------
+       FLOATING MINIMAL NAVIGATION DOCK
+       ------------------------------------------------------------------------ -->
+  <aside class="cv-dock-wrap" aria-label="Quick Navigation">
+    <div class="cv-dock">
+      <a href="#sec-opening" class="cv-dock-brand" aria-label="CampusVault Home">
+        <span class="cv-dock-status-dot"></span>
+        <span class="cv-dock-logo">CAMPUSVAULT</span>
+      </a>
 
-    <section class="hero">
-      <div class="container">
+      <nav class="cv-dock-nav" aria-label="Main menu">
+        <a href="#sec-opening" class="cv-dock-link active">HOME</a>
+        <a href="#sec-journey" class="cv-dock-link">STORY</a>
+        <a href="#sec-projects" class="cv-dock-link">PROJECTS</a>
+        <a href="#sec-robotics" class="cv-dock-link">ROBOTICS</a>
+        <a href="#sec-hub" class="cv-dock-link">VAULT</a>
+        <a href="about.html" class="cv-dock-link">ABOUT</a>
+        <a href="contact.html" class="cv-dock-link">CONTACT</a>
+      </nav>
 
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          AI &amp; Data Science • SREC • 3rd Year (2024–2028)
-        </div>
+      <div class="cv-dock-controls">
+        <!-- Audio Atmosphere Toggle -->
+        <button id="cv-audio-toggle" class="cv-dock-btn" aria-label="Toggle atmospheric sound" aria-pressed="false"
+          title="Toggle ambient sound">
+          <div class="cv-sound-bars" id="cv-sound-bars" aria-hidden="true">
+            <span class="cv-sound-bar"></span>
+            <span class="cv-sound-bar"></span>
+            <span class="cv-sound-bar"></span>
+          </div>
+        </button>
 
-        <h1>
-          <span>Student</span><br>
-          <span class="highlight">Resource Hub</span>
+        <!-- Mobile Drawer Toggle -->
+        <button id="cv-mobile-toggle" class="cv-dock-btn cv-mobile-toggle" aria-label="Open navigation menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="cv-mobile-drawer" class="cv-mobile-drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <button id="cv-drawer-close" class="cv-drawer-close" aria-label="Close navigation menu">✕</button>
+    <div class="cv-drawer-links">
+      <a href="#sec-opening" class="cv-drawer-link">HOME</a>
+      <a href="#sec-journey" class="cv-drawer-link">STORY</a>
+      <a href="#sec-physics" class="cv-drawer-link">PHYSICS FAILURE</a>
+      <a href="#sec-workshop" class="cv-drawer-link">WORKSHOP</a>
+      <a href="#sec-robotics" class="cv-drawer-link">ROBOTICS</a>
+      <a href="#sec-projects" class="cv-drawer-link">PROJECTS</a>
+      <a href="#sec-hub" class="cv-drawer-link">CAMPUSVAULT</a>
+      <a href="downloads.html" class="cv-drawer-link">DOWNLOADS</a>
+      <a href="iot.html" class="cv-drawer-link">IOT ARCHIVE</a>
+      <a href="about.html" class="cv-drawer-link">ABOUT DILLI</a>
+      <a href="contact.html" class="cv-drawer-link">CONTACT</a>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------------
+       MAIN NARRATIVE & STORY FLOW
+       ------------------------------------------------------------------------ -->
+  <main id="main-story" class="cv-story-wrapper">
+
+    <!-- OPENING EXPERIENCE -->
+    <section id="sec-opening" class="cv-opening-scene" aria-label="Opening Experience">
+      <canvas id="cv-open-canvas" class="cv-opening-canvas"></canvas>
+      <div class="cv-opening-text-wrap">
+        <h1 class="cv-opening-first" id="cv-open-first">
+          "I wasn't the strongest person in the room."
         </h1>
-
-        <p class="lead">
-          Intelligent tools, extensions, curated notes, and applied AI systems
-          engineered with precision, discipline, and purpose at
-          Sree Rama Engineering College (SREC), Tirupati.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn" href="projects.html">View Projects</a>
-          <a class="btn btn-outline" href="downloads.html">Downloads</a>
+        <div class="cv-opening-second" id="cv-open-second">
+          "I just refused to stop walking."
         </div>
-
-        <div class="decorative-svg">
-          <svg width="160" height="40" viewBox="0 0 200 40" fill="none">
-            <path d="M5 20 H70 M70 20 L90 5 M70 20 L90 35 M195 20 H130 M130 20 L110 5 M130 20 L110 35"
-              stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
-          </svg>
-        </div>
-
+      </div>
+      <div class="cv-scroll-cue">
+        <span>SCROLL TO ENTER</span>
+        <div class="cv-scroll-line"></div>
       </div>
     </section>
 
-    <!-- DAILY QUOTE WIDGET -->
-    <section class="container">
-      <div class="widget-card quote-widget fade-in" id="quoteWidget">
-        <p class="quote-text" id="quoteText">A useful idea starts with a clear question.</p>
-        <span class="quote-author" id="quoteAuthor">— CampusVault note</span>
-        <button class="quote-refresh" id="quoteRefresh" aria-label="New quote">↻</button>
-      </div>
-    </section>
-
-    <!-- FEATURES SECTION -->
-    <section class="container">
-      <div class="features">
-        <article class="card fade-in">
-          <h3>Privacy-First</h3>
-          <p>Strict focus on academic rigor, branch, and discipline without unnecessary personal tracking.</p>
-        </article>
-
-        <article class="card fade-in">
-          <h3>Resource Hub</h3>
-          <p>Browser extensions, engineering tools, study notes, and core computer science resources.</p>
-        </article>
-
-        <article class="card fade-in">
-          <h3>Fully Static</h3>
-          <p>Zero backend dependencies — lightweight, lightning-fast, and hosted on GitHub Pages.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- WEATHER + JOKE WIDGETS -->
-    <section class="container">
-      <div class="widget-row">
-        <!-- Weather Widget -->
-        <div class="widget-card weather-widget fade-in" id="weatherWidget">
-          <div class="widget-header">
-            <span class="widget-icon">🌤️</span>
-            <h3>Live Weather</h3>
-          </div>
-          <div class="weather-body" id="weatherBody">
-            <p class="weather-loading">Weather is optional and may use your location if you allow it.</p>
-          </div>
+    <!-- SECTION 01 — BEFORE THE JOURNEY -->
+    <section id="sec-journey" class="cv-section" aria-labelledby="h-sec-01">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">01</span> BEFORE THE JOURNEY
         </div>
-
-        <!-- Programming Joke Widget -->
-        <div class="widget-card joke-widget fade-in" id="jokeWidget">
-          <div class="widget-header">
-            <span class="widget-icon">⚡</span>
-            <h3>Dev Joke</h3>
-          </div>
-          <div class="joke-body" id="jokeBody">
-            <p class="joke-setup">Optional programming joke unavailable. Your resources remain available.</p>
-          </div>
-          <button class="quote-refresh" id="jokeRefresh" aria-label="New joke">↻</button>
+        <h2 id="h-sec-01" class="cv-narrative-lead">
+          I was never the person who had everything figured out.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            I grew up with questions. A lot of them.
+          </p>
+          <p>
+            Questions about technology. Questions about life. Questions about what I could become.
+          </p>
+          <p>
+            Sometimes I would sit quietly and imagine a future that didn't exist yet. A future where I could build things.
+          </p>
+          <p>
+            <strong>Websites. Robots. AI systems.</strong> Things that people could actually use.
+          </p>
+          <p>
+            I didn't know exactly how I would get there. I only knew one thing:
+          </p>
+        </div>
+        <div class="cv-monumental-quote cv-glow">
+          "I WANTED TO BUILD SOMETHING <span class="cv-highlight">OF MY OWN.</span>"
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS PREVIEW -->
-    <section class="container" style="margin-top: 56px;">
-      <h2 style="font-family:var(--font-heading); font-size:24px; font-weight:600; letter-spacing:-0.4px;">Selected
-        Projects</h2>
-      <div class="grid" id="projectGrid">
-        <article class="project-card">
-          <h3>DSA in Java</h3>
-          <p>A structured Data Structures and Algorithms learning project covering arrays, linked lists, stacks, queues,
-            recursion, and sorting.</p>
-          <a href="projects.html" class="link">View project details &rarr;</a>
-        </article>
-        <article class="project-card">
-          <h3>QR Code Generator</h3>
-          <p>A client-side browser tool for generating QR codes without sending the input to a server.</p>
-          <a href="projects.html" class="link">View project details &rarr;</a>
-        </article>
-        <article class="project-card">
-          <h3>IoT Air Quality Dashboard</h3>
-          <p>An ESP8266 and Firebase project for monitoring air quality with historical data and analysis.</p>
-          <a href="projects.html" class="link">View project details &rarr;</a>
-        </article>
+    <!-- SECTION 02 — THE BOY WHO KEPT THINKING -->
+    <section id="sec-thinking" class="cv-section" aria-labelledby="h-sec-02">
+      <div class="cv-scene-canvas-wrap">
+        <canvas id="cv-thinking-canvas" class="cv-scene-canvas"></canvas>
       </div>
-      <div style="text-align:center; margin-top:36px;">
-        <a class="btn btn-outline" href="projects.html">View All Projects</a>
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">02</span> THE BOY WHO KEPT THINKING
+        </div>
+        <h2 id="h-sec-02" class="cv-narrative-lead">
+          I have always had a mind that doesn't know when to stop.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            One problem becomes five questions. One mistake becomes ten possibilities. One conversation can replay in my head for hours.
+          </p>
+          <p>
+            Sometimes that helped me. It made me curious. It made me question how things worked. It made me dig deeper when everyone else was satisfied with the first answer.
+          </p>
+          <p>
+            But sometimes... my own thoughts became my biggest opponent.
+          </p>
+          <p>
+            I could overthink a simple decision until it felt impossible. I could doubt myself even after doing something right. And there were moments when I wondered:
+          </p>
+          <p style="font-style: italic; color: #fff; font-size: 1.25em;">
+            "Am I actually good enough?"
+          </p>
+          <p>
+            I didn't always have an answer.
+          </p>
+        </div>
+        <div class="cv-monumental-quote">
+          "SO I KEPT GOING <span class="cv-highlight">ANYWAY.</span>"
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03 — COLLEGE -->
+    <section id="sec-college" class="cv-section" aria-labelledby="h-sec-03">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">03</span> COLLEGE · SREC TIRUPATI
+        </div>
+        <div style="font-family: var(--cv-font-mono); color: var(--cv-accent-bright); font-size: 14px; letter-spacing: 0.15em; margin-bottom: 12px;">
+          B.TECH · ARTIFICIAL INTELLIGENCE &amp; DATA SCIENCE
+        </div>
+        <h2 id="h-sec-03" class="cv-narrative-lead">
+          Then came engineering.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            A new environment. New people. New expectations. And a completely different level of pressure.
+          </p>
+          <p>
+            At first, I thought college would simply be about studying, getting good marks, learning programming, and eventually getting a job.
+          </p>
+          <p>
+            <strong>I was wrong.</strong>
+          </p>
+          <p>
+            College taught me something much bigger. It taught me about people. About friendship. Competition. Ego. Trust. Betrayal.
+          </p>
+          <p>
+            And sometimes... loneliness in a room full of people.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04 — PHYSICS FAILURE -->
+    <section id="sec-physics" class="cv-section" aria-labelledby="h-sec-04">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">04</span> TURNING POINT
+        </div>
+        <h2 id="h-sec-04" class="cv-narrative-lead">
+          Then came Physics.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            One subject. One exam. One result. And suddenly, something that looked small on paper felt enormous in my head.
+          </p>
+          <p>
+            <strong>I failed. I had to face a backlog.</strong>
+          </p>
+          <p>
+            For someone who wanted to prove himself academically, it hurt. There were people who laughed. People who made comments. People who made me feel like one failed subject somehow defined me.
+          </p>
+        </div>
+
+        <!-- Interactive Physics Fracture & Reconstruct Stage -->
+        <div class="cv-physics-stage" aria-label="Interactive Physics Fracture and Reconstruct simulation">
+          <canvas id="cv-physics-canvas" class="cv-physics-canvas"></canvas>
+        </div>
+
+        <div class="cv-narrative-prose">
+          <p>
+            For a while, I believed them. Maybe I wasn't good enough. Maybe I had fallen behind. Maybe everyone else was moving forward while I was stuck.
+          </p>
+          <p>
+            But eventually I understood something:
+          </p>
+          <p style="font-size: 1.2em; color: #fff;">
+            <strong>A backlog is a result. It isn't an identity.</strong>
+          </p>
+          <p>
+            So I went back. I wrote the exam again. And this time... I cleared it.
+          </p>
+        </div>
+
+        <div class="cv-monumental-quote cv-glow">
+          FALLEN ≠ <span class="cv-highlight">FINISHED</span>
+        </div>
+
+        <div class="cv-narrative-prose" style="margin-top: 18px;">
+          <p>
+            The subject that once represented failure became one of the first lessons I carried forward:
+          </p>
+          <p style="font-family: var(--cv-font-display); font-size: 26px; color: #ffffff;">
+            Falling behind isn't the same as being finished.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05 — PEOPLE -->
+    <section id="sec-people" class="cv-section" aria-labelledby="h-sec-05">
+      <div class="cv-scene-canvas-wrap">
+        <canvas id="cv-people-canvas" class="cv-scene-canvas"></canvas>
+      </div>
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">05</span> PEOPLE &amp; DISTANCE
+        </div>
+        <h2 id="h-sec-05" class="cv-narrative-lead">
+          Not everyone who stands beside you is standing with you.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            Some friendships are real. Some are temporary. And some disappear the moment your interests stop matching theirs.
+          </p>
+          <p>
+            There were moments when I trusted people and later realized that the trust wasn't being returned. Decisions made without me. Credit taken. Things said behind my back. Sometimes people tried to make me feel smaller so they could feel bigger.
+          </p>
+          <p>
+            I didn't always know how to respond. Sometimes I argued. Sometimes I became angry. Sometimes I simply walked away.
+          </p>
+          <p>
+            Eventually I learned something important: Not every battle deserves your energy. Some people don't need an explanation. They need distance.
+          </p>
+          <p>
+            And sometimes walking away is not weakness. It's choosing peace.
+          </p>
+        </div>
+        <div class="cv-monumental-quote">
+          "WALKING AWAY CAN ALSO BE <span class="cv-highlight">MOVING FORWARD.</span>"
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06 — THE PRESSURE -->
+    <section id="sec-pressure" class="cv-section" aria-labelledby="h-sec-06">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">06</span> THE CONVERGENCE
+        </div>
+        <h2 id="h-sec-06" class="cv-narrative-lead">
+          Days when everything seemed to happen at once.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            College. Assignments. Exams. Projects. Programming. Competitions. Expectations. Future. Career. Money. Family.
+          </p>
+          <p style="font-size: 1.25em; color: #fff;">
+            And the endless question: <em>"What are you going to do with your life?"</em>
+          </p>
+          <p>
+            I didn't have a perfect answer. I still don't.
+          </p>
+          <p>
+            But I started experimenting.
+          </p>
+        </div>
+        <div class="cv-monumental-quote cv-glow">
+          "SO I STARTED <span class="cv-highlight">BUILDING.</span>"
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 07 & 08 — THE COMPUTER BECAME MY WORKSHOP & LINUX -->
+    <section id="sec-workshop" class="cv-section" aria-labelledby="h-sec-07">
+      <div class="cv-container">
+        <div class="cv-container-narrative" style="margin: 0 auto 36px;">
+          <div class="cv-eyebrow">
+            <span class="cv-eyebrow-num">07 &amp; 08</span> THE WORKSHOP · LINUX &amp; UBUNTU
+          </div>
+          <h2 id="h-sec-07" class="cv-narrative-lead">
+            My laptop stopped being just a laptop. It became my workshop.
+          </h2>
+          <div class="cv-narrative-prose">
+            <p>
+              I started learning. C. Python. Java. Linux. Git. GitHub. Cloud computing. Artificial intelligence. Web development. Robotics.
+            </p>
+            <p>
+              Sometimes I broke things. Then I fixed them. Sometimes I spent hours fighting a problem that eventually turned out to be one missing character.
+            </p>
+            <p>
+              Eventually, I made a decision that scared me a little: <strong>I left Windows behind and installed Ubuntu.</strong> A clean beginning. No safety net. Just me, Linux, and a terminal.
+            </p>
+            <p>
+              And somewhere along the way... I stopped being afraid of the terminal.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Terminal Simulator -->
+        <div class="cv-terminal-window" aria-label="Interactive Ubuntu Terminal">
+          <div class="cv-terminal-header">
+            <div class="cv-terminal-dots">
+              <span class="cv-terminal-dot red"></span>
+              <span class="cv-terminal-dot yellow"></span>
+              <span class="cv-terminal-dot green"></span>
+            </div>
+            <div class="cv-terminal-title">dilli@campusvault-node: ~</div>
+            <div class="cv-terminal-os-badge">Ubuntu 24.04 LTS</div>
+          </div>
+          <div class="cv-terminal-body" id="cv-terminal-content">
+            <!-- Simulated command lines will be dynamically typed here -->
+          </div>
+          <div style="padding: 12px 18px; background: #0b0e15; border-top: 1px solid var(--cv-surface-border); display: flex; align-items: center; gap: 8px;">
+            <span style="font-family: var(--cv-font-mono); color: var(--cv-accent-bright); font-size: 13px;">$</span>
+            <input type="text" id="cv-term-input" placeholder="Type a command (try: 'whoami', 'status', 'projects', 'help')..."
+              style="flex-grow: 1; background: transparent; border: none; outline: none; color: #fff; font-family: var(--cv-font-mono); font-size: 13px;"
+              autocomplete="off" spellcheck="false" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 09 — THE CLOUD -->
+    <section id="sec-cloud" class="cv-section" aria-labelledby="h-sec-09">
+      <div class="cv-container">
+        <div class="cv-container-narrative" style="margin: 0 auto 36px;">
+          <div class="cv-eyebrow">
+            <span class="cv-eyebrow-num">09</span> THE CLOUD
+          </div>
+          <h2 id="h-sec-09" class="cv-narrative-lead">
+            Computers didn't have to live on my desk.
+          </h2>
+          <div class="cv-narrative-prose">
+            <p>
+              I started experimenting with cloud platforms. Virtual machines. Google Cloud. Azure. Cloud Run. Storage. Servers. Networking. Tunnels. Remote environments. Containers.
+            </p>
+            <p>
+              I wasn't just learning technology from textbooks anymore. I was touching it. Creating things. Deploying things. Watching errors appear. Fixing them. Trying again.
+            </p>
+          </div>
+        </div>
+
+        <!-- Progression Architecture -->
+        <div class="cv-cloud-progression">
+          <div class="cv-cloud-step">
+            <div class="cv-cloud-step-icon">💻</div>
+            <div class="cv-cloud-step-name">LOCAL MACHINE</div>
+            <div class="cv-cloud-step-desc">Ubuntu · Compilers · Shell scripts · Code</div>
+            <div class="cv-cloud-step-arrow">→</div>
+          </div>
+          <div class="cv-cloud-step">
+            <div class="cv-cloud-step-icon">🖥️</div>
+            <div class="cv-cloud-step-name">SERVER</div>
+            <div class="cv-cloud-step-desc">Node.js · Python daemons · Linux daemons</div>
+            <div class="cv-cloud-step-arrow">→</div>
+          </div>
+          <div class="cv-cloud-step">
+            <div class="cv-cloud-step-icon">☁️</div>
+            <div class="cv-cloud-step-name">CLOUD</div>
+            <div class="cv-cloud-step-desc">Containers · Storage · DNS tunnels · APIs</div>
+            <div class="cv-cloud-step-arrow">→</div>
+          </div>
+          <div class="cv-cloud-step">
+            <div class="cv-cloud-step-icon">🌐</div>
+            <div class="cv-cloud-step-name">GLOBAL</div>
+            <div class="cv-cloud-step-desc">Edge CDN · CampusVault live in production</div>
+          </div>
+        </div>
+
+        <!-- 3D Cloud Globe Canvas -->
+        <div style="width: 100%; height: 320px; position: relative;">
+          <canvas id="cv-cloud-canvas" class="cv-scene-canvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10 & CAMPUSVAULT SHOWCASE — THE BUILDER -->
+    <section id="sec-projects" class="cv-section cv-showcase-section" aria-labelledby="h-sec-projects">
+      <div class="cv-container">
+        <div class="cv-showcase-header">
+          <div class="cv-eyebrow">
+            <span class="cv-eyebrow-num">10</span> THE BUILDER
+          </div>
+          <h2 id="h-sec-projects" class="cv-narrative-lead" style="margin-bottom: 16px;">
+            The Things I Built.
+          </h2>
+          <p class="cv-narrative-prose" style="font-size: 19px;">
+            "You don't become a developer by knowing everything. You become one by being willing to figure things out."
+          </p>
+        </div>
+
+        <!-- Interactive 3D Project Cards -->
+        <div class="cv-projects-grid">
+          <!-- Project 1: DSA in Java -->
+          <article class="cv-project-card">
+            <div class="cv-project-media">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="DSA in Java code matrix" loading="lazy">
+              <div class="cv-project-media-overlay"></div>
+              <span class="cv-project-badge">CORE FOUNDATION</span>
+            </div>
+            <div class="cv-project-content">
+              <h3 class="cv-project-title">DSA in Java</h3>
+              <p class="cv-project-desc">
+                A rigorous, 90-day structured exploration of foundational Data Structures &amp; Algorithms — arrays, linked lists, stacks, queues, trees, recursion, sorting, and dynamic programming.
+              </p>
+              <div class="cv-project-tech">
+                <span class="cv-tech-pill">Java</span>
+                <span class="cv-tech-pill">Algorithms</span>
+                <span class="cv-tech-pill">Problem Solving</span>
+              </div>
+              <div class="cv-project-actions">
+                <a class="cv-btn cv-btn-outline" href="https://github.com/Paigalashanker/dsa-in-java" target="_blank"
+                  rel="noopener noreferrer">Source Code ↗</a>
+                <a class="cv-btn cv-btn-primary" href="projects.html">Deep Dive</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: QR Code Generator -->
+          <article class="cv-project-card">
+            <div class="cv-project-media">
+              <img src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="QR Code Generator visual" loading="lazy">
+              <div class="cv-project-media-overlay"></div>
+              <span class="cv-project-badge">BROWSER UTILITY</span>
+            </div>
+            <div class="cv-project-content">
+              <h3 class="cv-project-title">QR Code Generator</h3>
+              <p class="cv-project-desc">
+                A lightweight client-side browser utility engineered to generate instant, offline-readable QR codes with zero server telemetry or external logging.
+              </p>
+              <div class="cv-project-tech">
+                <span class="cv-tech-pill">JavaScript</span>
+                <span class="cv-tech-pill">HTML5 Canvas</span>
+                <span class="cv-tech-pill">Privacy-First</span>
+              </div>
+              <div class="cv-project-actions">
+                <a class="cv-btn cv-btn-outline" href="https://github.com/Paigalashanker/QR" target="_blank"
+                  rel="noopener noreferrer">Source Code ↗</a>
+                <a class="cv-btn cv-btn-primary" href="projects.html">Live Tool</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: IoT Air Quality Dashboard -->
+          <article class="cv-project-card">
+            <div class="cv-project-media">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Hardware and IoT sensor setup" loading="lazy">
+              <div class="cv-project-media-overlay"></div>
+              <span class="cv-project-badge">HARDWARE &amp; AI</span>
+            </div>
+            <div class="cv-project-content">
+              <h3 class="cv-project-title">IoT Air Quality Dashboard</h3>
+              <p class="cv-project-desc">
+                Full-stack embedded environmental monitoring system combining ESP8266 microcontrollers, MQ sensors, Firebase Realtime Database, and real-time visualization analytics.
+              </p>
+              <div class="cv-project-tech">
+                <span class="cv-tech-pill">ESP8266 / C++</span>
+                <span class="cv-tech-pill">Firebase</span>
+                <span class="cv-tech-pill">Sensors</span>
+                <span class="cv-tech-pill">Analytics</span>
+              </div>
+              <div class="cv-project-actions">
+                <a class="cv-btn cv-btn-outline" href="https://github.com/Paigalashanker/iot-air-quality-dashboard" target="_blank"
+                  rel="noopener noreferrer">GitHub ↗</a>
+                <a class="cv-btn cv-btn-primary" href="projects.html">Explore</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4: CampusVault Platform -->
+          <article class="cv-project-card">
+            <div class="cv-project-media">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="CampusVault architecture layout" loading="lazy">
+              <div class="cv-project-media-overlay"></div>
+              <span class="cv-project-badge">FLAGSHIP PLATFORM</span>
+            </div>
+            <div class="cv-project-content">
+              <h3 class="cv-project-title">CampusVault Platform</h3>
+              <p class="cv-project-desc">
+                The centralized digital shelf and academic resource repository for engineering students, uniting downloads, NPTEL archives, and research notes into one high-performance interface.
+              </p>
+              <div class="cv-project-tech">
+                <span class="cv-tech-pill">React</span>
+                <span class="cv-tech-pill">Node.js</span>
+                <span class="cv-tech-pill">GSAP</span>
+                <span class="cv-tech-pill">Cloud DNS</span>
+              </div>
+              <div class="cv-project-actions">
+                <a class="cv-btn cv-btn-outline" href="https://github.com/Paigalashanker/resource-hub" target="_blank"
+                  rel="noopener noreferrer">Repository ↗</a>
+                <a class="cv-btn cv-btn-primary" href="#sec-hub">Browse Hub</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <a class="cv-btn cv-btn-outline" href="projects.html">View Complete Projects Archive &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION — ROBOTICS & E-YANTRA -->
+    <section id="sec-robotics" class="cv-section" aria-labelledby="h-sec-robotics">
+      <div class="cv-container">
+        <div class="cv-container-narrative" style="margin: 0 auto 36px;">
+          <div class="cv-eyebrow">
+            <span class="cv-eyebrow-num">11</span> ROBOTICS &amp; E-YANTRA
+          </div>
+          <h2 id="h-sec-robotics" class="cv-narrative-lead">
+            Teaching machines how to see and move.
+          </h2>
+          <div class="cv-narrative-prose">
+            <p>
+              Then came robotics. e-Yantra. A completely different world.
+            </p>
+            <p>
+              <strong>ROS. Python. OpenCV. Sensors. Simulation. Inverse kinematics. Robot movement. Debugging.</strong> And a ridiculous number of terminal commands.
+            </p>
+            <p>
+              Sometimes the robot didn't do what I expected. Sometimes the code worked yesterday and suddenly didn't work today. Sometimes I had absolutely no idea why something was failing.
+            </p>
+            <p>
+              But every failure forced me to understand the system better. I wasn't just writing code anymore. I was teaching machines how to perceive physical reality.
+            </p>
+            <p style="font-size: 1.25em; color: #fff;">
+              And that feeling... was different.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3D Wireframe Robotics Viewport & Telemetry HUD -->
+        <div class="cv-robotics-viewport" aria-label="3D Robotics and Computer Vision Telemetry Viewport">
+          <div class="cv-robotics-hud">
+            <span class="cv-hud-badge">ROS2 NODE: /arm_controller</span>
+            <span class="cv-hud-badge">OPENCV: TRACKING LIVE</span>
+          </div>
+          <canvas id="cv-robotics-canvas" class="cv-robotics-canvas"></canvas>
+          <div class="cv-robotics-telemetry">
+            <div class="cv-telemetry-item">
+              <span>END-EFFECTOR:</span>
+              <strong id="cv-telemetry-coord" class="cv-telemetry-val">X: 245.8 mm | Y: 112.4 mm | Z: 89.2 mm</strong>
+            </div>
+            <div class="cv-telemetry-item">
+              <span>JOINT ANGLES:</span>
+              <strong id="cv-telemetry-angles" class="cv-telemetry-val">θ1: 34.2° | θ2: -45.1° | θ3: 12.0°</strong>
+            </div>
+            <div class="cv-telemetry-item">
+              <span>FRAME RATE:</span>
+              <strong class="cv-telemetry-val">60.0 FPS [STABLE]</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION — THE NIGHT HOURS (2 AM) -->
+    <section id="sec-night" class="cv-section" aria-labelledby="h-sec-night">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">12</span> THE NIGHT HOURS
+        </div>
+        <h2 id="h-sec-night" class="cv-narrative-lead">
+          Some of my most important progress didn't happen in classrooms.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            It happened late at night. A laptop glowing in a dark room.
+          </p>
+          <p>
+            Terminal open. Browser tabs everywhere. Documentation. GitHub. YouTube. AI assistants. One problem. Then another.
+          </p>
+          <p>
+            Sometimes I would tell myself: <em>"Just five more minutes."</em>
+          </p>
+          <p>
+            And suddenly it would be 2 AM. Not because I was forced to. Because I wanted the thing to work.
+          </p>
+          <p>
+            There is something addictive about solving a problem that refused to be solved. That moment when the error disappears. The program finally runs. The robot finally moves. The website finally loads.
+          </p>
+          <p>
+            You look at the screen and think:
+          </p>
+        </div>
+
+        <!-- 2 AM Glowing Scene Card -->
+        <div class="cv-night-hours-card">
+          <div class="cv-night-clock" id="cv-night-clock">02:14 AM</div>
+          <div style="font-family: var(--cv-font-mono); color: var(--cv-accent-bright); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;">
+            SOLITARY ITERATION · TIRUPATI
+          </div>
+          <div class="cv-night-ambient-glow"></div>
+        </div>
+
+        <div class="cv-monumental-quote cv-glow" style="text-align: center; width: 100%;">
+          "I <span class="cv-highlight">MADE</span> THAT."
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION — CAMPUSVAULT QUICK ACCESS HUB -->
+    <section id="sec-hub" class="cv-section" aria-labelledby="h-sec-hub">
+      <div class="cv-container">
+        <div class="cv-container-narrative" style="margin: 0 auto 36px; text-align: center;">
+          <div class="cv-eyebrow">
+            <span class="cv-eyebrow-num">13</span> THE REPOSITORY
+          </div>
+          <h2 id="h-sec-hub" class="cv-narrative-lead">
+            Welcome to CampusVault.
+          </h2>
+          <p class="cv-narrative-prose">
+            It wasn't just another college project. It represented the idea that I could take an empty screen and turn it into something genuinely useful for students.
+          </p>
+        </div>
+
+        <!-- Direct Portal Hub Cards -->
+        <div class="cv-hub-grid">
+          <a href="projects.html" class="cv-hub-card">
+            <div class="cv-hub-icon">🚀</div>
+            <div class="cv-hub-title">Projects Showcase <span>&rarr;</span></div>
+            <div class="cv-hub-desc">Curated suites of machine learning tools, Java DSA repositories, and IoT dashboards.</div>
+          </a>
+
+          <a href="downloads.html" class="cv-hub-card">
+            <div class="cv-hub-icon">📥</div>
+            <div class="cv-hub-title">Downloads Center <span>&rarr;</span></div>
+            <div class="cv-hub-desc">Curated academic assets, syllabus structures, and revision guides with live search &amp; filters.</div>
+          </a>
+
+          <a href="iot.html" class="cv-hub-card">
+            <div class="cv-hub-icon">📡</div>
+            <div class="cv-hub-title">IoT (NPTEL) Archive <span>&rarr;</span></div>
+            <div class="cv-hub-desc">Virtual course drive with lecture folders and integrated in-page reading-only PDF preview.</div>
+          </a>
+
+          <a href="about.html" class="cv-hub-card">
+            <div class="cv-hub-icon">👤</div>
+            <div class="cv-hub-title">About Dilli <span>&rarr;</span></div>
+            <div class="cv-hub-desc">Interactive profile, philosophical toolkit, and technical skills explorer rendered in React.</div>
+          </a>
+
+          <a href="contact.html" class="cv-hub-card">
+            <div class="cv-hub-icon">✉️</div>
+            <div class="cv-hub-title">Direct Channel <span>&rarr;</span></div>
+            <div class="cv-hub-desc">Send feedback, collaboration requests, and questions directly to Dilli's personal inbox.</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION — THE REAL COMPETITION & UNDERSTANDING FAILURE -->
+    <section id="sec-philosophy" class="cv-section" aria-labelledby="h-sec-philosophy">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">14</span> THE MINDSET
+        </div>
+        <h2 id="h-sec-philosophy" class="cv-narrative-lead">
+          The Real Competition.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            For a long time, I thought my biggest competition was everyone around me. The student with better marks. The person who knew more code. The person who seemed more confident. The person who already had an internship.
+          </p>
+          <p>
+            <strong>Eventually I realized something:</strong>
+          </p>
+          <p style="font-size: 1.25em; color: #fff;">
+            My real competition was yesterday's version of me.
+          </p>
+          <p>
+            If I knew one more thing today... I had progressed.<br>
+            If I fixed one bug... I had progressed.<br>
+            If I understood one concept... I had progressed.<br>
+            If I recovered from one bad day... I had progressed.
+          </p>
+          <div class="cv-hairline"></div>
+          <p>
+            I used to think successful people were people who didn't fail. Now I think differently:
+          </p>
+          <p style="font-family: var(--cv-font-display); font-size: 24px; color: #fff;">
+            Maybe success is simply what happens when you fail... and don't stay there.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION — STILL NOT THERE & THE DREAM -->
+    <section id="sec-dream" class="cv-section" aria-labelledby="h-sec-dream">
+      <div class="cv-container cv-container-narrative">
+        <div class="cv-eyebrow">
+          <span class="cv-eyebrow-num">15</span> THE HORIZON
+        </div>
+        <h2 id="h-sec-dream" class="cv-narrative-lead">
+          Still Not There.
+        </h2>
+        <div class="cv-narrative-prose">
+          <p>
+            I'm still not where I want to be. There are still things I don't know. Technologies I haven't mastered. Projects sitting unfinished.
+          </p>
+          <p>
+            There are still days when I doubt myself. Moments when I overthink. Failures I remember.
+          </p>
+          <p>
+            But something has changed: <strong>I no longer expect the road to be easy. I expect it to be difficult. And I'm okay with that.</strong>
+          </p>
+          <p>
+            I don't know exactly where this road ends. Maybe AI. Maybe software engineering. Maybe robotics. Maybe building a company. Maybe I'll fail at ten more things before I succeed at one.
+          </p>
+          <p style="font-size: 1.25em; color: #fff;">
+            And honestly... that's exciting.
+          </p>
+        </div>
+        <div class="cv-monumental-quote cv-glow">
+          "BECAUSE THE STORY <span class="cv-highlight">ISN'T FINISHED.</span>"
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL SCREEN -->
+    <section id="sec-final" class="cv-final-screen" aria-label="Final Epilogue">
+      <div class="cv-final-content">
+        <div class="cv-final-subhead">EPILOGUE</div>
+        <h2 class="cv-final-work-in-progress">
+          "I'M NOT A SUCCESS STORY YET.<br>
+          <span style="color: var(--cv-accent-bright);">I'M A WORK IN PROGRESS.</span>"
+        </h2>
+
+        <div class="cv-final-stanzas">
+          <div>I have failed.</div>
+          <div>I have been disappointed.</div>
+          <div>I have disappointed myself.</div>
+          <div>I have started over.</div>
+          <div>I have learned.</div>
+          <div>I have lost people.</div>
+          <div>I have found new directions.</div>
+          <div>I have questioned myself.</div>
+          <div class="cv-final-stanza-strong">And somehow... I'm still here.</div>
+          <div style="color: #cbd5e1; font-family: var(--cv-font-mono); font-size: 14px; margin-top: 10px;">
+            Still coding. Still creating. Still dreaming. Still moving.
+          </div>
+        </div>
+
+        <div class="cv-final-grand-climax">
+          THE STORY ISN'T OVER.
+        </div>
+        <div class="cv-final-getting-started">
+          I'M JUST GETTING STARTED.
+        </div>
+
+        <div class="cv-author-signature">
+          <div class="cv-author-name">PAIGALA DELLI SANKAR (DILLI)</div>
+          <div class="cv-author-creds">
+            B.Tech in <span>Artificial Intelligence &amp; Data Science</span> · SREC Tirupati
+          </div>
+          <div class="cv-author-motto">
+            "Still learning. Still building. Still becoming."
+          </div>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-dev">
-        Developed &amp; Maintained by
-        <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">Paigala Delli Sankar</a>
+  <!-- ------------------------------------------------------------------------
+       MASTER FOOTER
+       ------------------------------------------------------------------------ -->
+  <footer class="cv-footer" role="contentinfo">
+    <div class="cv-footer-inner">
+      <div style="font-family: var(--cv-font-display); font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.1em;">
+        CAMPUSVAULT
       </div>
-      <div class="footer-links">
+      <div class="cv-footer-links">
         <a href="https://github.com/Paigalashanker" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span>•</span>
         <a href="mailto:paigalashanker@gmail.com">Email</a>
         <span>•</span>
+        <a href="projects.html">Projects</a>
+        <span>•</span>
+        <a href="downloads.html">Downloads</a>
+        <span>•</span>
+        <a href="iot.html">IoT (NPTEL)</a>
+        <span>•</span>
         <a href="about.html">About</a>
+        <span>•</span>
+        <a href="contact.html">Contact</a>
         <span>•</span>
         <a href="privacy.html">Privacy</a>
         <span>•</span>
@@ -205,28 +904,16 @@
         <span>•</span>
         <a href="disclaimer.html">Disclaimer</a>
       </div>
-      <div class="visitor-counter">
-        <span>Static site • No account required</span>
+      <div class="cv-footer-copy">
+        Crafted with precision, resilience &amp; vision by Paigala Delli Sankar · SREC AI &amp; DS (2024–2028)
       </div>
-      <div class="footer-meta">AI &amp; DS • 3rd Year • SREC (2024–2028)</div>
     </div>
   </footer>
 
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div class="status-left">
-      <span>Ready</span>
-    </div>
-    <div class="status-right">
-      <span>UTF-8</span>
-      <span>LF</span>
-      <span>Google Antigravity Theme</span>
-      <span>Go Live</span>
-    </div>
-  </div>
-
-  <script src="assets/js/math-floaters.js"></script>
+  <!-- Scripts -->
+  <script src="assets/js/cinema-engine.js"></script>
   <script src="assets/js/script.js"></script>
+
 </body>
 
 </html>

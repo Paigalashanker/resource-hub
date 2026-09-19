@@ -16,9 +16,9 @@ function Header() {
 
     return React.createElement('header', { className: 'glass-header' },
         React.createElement('a', { href: 'index.html', className: 'glass-brand' },
-            React.createElement('span', { className: 'brand-mark' }, 'R'),
+            React.createElement('span', { className: 'brand-mark' }, 'CV'),
             React.createElement('span', null,
-                React.createElement('strong', null, 'RESOURCE-HUB'),
+                React.createElement('strong', null, 'CAMPUSVAULT'),
                 React.createElement('small', null, 'AI & DS / SREC')
             )
         ),

@@ -116,7 +116,7 @@
 (function () {
   const finePointer = window.matchMedia('(pointer: fine)').matches;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!finePointer || reducedMotion) return;
+  if (!finePointer || reducedMotion || document.body.classList.contains('cv-has-custom-cursor')) return;
 
   const segmentCount = 11;
   const segments = [];

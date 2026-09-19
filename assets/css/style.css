@@ -66,9 +66,9 @@
   --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Typography */
-  --font-body: 'Pixelify Sans', 'Courier New', monospace;
-  --font-heading: 'Pixelify Sans', 'Courier New', monospace;
-  --font-mono: 'Pixelify Sans', 'Courier New', monospace;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Syne', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
 
 /* Light Theme */

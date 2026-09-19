@@ -1,8 +1,8 @@
 const { createServer } = require('http');
 const { readFile } = require('fs');
-const { extname, join, normalize } = require('path');
+const { extname, join, normalize, resolve } = require('path');
 
-const root = __dirname;
+const root = resolve(__dirname);
 const port = Number(process.env.PORT) || 3000;
 const mimeTypes = {
     '.html': 'text/html; charset=utf-8',
@@ -22,7 +22,7 @@ const mimeTypes = {
 createServer(async (request, response) => {
     const requestedPath = decodeURIComponent((request.url && request.url.split('?')[0]) || '/');
     const relativePath = requestedPath === '/' ? 'index.html' : requestedPath.replace(/^\/+/, '');
-    const filePath = normalize(join(root, relativePath));
+    const filePath = resolve(root, relativePath);
 
     if (!filePath.startsWith(root)) {
         response.writeHead(403).end('Forbidden');
