@@ -491,7 +491,7 @@
   function itemIcon(item) { return item.type === 'folder' ? '📁' : item.type === 'pdf' ? '📄' : '📝'; }
 
   function openPdf(item) {
-    if (item.type !== 'pdf' || !item.path) return;
+    if (!['pdf', 'docx'].includes(item.type) || !item.path) return;
     viewerTrigger = document.activeElement;
     viewerTitle.textContent = item.name;
     frame.src = `${item.path}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
@@ -523,10 +523,17 @@
       const card = document.createElement('article');
       card.className = 'drive-item';
       const isFolder = item.type === 'folder';
-      const canRead = item.type === 'pdf' && item.path;
-      card.innerHTML = `<div class="drive-item-icon" aria-hidden="true">${itemIcon(item)}</div><div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : (item.type || 'File').toUpperCase()}</p></div><button class="drive-item-action" type="button" ${canRead || isFolder ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read PDF' : 'Unavailable'}</button>`;
+      const canRead = ['pdf', 'docx'].includes(item.type) && item.path;
+      card.innerHTML = `<div class="drive-item-icon" aria-hidden="true">${itemIcon(item)}</div><div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : (item.type || 'File').toUpperCase()}</p></div><button class="drive-item-action" type="button" ${canRead || isFolder ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read file' : 'Unavailable'}</button>`;
       const action = card.querySelector('button');
-      if (isFolder) action.addEventListener('click', () => { folderPath = [...folderPath, item.name]; showFolder(); });
+      if (isFolder) action.addEventListener('click', () => {
+        if (!(item.items || []).length && item.source) {
+          window.open(item.source, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        folderPath = [...folderPath, item.name];
+        showFolder();
+      });
       if (canRead) action.addEventListener('click', () => openPdf(item));
       grid.appendChild(card);
     });

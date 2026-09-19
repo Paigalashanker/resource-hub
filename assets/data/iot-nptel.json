@@ -74,33 +74,416 @@
         {
             "name": "Jan 2023",
             "source": "https://drive.google.com/open?id=1jI4cdwF4a6PV544gR7kAj_sV-5vKvM37",
-            "items": []
+            "items": [
+                {
+                    "name": "Assignment-W10.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1hIlPmG3DK4lwoDalmZdtP0ey_s7OiAZ0/preview"
+                },
+                {
+                    "name": "Assignment-W11.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1aZinXD80RwlMVckM8jMYQWkLnJcvj1g7/preview"
+                },
+                {
+                    "name": "Assignment-W12 - Copy.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1_Z9dL5jCOSIyBnD8oVXGhO-y63Bvq6C_/preview"
+                },
+                {
+                    "name": "Assignment-W8.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1sfRapEwrd72pHmMuvXIFeXEX7kAECarC/preview"
+                },
+                {
+                    "name": "Assignment-W9.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1fy112wlBY20dmI1Is0Yo0FFZjuPZqWNC/preview"
+                },
+                {
+                    "name": "Assignment-W5.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/10L9C6y1t_VL590k4V9pMjcJ36DF83v3C/preview"
+                },
+                {
+                    "name": "Assignment-W6_Non_Highlighted.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1xFBiAEoRqhwPQjRzPwpVD6ECHAcyxteB/preview"
+                },
+                {
+                    "name": "Assignment-W7.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/10hR96gr_t7xaIauoU-OVjLyjj7gmpjqF/preview"
+                },
+                {
+                    "name": "Assignment-W4.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ifgYzZRDyxeMZkHnJ4COjjOFshF4E8_K/preview"
+                },
+                {
+                    "name": "Assignment-W3.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1cidTs7O_Smi-rA9-2V37B2lugNTeiE82/preview"
+                },
+                {
+                    "name": "Assignment-W2.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1iTAWQJd5I23R_6wRftkHlRX2WFihdOIY/preview"
+                },
+                {
+                    "name": "Assignment-W1.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1CEPwAq2LscR9U0dBl0pi-KfnyrDofGXE/preview"
+                }
+            ]
         },
         {
             "name": "Jan 2024",
             "source": "https://drive.google.com/open?id=1jre8IVT_dhjziEfs3SJV-Zav64g7Usxc",
-            "items": []
+            "items": [
+                {
+                    "name": "IOT_Assignment-12_Solution (1).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1K6Yo2oT9gV3b6c8P1nYlvbp2BW1BYNaq/preview"
+                },
+                {
+                    "name": "IOT_Assignment-6_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/173ebziVGjHnmeygGKONIgzSsgAVph7Fr/preview"
+                },
+                {
+                    "name": "IOT_Assignment-7_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ap4vGh1JhJ2g3nSH1qh_9gU6MVs_tdPs/preview"
+                },
+                {
+                    "name": "IOT_Assignment-8_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1EFQQRDgaJ4NhQ7jImhwi037ARDKRXdtK/preview"
+                },
+                {
+                    "name": "IOT_Assignment-9_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1kKHZHNmY66mvX3orGL7Fr4TAckDZSgAe/preview"
+                },
+                {
+                    "name": "IOT_Assignment-10_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1pHKDXB6yJ_MvmBq7d8fw-Eq8xevRNKE0/preview"
+                },
+                {
+                    "name": "IOT_Assignment-11_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1_K9r72FDgu0JNHO-ZEgiBWW5ug28Q3Ai/preview"
+                },
+                {
+                    "name": "IOT_Assignment-1_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1dmy2gdtzsccwaz2hEfQDWuRNMte1bjvp/preview"
+                },
+                {
+                    "name": "IOT_Assignment-2_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1_UNRYrzAMroCErbqFLCeGmrKs1yDECuN/preview"
+                },
+                {
+                    "name": "IOT_Assignment-3_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1mGeiMv_e5OjiYOWsApYgLk4x8gRUoxtn/preview"
+                },
+                {
+                    "name": "IOT_Assignment-4_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1AYg_P76mcE9CoMwmkAuhy0Xp0EykyE2J/preview"
+                },
+                {
+                    "name": "IOT_Assignment-5_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1KkAIoMAiM4bqtJN4MgJo2KGCTpW7VHLE/preview"
+                }
+            ]
         },
         {
             "name": "July 2022",
             "source": "https://drive.google.com/open?id=1o1etcPbcOnEZS1GYepTnX9Gm_vse5f7Z",
-            "items": []
+            "items": [
+                {
+                    "name": "Assignment-W12_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1pGhVvnwI6wjCQY0kfe1lwsQYeaNhnH40/preview"
+                },
+                {
+                    "name": "Assignment-W8_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1yo44BsGDto8lTpuND6y-T-DvtLoxqrkN/preview"
+                },
+                {
+                    "name": "Assignment-W9_updated_july2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1wzDEw617avvpC-6-N-dLkgnJuOKkrNTS/preview"
+                },
+                {
+                    "name": "Assignment-W10_updated_july2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ntuMuW2bXtfXSfPrb1No9QzahkyFa6dU/preview"
+                },
+                {
+                    "name": "Assignment-W11_updated_july2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1cDiOoSb0UetTp73FJ3geXtUp0vsA-3kT/preview"
+                },
+                {
+                    "name": "Assignment-W0_july22.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1_-Rw64xiRBjaGe0BkVJu8UfI5KqCPTkx/preview"
+                },
+                {
+                    "name": "Assignment-W1_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1OS3_b1VucSw99iJhQY24acbCN7JKCHnW/preview"
+                },
+                {
+                    "name": "Assignment-W2_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ddIKvuLJEuZ3ArQ5oR9vSJr1xtHw_pQ_/preview"
+                },
+                {
+                    "name": "Assignment-W4_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1a_h99R9tD6QwuaJAbgZl2KJPgcf2CL5m/preview"
+                },
+                {
+                    "name": "Assignment-W5_updated_july2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1StVO5vfV_OEr3d3bOy_cFHo2etum4XHX/preview"
+                },
+                {
+                    "name": "Assignment-W6_JULY2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1pEvY5nOzTVFh3lx6DnP-60uhtQXBFvFv/preview"
+                },
+                {
+                    "name": "Assignment-W7_updated_july2022.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1TqQgUlhrRKSIwWyu-X8J-JgUZJN4jbMV/preview"
+                }
+            ]
         },
         {
             "name": "July 2023",
             "source": "https://drive.google.com/open?id=1KvB8Vvihk1YShuPVrubTFQqaFux0Xr_5",
-            "items": []
+            "items": [
+                {
+                    "name": "Assignment-W12.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1YP1NFmfCZ-gOkyV3UUGj5zasz6Pg0b7t/preview"
+                },
+                {
+                    "name": "Assignment-W7.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1WrLx_fCTW6lNC3yqYh9xUYnSfJ-HwH7A/preview"
+                },
+                {
+                    "name": "Assignment-W8.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/19Rnq30osGEE4Hj9I9Lj0mdQ8skQu8Q3m/preview"
+                },
+                {
+                    "name": "Assignment-W9.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ioyD18-9bGquQd39iRPI_lyZ26YMQxvh/preview"
+                },
+                {
+                    "name": "Assignment-W10.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1dFAcMUmcxl3fqKkSwAx7ZgSJuACEvqs1/preview"
+                },
+                {
+                    "name": "Assignment-W11.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1OoeYzOxn5Bm4DJ38D7pFLdq3RSX6-VKM/preview"
+                },
+                {
+                    "name": "Assignment-W5.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1snEerWPFTgzYEISrN-tR_L9XuGVwgt8C/preview"
+                },
+                {
+                    "name": "Assignment-W6.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1_pLcA2wXmNSP8-tRUZlmJLCl6JjoCQbG/preview"
+                },
+                {
+                    "name": "Assignment-W4.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/19Y4GjPkQZ0ipBojQWyOPjKuT_AO31nnl/preview"
+                },
+                {
+                    "name": "Assignment-W3.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1-VVNBBcGOG6_3Pz2DHGfvfRRDDNs75D4/preview"
+                },
+                {
+                    "name": "Assignment-W2.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1vC8q5Saw8qxxPH03_qm9103qt7d8mkzj/preview"
+                },
+                {
+                    "name": "Assignment-W1.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1y6x1K-sqsrRL1utOfeAn983fOfhwcewH/preview"
+                },
+                {
+                    "name": "Assignment-W0_july22.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1HII0j4i_xzeDl8qd4VNebZuwNUKxxgac/preview"
+                }
+            ]
         },
         {
             "name": "July 2024",
             "source": "https://drive.google.com/open?id=1g-IQFMWZdAKzo91HsKS63WxolBrASVED",
-            "items": []
+            "items": [
+                {
+                    "name": "Assignment-W5.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1yE5Mykp7ZSCznS-YGvKECRMyuLJhK-DM/preview"
+                },
+                {
+                    "name": "Assignment-W6.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/18Kx-CtLrrkSO9bXnbc2lS-tzY8Wc6usR/preview"
+                },
+                {
+                    "name": "IOT_Assignment-0_Solution.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/11ktNrvPGxrc72o3uw105vV5NU0FKM6Tg/preview"
+                },
+                {
+                    "name": "2024Assignment-W10 (1).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1OChatUbQUA4TZbXWdcksfYnAGWT5Ad7U/preview"
+                },
+                {
+                    "name": "2024Assignment-W11 (1).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/124pYNPgY6PsdCNRfw7IFtIOHiB-qwVsz/preview"
+                },
+                {
+                    "name": "2024Assignment-W12 _updated.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1vM5aI0l-OgurKeeOXsEPpK4ooWuC-47a/preview"
+                },
+                {
+                    "name": "Assignment-W1_UPDATED.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1v54qYkwFjgvCCUvRjm7kh6NILAADH1Ye/preview"
+                },
+                {
+                    "name": "Assignment-W2.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1UB43aFi4DpluIU6c9CClni1V8cQMddRO/preview"
+                },
+                {
+                    "name": "Assignment-W3.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1rW1HFWNSSgrRMYO4mYlpCy09tbvbORzZ/preview"
+                },
+                {
+                    "name": "Assignment-W4.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1tCcvb9nMmPkPhk92m-AzLWaQ-BH6Ozxl/preview"
+                },
+                {
+                    "name": "2024Assignment-W7 (2).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1Cqj0obkNIfc9rMd7two5TjAn82OhZ3uC/preview"
+                },
+                {
+                    "name": "2024Assignment-W8 (1).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ICNrksxm6kk4WsTZSdjF9kQORHmc8_Gi/preview"
+                },
+                {
+                    "name": "2024Assignment-W9 (1).pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1uWM9ZODA4aAs3H60DJ_Cwh84jCeC8JG_/preview"
+                }
+            ]
         },
         {
             "name": "Lecture Slides",
             "source": "https://drive.google.com/open?id=1MUPcASPcSNAVT5TSnBfL2ja-mhvyotTA",
-            "items": []
+            "items": [
+                {
+                    "name": "Week-10.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1i5He6v3LChaeIaz8PTynM9BTAIiMGI1E/preview"
+                },
+                {
+                    "name": "Week-11.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1yaRvibsPCjn6-KoV8cOeTC30MWNgXAG2/preview"
+                },
+                {
+                    "name": "Week-12.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1tCZB90FEgfHKKzdpIsvbKuNUNqBtVUW2/preview"
+                },
+                {
+                    "name": "Week-3.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/11ZIlMolSD_CSRpPjDDkQ2OdCoAGP8iW_/preview"
+                },
+                {
+                    "name": "Week-4.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1syxE9XP9uYnRfh79Snxp4w6_DSKY_0GQ/preview"
+                },
+                {
+                    "name": "Week-5.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1VSOKfEPhpBXuG3g2Boyj5zXBSdQ1Dfrk/preview"
+                },
+                {
+                    "name": "Week-6.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1f_Cu-VJBVQcRn8as71SrEYxYdzo_UKHo/preview"
+                },
+                {
+                    "name": "Week-7.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1T-IyXWaAeOwD5WYnIkVg4QPBwzCRQM_k/preview"
+                },
+                {
+                    "name": "Week-8.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1ki_Wc9u7D38B2-cjJwQnMcHtT5SAtvu5/preview"
+                },
+                {
+                    "name": "Week-9.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1KBFSktqJ3CyxdYjXOiG013FFOWOkjDKW/preview"
+                },
+                {
+                    "name": "Week 1 Lecture material",
+                    "type": "folder",
+                    "source": "https://drive.google.com/open?id=1swepU3whLtmcCfcW6C03V6cJu2JU4Wz8",
+                    "items": []
+                },
+                {
+                    "name": "Week-2.pdf",
+                    "type": "pdf",
+                    "path": "https://drive.google.com/file/d/1VXtSgts9Rmwfusivun4J8bJrp6fJT0Q9/preview"
+                }
+            ]
         }
     ],
-    "files": []
+    "files": [
+        {
+            "name": "How to Prepare.docx",
+            "type": "docx",
+            "path": "https://drive.google.com/file/d/1cXV4uHTOyv-Y9HjFojOZaltJ0wQZ6FZY/preview"
+        }
+    ]
 }

@@ -1898,6 +1898,20 @@ textarea.form-input {
   }
 
   .hero h1 {
+    letter-spacing: -0.8px;
+  }
+
+  .hero-badge {
+    max-width: 100%;
+    margin-bottom: 18px;
+    padding: 6px 12px;
+  }
+
+  .lead {
+    margin-bottom: 26px;
+  }
+
+  .hero h1 {
     font-size: clamp(28px, 6vw, 42px);
   }
 
@@ -1929,6 +1943,20 @@ textarea.form-input {
     gap: 16px;
   }
 
+  .category-filters {
+    gap: 6px;
+  }
+
+  .category-btn,
+  .form-input,
+  .search-input {
+    min-height: 44px;
+  }
+
+  .project-card img {
+    height: 160px;
+  }
+
   .drive-toolbar {
     align-items: stretch;
     flex-direction: column;
@@ -1946,6 +1974,36 @@ textarea.form-input {
 
   .drive-actions .btn {
     width: 100%;
+  }
+
+  .drive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drive-item {
+    min-height: 76px;
+    padding: 13px 14px;
+  }
+
+  .drive-item-action {
+    min-height: 40px;
+    padding: 8px 4px;
+  }
+
+  .pdf-viewer {
+    padding: 0;
+  }
+
+  .pdf-viewer-panel {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .pdf-viewer-header {
+    min-height: 56px;
+    padding: 10px 14px;
   }
 }
 
@@ -1966,12 +2024,64 @@ textarea.form-input {
     display: none;
   }
 
+  .brand .logo {
+    font-size: 16px;
+  }
+
+  .hero {
+    padding: 44px 0 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 11vw, 42px);
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
   .card {
     padding: 20px;
   }
 
   .widget-row {
     grid-template-columns: 1fr;
+  }
+
+  .drive-toolbar {
+    padding: 15px;
+  }
+
+  .drive-breadcrumb {
+    align-items: flex-start;
+    gap: 5px;
+    line-height: 1.5;
+  }
+
+  .drive-status {
+    margin: 16px 0 8px;
+  }
+
+  .drive-item {
+    gap: 10px;
+  }
+
+  .drive-item-icon {
+    width: 32px;
+    flex-basis: 32px;
+    font-size: 23px;
+  }
+
+  .drive-item-copy h2 {
+    font-size: 14px;
+  }
+
+  .drive-item-action {
+    font-size: 11px;
+  }
+
+  .pdf-viewer-header h2 {
+    max-width: calc(100% - 48px);
   }
 
   .about-developer .dev-avatar {
@@ -2522,6 +2632,9 @@ textarea.form-input {
 
   .glass-header {
     top: 10px;
+    gap: 12px;
+    min-height: 58px;
+    padding: 8px 10px 8px 12px;
   }
 
   .glass-menu-button {
@@ -2557,11 +2670,11 @@ textarea.form-input {
   }
 
   .about-content {
-    padding: 72px 3% 55px;
+    padding: 60px 3% 44px;
   }
 
   .about-intro h1 {
-    font-size: clamp(50px, 15vw, 78px);
+    font-size: clamp(38px, 13vw, 64px);
   }
 
   .profile-grid,
@@ -2573,6 +2686,41 @@ textarea.form-input {
   .profile-card {
     align-items: flex-start;
     flex-direction: column;
+    gap: 22px;
+    min-height: 0;
+    padding: 24px;
+  }
+
+  .profile-orbit {
+    flex-basis: 104px;
+    width: 104px;
+    height: 104px;
+    font-size: 29px;
+  }
+
+  .profile-copy h2 {
+    font-size: 23px;
+  }
+
+  .profile-links {
+    flex-wrap: wrap;
+  }
+
+  .profile-links a,
+  .glass-button,
+  .text-button {
+    min-height: 40px;
+  }
+
+  .signal-card,
+  .philosophy-card,
+  .skills-card {
+    padding: 22px;
+  }
+
+  .signal-stats {
+    flex-wrap: wrap;
+    gap: 20px 28px;
   }
 
   .about-footer {
