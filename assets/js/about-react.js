@@ -9,8 +9,6 @@ const navItems = [
     ['About', 'about.html'],
     ['Contact', 'contact.html']
 ];
-const mathFloaters = ['AI', 'PY', 'TF', 'NP', 'PD', 'JS', 'GH', 'CV'];
-
 function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -51,13 +49,6 @@ function AboutPage() {
     return React.createElement(React.Fragment, null,
         React.createElement('a', { className: 'skip-link', href: '#main-content' }, 'Skip to main content'),
         React.createElement('div', { className: 'about-atmosphere' }),
-        React.createElement('div', { className: 'math-floaters', 'aria-hidden': 'true' },
-            mathFloaters.map((formula, index) => React.createElement('span', {
-                className: 'math-floater',
-                key: formula,
-                style: { '--floater-index': index }
-            }, React.createElement('span', { className: 'math-formula' }, formula), React.createElement('i', null)))
-        ),
         React.createElement('div', { className: 'about-shell' },
             React.createElement(Header),
             React.createElement('main', { id: 'main-content', className: 'about-content' },
@@ -116,7 +107,6 @@ function AboutPage() {
             ),
             React.createElement('footer', { className: 'about-footer' },
                 React.createElement('span', null, 'Resource Hub / About'),
-                React.createElement('span', null, 'Maintained by Paigala Delli Sankar'),
                 React.createElement('nav', { 'aria-label': 'Footer navigation' },
                     React.createElement('a', { href: 'privacy.html' }, 'Privacy'),
                     React.createElement('a', { href: 'terms.html' }, 'Terms'),

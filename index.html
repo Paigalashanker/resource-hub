@@ -4,20 +4,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#06070a" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
 
-  <title>CAMPUSVAULT — The Story &amp; Digital Workshop of Dilli</title>
+  <title>CAMPUSVAULT — Projects and Resources</title>
   <meta name="description"
-    content="Experience the cinematic journey of a student who faced failure, pressure, and self-doubt to build AI systems, robotics, and CampusVault." />
+    content="Explore projects, downloads, IoT coursework, and practical resources from CAMPUSVAULT." />
   <link rel="canonical" href="https://campusvault.dpdns.org/" />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph / Meta -->
-  <meta property="og:title" content="CAMPUSVAULT — The Story &amp; Digital Workshop of Dilli" />
+  <meta property="og:title" content="CAMPUSVAULT — Projects and Resources" />
   <meta property="og:description"
     content="An interactive documentary of an engineering journey in AI, Data Science, Robotics, and software systems." />
   <meta property="og:url" content="https://campusvault.dpdns.org/" />
@@ -27,8 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Modern Cinema Stylesheet -->
-  <link rel="stylesheet" href="assets/css/cinema.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4394486687199900"
@@ -53,13 +52,94 @@
   </script>
 </head>
 
-<body>
+<body class="student-home">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="logo">CAMPUSVAULT</div>
+        <div class="tag">Student Resource Hub</div>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="downloads.html" class="nav-link">Downloads</a>
+        <a href="iot.html" class="nav-link">IoT (NPTEL)</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main class="container student-home-content" id="main-content">
+    <section class="hero student-home-hero">
+      <div class="hero-badge"><span class="badge-dot"></span>Student Resource Hub</div>
+      <h1>Find what you need to <span class="highlight">learn and build.</span></h1>
+      <p class="lead">A simple home for course materials, project references, IoT assignments, and practical student resources.</p>
+    </section>
+
+    <a class="student-featured-resource" href="iot.html" aria-label="Open IoT and NPTEL course archive">
+      <span class="featured-resource-label">Featured study area</span>
+      <span class="featured-resource-content">
+        <strong>IoT &amp; NPTEL Course Archive</strong>
+        <span>Open weekly assignments, lecture material, and course files in one organized archive.</span>
+      </span>
+      <span class="featured-resource-action">Open archive &rarr;</span>
+    </a>
+
+    <section class="student-resource-grid" aria-labelledby="resource-heading">
+      <div class="section-heading">
+        <p class="eyebrow">Quick access</p>
+        <h2 id="resource-heading">Start with a resource</h2>
+      </div>
+      <div class="grid">
+        <a class="student-resource-card" href="downloads.html">
+          <span class="resource-card-icon" aria-hidden="true">PDF</span>
+          <span><strong>Downloads</strong><small>Notes, documents, tools, and study files.</small></span>
+          <span class="resource-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="student-resource-card" href="iot.html">
+          <span class="resource-card-icon" aria-hidden="true">IoT</span>
+          <span><strong>IoT / NPTEL</strong><small>Browse weekly assignments and course material.</small></span>
+          <span class="resource-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="student-resource-card" href="projects.html">
+          <span class="resource-card-icon" aria-hidden="true">DEV</span>
+          <span><strong>Projects</strong><small>Explore practical builds and technical references.</small></span>
+          <span class="resource-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="student-resource-card" href="about.html">
+          <span class="resource-card-icon" aria-hidden="true">INFO</span>
+          <span><strong>About CampusVault</strong><small>Understand the collection and its purpose.</small></span>
+          <span class="resource-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="student-home-note card" aria-labelledby="guide-heading">
+      <p class="eyebrow">Suggested path</p>
+      <h2 id="guide-heading">Looking for study material?</h2>
+      <p>Open <a href="downloads.html">Downloads</a> for general files or go to the <a href="iot.html">IoT / NPTEL archive</a> for weekly course assignments. Use the search controls on those pages to find a file quickly.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer student-home-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="projects.html">Projects</a><span>•</span>
+        <a href="downloads.html">Downloads</a><span>•</span>
+        <a href="iot.html">IoT (NPTEL)</a><span>•</span>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
 
   <!-- Scroll Progress Bar -->
   <div id="cv-progress-bar" aria-hidden="true"></div>
 
   <!-- Accessible Skip Link -->
-  <a class="cv-skip-link" href="#main-story">Skip to main content</a>
+  <a class="cv-skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Ambient Vignette -->
   <div class="cv-vignette" aria-hidden="true"></div>
@@ -911,7 +991,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/js/cinema-engine.js"></script>
   <script src="assets/js/script.js"></script>
 
 </body>
