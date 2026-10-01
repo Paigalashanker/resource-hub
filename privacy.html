@@ -97,6 +97,17 @@
     </footer>
     <script src="assets/js/script.js"></script>
     <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b22e9805a0b149cbab15c056d57ff72f"}'></script><!-- End Cloudflare Web Analytics -->
+        <script>
+fetch("https://campusvault-visitor-logger.paigalashanker.workers.dev", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        path: window.location.pathname
+    })
+}).catch(() => {});
+</script>
 </body>
 
 </html>
