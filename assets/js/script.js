@@ -1,3 +1,43 @@
+// Treat manifest and localStorage content as untrusted, including URL attributes.
+const siteContent = (() => {
+  function url(value) {
+    if (typeof value !== 'string' || !value.trim() || /[\u0000-\u001f\u007f\\]/.test(value)) return null;
+    try {
+      const parsed = new URL(value.trim(), window.location.href);
+      if (!['https:', 'http:'].includes(parsed.protocol)) return null;
+      if (parsed.protocol === 'http:' && parsed.origin !== window.location.origin) return null;
+      if (parsed.username || parsed.password) return null;
+      // Encoded schemes are not useful resource paths. Reject them too, rather
+      // than relying on their currently harmless interpretation as relative URLs.
+      let probe = value.trim();
+      for (let i = 0; i < 3; i++) {
+        let decoded;
+        try { decoded = decodeURIComponent(probe); } catch { break; }
+        if (decoded === probe) break;
+        probe = decoded;
+      }
+      if (/^[^/?#]*:/.test(probe) && !/^https?:/i.test(probe)) return null;
+      return parsed.href;
+    } catch { return null; }
+  }
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = String(text ?? '');
+    return node;
+  }
+  function link(value, className, text) {
+    const href = url(value);
+    if (!href) return null;
+    const node = element('a', className, text);
+    node.setAttribute('href', href);
+    node.setAttribute('target', '_blank');
+    node.setAttribute('rel', 'noopener noreferrer');
+    return node;
+  }
+  return { url, element, link };
+})();
+
 // ─── Form submission success popup ───
 (function () {
   const params = new URLSearchParams(window.location.search);
@@ -271,10 +311,6 @@
     return name;
   }
 
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
-  }
-
   function formatSize(bytes) {
     if (!bytes) return 'Local file';
     if (bytes < 1024) return bytes + ' B';
@@ -284,7 +320,7 @@
 
   function buildCard(file) {
     const ext = getExt(file.name);
-    const info = typeMap[ext] || { label: ext.toUpperCase() || 'FILE', icon: '📁', cat: 'other' };
+    const info = Object.hasOwn(typeMap, ext) ? typeMap[ext] : { label: ext.toUpperCase() || 'FILE', icon: '📁', cat: 'other' };
     const title = prettyName(file.name);
     const downloadUrl = file.url || `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/${DOWNLOAD_PATH}/${encodeURIComponent(file.name)}`;
 
@@ -292,20 +328,23 @@
     card.className = 'download-card card';
     card.dataset.category = info.cat || 'other';
     card.dataset.ext = ext;
-    const safeTitle = escapeHtml(title);
-    const safeDescription = escapeHtml(file.description || `${info.label} file · ${formatSize(file.size)}`);
-    const isPdf = ext === 'pdf';
-    card.innerHTML = `
-      <span class="file-badge">${info.icon} ${info.label}</span>
-      <h3>${safeTitle}</h3>
-      <p>
-        ${safeDescription}
-      </p>
-      <div class="download-actions">
-        ${isPdf ? `<a class="btn btn-compact btn-outline" href="${downloadUrl}" target="_blank" rel="noopener">Open PDF</a>` : ''}
-        <a class="btn btn-compact" href="${downloadUrl}" download="${escapeHtml(file.name)}">Download</a>
-      </div>
-    `;
+    card.append(
+      siteContent.element('span', 'file-badge', `${info.icon} ${info.label}`),
+      siteContent.element('h3', '', title),
+      siteContent.element('p', '', file.description || `${info.label} file · ${formatSize(file.size)}`)
+    );
+    const actions = siteContent.element('div', 'download-actions');
+    if (ext === 'pdf') {
+      const open = siteContent.link(downloadUrl, 'btn btn-compact btn-outline', 'Open PDF');
+      if (open) actions.appendChild(open);
+    }
+    const download = siteContent.link(downloadUrl, 'btn btn-compact', 'Download');
+    if (download) {
+      download.removeAttribute('target');
+      download.setAttribute('download', file.name);
+      actions.appendChild(download);
+    }
+    card.appendChild(actions);
     return card;
   }
 
@@ -433,7 +472,9 @@
 
   function openPdf(item) {
     if (!['pdf', 'docx'].includes(item.type) || !item.path) return;
-    const fullDocumentUrl = item.path.replace(/\/preview(?:[?#].*)?$/, '/view');
+    const path = siteContent.url(item.path);
+    if (!path) return;
+    const fullDocumentUrl = path.replace(/\/preview(?:[?#].*)?$/, '/view');
     window.open(fullDocumentUrl, '_blank', 'noopener,noreferrer');
   }
 
@@ -459,12 +500,19 @@
       const card = document.createElement('article');
       card.className = 'drive-item';
       const isFolder = item.type === 'folder';
-      const canRead = ['pdf', 'docx'].includes(item.type) && item.path;
-      card.innerHTML = `<div class="drive-item-icon" aria-hidden="true">${itemIcon(item)}</div><div class="drive-item-copy"><h2>${escapeHtml(item.name)}</h2><p>${isFolder ? 'Folder' : (item.type || 'File').toUpperCase()}</p></div><button class="drive-item-action" type="button" ${canRead || isFolder ? '' : 'disabled'}>${isFolder ? 'Open folder' : canRead ? 'Read file' : 'Unavailable'}</button>`;
-      const action = card.querySelector('button');
+      const canRead = ['pdf', 'docx'].includes(item.type) && siteContent.url(item.path);
+      const icon = siteContent.element('div', 'drive-item-icon', itemIcon(item));
+      icon.setAttribute('aria-hidden', 'true');
+      const copy = siteContent.element('div', 'drive-item-copy');
+      copy.append(siteContent.element('h2', '', item.name), siteContent.element('p', '', isFolder ? 'Folder' : String(item.type || 'File').toUpperCase()));
+      const action = siteContent.element('button', 'drive-item-action', isFolder ? 'Open folder' : canRead ? 'Read file' : 'Unavailable');
+      action.setAttribute('type', 'button');
+      action.disabled = !canRead && !isFolder;
+      card.append(icon, copy, action);
       if (isFolder) action.addEventListener('click', () => {
         if (!(item.items || []).length && item.source) {
-          window.open(item.source, '_blank', 'noopener,noreferrer');
+          const source = siteContent.url(item.source);
+          if (source) window.open(source, '_blank', 'noopener,noreferrer');
           return;
         }
         folderPath = [...folderPath, item.name];
@@ -537,28 +585,41 @@
   function buildFullCard(p) {
     const card = document.createElement('div');
     card.className = 'project-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <h3>${p.title}</h3>
-      <p>${p.description}</p>
-      ${p.tech ? `<div class="project-tags"><span>${p.tech}</span></div>` : ''}
-      <div style="display:flex; gap:10px; margin: 0 22px 20px; flex-wrap:wrap;">
-        ${p.github ? `<a class="btn btn-compact btn-outline" href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : ''}
-        ${p.demo ? `<a class="btn btn-compact" href="${p.demo}" target="_blank" rel="noopener">Live Demo</a>` : ''}
-      </div>
-    `;
+    appendProjectContent(card, p, 'h3');
+    if (p.tech) {
+      const tags = siteContent.element('div', 'project-tags');
+      tags.appendChild(siteContent.element('span', '', p.tech));
+      card.appendChild(tags);
+    }
+    const actions = siteContent.element('div');
+    actions.style.cssText = 'display:flex; gap:10px; margin: 0 22px 20px; flex-wrap:wrap;';
+    const github = siteContent.link(p.github, 'btn btn-compact btn-outline', 'GitHub');
+    const demo = siteContent.link(p.demo, 'btn btn-compact', 'Live Demo');
+    if (github) actions.appendChild(github);
+    if (demo) actions.appendChild(demo);
+    card.appendChild(actions);
     return card;
+  }
+
+  function appendProjectContent(card, p, heading) {
+    const imageUrl = siteContent.url(p.image);
+    if (imageUrl) {
+      const image = siteContent.element('img');
+      image.setAttribute('src', imageUrl);
+      image.setAttribute('alt', String(p.title ?? ''));
+      image.setAttribute('loading', 'lazy');
+      card.appendChild(image);
+    }
+    card.append(siteContent.element(heading, '', p.title), siteContent.element('p', '', p.description));
   }
 
   function buildPreviewCard(p) {
     const card = document.createElement('div');
     card.className = 'project-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <h4>${p.title}</h4>
-      <p>${p.description}</p>
-      <a href="projects.html" class="link">View Details &rarr;</a>
-    `;
+    appendProjectContent(card, p, 'h4');
+    const details = siteContent.element('a', 'link', 'View Details →');
+    details.setAttribute('href', 'projects.html');
+    card.appendChild(details);
     return card;
   }
 

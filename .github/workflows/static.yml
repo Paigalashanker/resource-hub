@@ -33,11 +33,48 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Security regression tests
+        run: npm test
+      - name: Stage public site files only
+        shell: bash
+        run: |
+          mkdir -p _site
+          cp index.html about.html contact.html disclaimer.html downloads.html \
+            google845af6e47eaa2c61.html iot.html privacy.html projects.html \
+            terms.html robots.txt sitemap.xml _site/
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+
+          types = {
+              'css': {'.css'}, 'js': {'.js'},
+              'img': {'.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp', '.ico'},
+              'data': {'.json'}, 'downloads': {'.pdf', '.docx'},
+          }
+          private = {'private', 'source', 'src', 'secrets', 'node_modules', 'tests', 'test'}
+          for folder, extensions in types.items():
+              source = Path('assets') / folder
+              for path in source.rglob('*'):
+                  if path.is_symlink() or not path.is_file():
+                      continue
+                  if any(part.startswith('.') or part.lower() in private for part in path.parts):
+                      continue
+                  if any(parent.is_symlink() for parent in path.parents):
+                      continue
+                  if path.suffix.lower() not in extensions:
+                      continue
+                  destination = Path('_site') / path
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(path, destination)
+          PY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
